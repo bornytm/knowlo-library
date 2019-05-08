@@ -11,8 +11,8 @@
         </ul>
         <ul class="right ">
           <li v-if="!member.uid" style="margin-right:13px">
-            <a @click="loginModal" class="hide-on-med-and-down">Login | Sign Up</a>
-            <a @click="loginModal" class="hide-on-med-and-up"><i class="material-icons fa fa-lg fa-sign-in"></i></a>
+            <!-- <a @click="loginModal" class="hide-on-med-and-down">Login | Sign Up</a>
+            <a @click="loginModal" class="hide-on-med-and-up"><i class="material-icons fa fa-lg fa-sign-in"></i></a> -->
           </li>
           <li v-else v-cloak style="margin-right:13px">
             <!-- member icon here? -->
