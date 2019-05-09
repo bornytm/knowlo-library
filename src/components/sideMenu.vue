@@ -13,10 +13,10 @@
     <li><a class="subheader"></a></li>
 		<li><div class="divider"></div></li>
     <li><router-link class="waves-effect" to="/about"><i class="fa fa-lg fa-info"></i>About</router-link></li>
-    <li><router-link class="waves-effect" to="/principals"><i class="fa fa-lg fa-lightbulb-o"></i>Principals</router-link></li>
+    <li><router-link class="waves-effect" to="/principals"><i class="far fa-lg fa-lightbulb-o"></i>Principals</router-link></li>
     <li><router-link class="waves-effect" to="/getInvolved"><i class="fa fa-lg fa-users"></i>Get Involved</router-link></li>
     <li><router-link class="waves-effect" to="/legal"><i class="fa fa-lg fa-gavel"></i>Legal</router-link></li>
-    <li><a class="waves-effect" target="blank" href="http://github.com/bornytm/knowlo"><i class="fa fa-lg fa-github"></i>Code | Github</a></li>
+    <li><a class="waves-effect" target="blank" href="http://github.com/bornytm/knowlo-landing-library"><i class="fab fa-lg fa-github"></i>Code | Github</a></li>
 	</ul>
 </template>
 <script>

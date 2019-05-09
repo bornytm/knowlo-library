@@ -12,7 +12,7 @@
 		        <h5>Default to Transparency </h5>
 						<p>(Almost) everything is open. Aside from reasonable concerns over member's private information and other sensitive data (as deemed by the community), everything is available for all to see. This includes but is not limited to:</p>
 						<p> - all <a target="_blank" href="https://docs.google.com/spreadsheets/d/1wqII5thbehl0WQNtKQrxbegW4s7i9pWrQWQ_WwGf3MM/edit?usp=sharing">financial information</a> (income & expenses: server costs, donations, bounty payments, etc.)</p>
-						<p> - the <a target="_blank" href="http://github.com/bornytm/knowlo">knowlo codebase</a> </p>
+						<p> - the <a target="_blank" href="http://github.com/bornytm/knowlo-landing">knowlo codebase</a> </p>
 						<p> - <router-link to="/status">real-time usage stats</router-link></p>
 						<p> - development plans and roadmap</p>
 						<p> - most everything else</p>

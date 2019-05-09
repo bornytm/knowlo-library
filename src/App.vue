@@ -5,7 +5,7 @@
   <div id="nav-slide" class="navbar-fixed">
     <nav class=''>
       <div class="nav-wrapper">
-        <router-link to="/" class="brand-logo center thin">knowlo</router-link>
+        <router-link to="/" class="brand-logo center thin">knowlo library</router-link>
         <ul class="left ">
           <li><a data-activates="slide-out" class="navbar-collapse show-on-large"><i class="material-icons">menu</i></a></li>
         </ul>
@@ -56,7 +56,7 @@
     </div>
     <div class="footer-copyright">
       <div class="container center">knowlo</div>
-      <a style="margin-left:20px; margin-top:5px; position:absolute;" href="https://github.com/bornytm/knowlo"><img style="width:25px" src="statics/github.png"></a>
+      <a style="margin-left:20px; margin-top:5px; position:absolute;" href="https://github.com/bornytm/knowlo-landing"><img style="width:25px" src="statics/github.png"></a>
     </div>
   </footer>
 

@@ -31,7 +31,7 @@ if (process.env.GRAPHENEDB_URL) {
 
 app.use('/api/auth', firebaseMiddleware.auth)
 app.use(bodyParser.json())
-app.use(serveStatic(__dirname + "/dist"))
+app.use(serveStatic(__dirname + "/dist/spa-mat"))
 
 require('./initDB')(app, db);
 require('./CRUD/tags')(app, db);
