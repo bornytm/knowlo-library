@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
-    "db": "node server.js",
+    "start": "node server.js",
     "devd": "node server.js | quasar dev"
   },
   "dependencies": {

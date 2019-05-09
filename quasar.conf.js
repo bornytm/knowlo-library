@@ -18,7 +18,16 @@ module.exports = function (ctx) {
     ],
     supportIE: false,
     build: {
+      // devtool: false,
+      // sourceMaps: false,
+      // minify: false,
       scopeHoisting: true,
+      // uglifyOptions: {
+      //   mangle: false
+        // mangleProperties: {
+        //   regex: /^_/
+        // }
+      // },
       // vueRouterMode: 'history',
       // vueCompiler: true,
       // gzip: true,
