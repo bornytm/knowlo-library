@@ -75,8 +75,12 @@
       'voteHalf': display === 'list'}"
     >
       <div class="">
-				<i  @click="ratingDisplay='global'" @mouseenter="ratingDisplay='global'" class="fa fa-lg fa-globe rating" :class="{'selected': ratingDisplay==='global'}"></i>
-				<i  @click="ratingDisplay='member'" @mouseenter="ratingDisplay='member'" class="fa fa-lg fa-user rating" :class="{'selected': ratingDisplay==='member'}"></i>
+				<i  @click="ratingDisplay='global'" @mouseenter="ratingDisplay='global'" class="far fa-lg fa-globe-americas rating" :class="{'selected': ratingDisplay==='global'}">
+          <q-tooltip :delay="500" :offset="[0, 5]">global rating</q-tooltip>
+        </i>
+				<i  @click="ratingDisplay='member'" @mouseenter="ratingDisplay='member'" class="fa fa-lg fa-user rating" :class="{'selected': ratingDisplay==='member'}">
+          <q-tooltip :delay="500" :offset="[0, 5]">your rating</q-tooltip>
+        </i>
         <span class='right'><span class='text-orange'> Q<span v-if='display === "list"'>uality</span>: </span> {{displayQuality.toString().substring(0, 4)}} <span class='text-blue'>C<span v-if='display === "list"'>omplexity</span>: </span> {{displayComplexity.toString().substring(0, 4)}}</span>
 			</div>
       <q-slider @change="qualityChange" color="orange"  v-model="displayQuality" :min="0" :max="1" :step="0.001" label :label-value="displayQuality | strr"/>
@@ -241,6 +245,9 @@ export default {
   padding-left: 5px;
   padding-right: 5px;
 }
+.vote i {
+  margin: 2px;
+}
 .list .thumb {
   margin:5px;
   border-radius: 0;
@@ -252,7 +259,7 @@ export default {
   flex-direction: column;
   align-items: center;
 }
-.resource a {color:black}
+.resource a {color:black;}
 .list span {
   font-size: 15px;
 }
@@ -280,6 +287,7 @@ export default {
 .card .card-image {
   max-height: 400px!important;
   overflow: hidden!important;
+  margin-bottom: 10px;
 }
 .card-bottom {
     margin: -11px!important;

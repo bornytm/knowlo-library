@@ -1231,7 +1231,8 @@ nav .input-field label.active i {
   font-size: 1.6rem;
   display: inline-block;
   text-align: center;
-  margin-right: 1rem;
+  margin-right: .5rem;
+  margin-left: .5rem;
 }
 
 .collapsible-body {

@@ -136,14 +136,28 @@
   						<span >{{resourcesRelated}} resource<span v-if="resourcesRelated !=1">s</span> matched</span>
         </span>
         <span v-else>
-				<span @click.stop.prevent="flipViewed" class="left viewBtn" :class="{'fade': !showViewed}" style="margin-right:15px"><i class="material-icons ">remove_red_eye</i></span>
-        <span class="viewBtn" @click.stop.prevent="changeDisplay('list')"><i class="material-icons">view_list</i></span>
-        <span class="viewBtn" @click.stop.prevent="changeDisplay('card')"><i class="material-icons">dashboard</i></span>
-        <span class="viewBtn" @click.stop.prevent="changeDisplay('thumb')"><i class="material-icons">dialpad</i></span>
+				<span @click.stop.prevent="flipViewed" class="left viewBtn" :class="{'fade': !showViewed}" ><i class="material-icons ">remove_red_eye</i>
+          <q-tooltip :delay="500" :offset="[0, 5]">show / hide viewed resources</q-tooltip>
+        </span>
+        <span class="viewBtn"  @click.stop.prevent="changeDisplay('list')"><i class="material-icons">view_list</i>
+         <q-tooltip :delay="500" :offset="[0, 5]">List view</q-tooltip>
+        </span>
+        <span class="viewBtn" @click.stop.prevent="changeDisplay('card')"><i class="material-icons">dashboard</i>
+         <q-tooltip :delay="500" :offset="[0, 5]">Grid view</q-tooltip>
+        </span>
+        <span class="viewBtn" @click.stop.prevent="changeDisplay('thumb')"><i class="material-icons">dialpad</i>
+          <q-tooltip :delay="500" :offset="[0, 5]">Icon view</q-tooltip>
+        </span>
         <span class='right'>
 					<a @click.stop="" class="dropdown-button viewBtn orderby" >
-            <span class="dropdown-button" data-activates='order' data-hover="true" data-alignment='right'>{{orderby}}</span>
-            <i @click="descending = !descending; setOrderAndDescending(orderby); fetchResources()" class="material-icons " :class="{'flipVert': !descending }">sort</i>
+            <span class="dropdown-button" data-activates='order' data-hover="true" data-alignment='right'>
+              {{orderby}}
+              <q-tooltip :delay="500" :offset="[0, 5]">order by</q-tooltip>
+            </span>
+            <i @click="descending = !descending; setOrderAndDescending(orderby); fetchResources()" class="material-icons " :class="{'flipVert': !descending }">
+              sort
+              <q-tooltip :delay="500" :offset="[0, 5]">ascending / descending</q-tooltip>
+            </i>
           </a>
         <ul id='order' class='dropdown-content sort'>
           <li @click.stop="setOrderAndDescending('quality')"><a>quality</a></li>
@@ -238,7 +252,7 @@
                 </q-btn>
               </router-link>
               <q-btn @click="random" color='primary' round >
-                <i class="fa fa-random fa-2x "></i>
+                <i class="far fa-random fa-2x "></i>
               </q-btn>
             </div>
           </div>
@@ -850,6 +864,7 @@ export default {
   height: 2em!important;
   width: 5em!important;
   padding-top: 2px!important;
+  margin-left: 6px;
 }
 [type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:before, [type="radio"].with-gap:checked+label:after {
     border: 2px solid #2196F3!important;
@@ -956,5 +971,9 @@ and (max-device-width : 480px) { /* portrait tablets, portrait iPad, landscape e
 #tagSuggestionOptions span {
   margin: 10px 20px 0px 20px;
   width: 110px;
+}
+
+.message button {
+  margin: 10px;
 }
 </style>

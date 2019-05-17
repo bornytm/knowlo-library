@@ -192,7 +192,6 @@ export default {
   }
 }
 </script>
-<!-- <style src="materialize-css/dist/css/materialize.css"></style> -->
 <style src="assets/materialize-subset.css"></style>
 <style src="flickity/dist/flickity.min.css"></style>
 <style src="leaflet/dist/leaflet.css"></style>
