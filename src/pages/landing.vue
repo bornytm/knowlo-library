@@ -5,7 +5,7 @@
       <br>
       <br>
       <h1 class=" center blue-text thin">knowlo</h1>
-      <div class="row center">
+      <div class=" center">
 
         <h4 style="margin-bottom:40px" class="header col s12 light">What's worth discussing?</h4>
 
