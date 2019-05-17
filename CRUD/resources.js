@@ -54,8 +54,7 @@ module.exports = function(app, db){
     if(parseInt(req.query.limit) > 50){
       req.query.limit = 50;
     }
-    console.log('in resource q')
-    console.log(req.query)
+
     var cypher = "MATCH (re:resource)-[:TAGGED_WITH]->(b:synSet)-[:IN_SET*0..3]->(synSet:synSet) "
            + "WITH distinct re, collect(synSet.uid) AS parentTags "
            + "WHERE all(tag IN {includedSets} WHERE tag IN parentTags) "              //  + "NOT synSet.uid IN {excludedSets} " // this doesn't work...
@@ -103,8 +102,7 @@ module.exports = function(app, db){
          if (typeof req.query.exclude === "undefined") {
              req.query.exclude = [];
          }
-         console.log('hi')
-         console.log(req.query)
+
         db.query(cypher, {
             includedSets: req.query.include || [],
             excludedSets: req.query.exclude || [],
@@ -112,10 +110,8 @@ module.exports = function(app, db){
             limit: parseInt(req.query.limit),
             language: 'en'
         }, function(err, result) {
-          console.log('back fro mq')
-          console.log(result)
+
       if (err) {console.log(err);res.status(500).send()};
-      console.log(result)
         // massage result for front end (collapse props onto core)...there's probably an alternative to iterating through all resources. Different schemea? Different query?
         for(rindex in result){
           for(pindex in result[rindex].properties){
@@ -253,7 +249,11 @@ module.exports = function(app, db){
             includedSets: req.query.include,
         }, function(err, result) {
       if (err) {console.log(err);res.status(500).send()};
-        res.send(result[0])
+        if (typeof result === 'undefined') {
+          res.status(500).send()
+        } else {
+          res.send(result[0])
+        }
       })
   }
 
