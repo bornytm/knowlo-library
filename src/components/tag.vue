@@ -22,27 +22,27 @@
   								<div class="rotater">
   									<div @click.stop="pin" class="mbtn mbtn-icon flexCenter" :class="{showPin: status.pinnedIcon, hide: hide.indexOf('pin')>-1 }">
   										<i class="fa fa-thumbtack" style="transform:rotate(-45deg)"></i>
-                      <q-tooltip :delay="500" :offset="[0, 0]" anchor="center left" self="center right">pin tag</q-tooltip>
+                      <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 0]" anchor="center left" self="center right">pin tag</q-tooltip>
   									</div>
   								</div>
   								<div  class="rotater">
   									<div @click="lens" class="mbtn mbtn-icon flexCenter" :class="{'showLens': status.lensIcon, hide: hide.indexOf('lens')>-1 }">
   										<i class="material-icons" style="margin-top:15px">more_horiz</i>
-                      <q-tooltip :delay="500" :offset="[0, 0]" anchor="center left" self="center right">pin tag</q-tooltip>
+                      <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 0]" anchor="center left" self="center right">pin tag</q-tooltip>
   									</div>
   								</div>
   								<div class="rotater">
   									<router-link :to="{ name: 'tag', params: { uid: tag.setID, name: tag.translation.name }}">
   										<div class="mbtn mbtn-icon flexCenter":class="{showInfo: status.infoIcon, hide: hide.indexOf('info')>-1 }">
   											<i class="fa fa-info" style="padding-right:10px;"></i>
-                        <q-tooltip :delay="500" :offset="[-15, 0]" anchor="center right" self="center left">tag page</q-tooltip>
+                        <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[-15, 0]" anchor="center right" self="center left">tag page</q-tooltip>
   										</div>
   									</router-link>
   								</div>
   								<div class="rotater">
   									<div @click="remove" class="mbtn mbtn-icon flexCenter" :class="{'showRemove': status.removeIcon, hide: hide.indexOf('remove')>-1 }">
   										<i class="fa fa-times"></i>
-                      <q-tooltip :delay="500" :offset="[0, 0]" anchor="center left" self="center right">remove tag</q-tooltip>
+                      <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 0]" anchor="center left" self="center right">remove tag</q-tooltip>
   									</div>
   								</div>
   								<!-- <div class="rotater">
@@ -53,13 +53,13 @@
   								<div class="rotater">
   									<div @click="include" class="mbtn mbtn-icon flexCenter" :class="{showPlus: status.includeIcon, hide: hide.indexOf('include')>-1 }">
   										<i class="fa fa-plus"></i>
-                      <q-tooltip :delay="500" :offset="[0, 0]" anchor="center left" self="center right">add tag</q-tooltip>
+                      <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 0]" anchor="center left" self="center right">add tag</q-tooltip>
   									</div>
   								</div>
   								<div class="rotater">
   									<div @click="focus" class="mbtn mbtn-icon flexCenter"  :class="{showFocus: status.focusIcon, hide: hide.indexOf('focus')>-1 }">
   										<i class="fa fa-crosshairs"></i>
-                      <q-tooltip :delay="500" :offset="[0, 0]" anchor="center left" self="center right">focus tag</q-tooltip>
+                      <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 0]" anchor="center left" self="center right">focus tag</q-tooltip>
   									</div>
   								</div>
 
@@ -133,6 +133,7 @@ import $ from 'jquery'
 export default {
   name: 'tag',
   props: {
+    settings: Object,
     tag: Object,
     display: String,
     hide: {

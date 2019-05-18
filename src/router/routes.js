@@ -28,6 +28,10 @@ const routes = [
       component: () => import('pages/legal.vue')
     },
     {
+      path: '/settings',
+      component: () => import('pages/settings.vue')
+    },
+    {
         path: '/:tagquery?',
         component: () => import('pages/explore.vue'),
         name: 'explore',

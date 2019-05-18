@@ -1,7 +1,7 @@
 <template>
 <div style='min-height:100vh;'>
   <!-- view for tag and resource page -->
-  <router-view :member='member' :tag-Query='tagQuery' v-on:add='addToQuery'></router-view>
+  <router-view :member='member' :tag-Query='tagQuery' :settings='settings' v-on:add='addToQuery'></router-view>
 
   <!-- <router-link :to="{ name: 'addResource'}">
   				add resource
@@ -32,7 +32,7 @@
         <!-- tag query  -->
         <div class=''>
           <isotope v-if="selectedPane === 'search'" style="min-height:150px" ref="tagQuery" :list="tagQuery" :options='{}' >
-            <tag v-for="tag in tagQuery" :key="tag.setID" :tag="tag" display="thumb" v-on:include="removeTag(tag.setID)" v-on:remove="removeTag(tag.setID)" v-on:focus="focus" v-on:lens="fetchContains" v-on:main="removeTag(tag.setID)">
+            <tag v-for="tag in tagQuery" :settings='settings' :key="tag.setID" :tag="tag" display="thumb" v-on:include="removeTag(tag.setID)" v-on:remove="removeTag(tag.setID)" v-on:focus="focus" v-on:lens="fetchContains" v-on:main="removeTag(tag.setID)">
             </tag>
           </isotope>
           <div v-if="tagQuery.length > 0" class="clear btn white waves-light" @click="$emit('clear')">
@@ -75,6 +75,7 @@
                   <tag
                   v-for="group, i in tagSuggestions"
                   v-on:main='selectSuggestionGroup(i)'
+                  :settings='settings'
                   :key="group.group[0].setID"
                   :tag="group.group[0]"
                   :display="'thumb'"
@@ -90,7 +91,7 @@
                 <flickity  v-if='show' id='suggestionSteps' ref='steps' key="steps" :options="suggestionSteps" class=" suggestionSteps">
                   <div v-for="step in tagSuggestions" class="suggestionGroupStep">
                     <isotope :ref='"suggestionBin" + step.group[0].setID' :list="step.contains" :options='{}'>
-                      <tag v-for="tag in step.contains" :key="tag.setID" :tag="tag" :display="'list'" v-on:main="addToQuery(tag)" v-on:include="addToQuery(tag)" v-on:exclude="addToQuery(tag)" v-on:focus="addToQuery(tag)" v-on:pin="addToQuery(tag)">
+                      <tag v-for="tag in step.contains" :key="tag.setID" :settings='settings' :tag="tag" :display="'list'" v-on:main="addToQuery(tag)" v-on:include="addToQuery(tag)" v-on:exclude="addToQuery(tag)" v-on:focus="addToQuery(tag)" v-on:pin="addToQuery(tag)">
                       </tag>
                     </isotope>
                   </div>
@@ -102,6 +103,7 @@
                     <div id='suggestionNav' class=" suggestionNav ">
                       <tag
                         v-for="tag in tagSuggestions"
+                        :settings='settings'
                         :key="tag.setID"
                         :tag="tag"
                         :display="'thumb'"
@@ -118,7 +120,7 @@
             <!-- suggestions un-grouped iso -->
             <div v-if="' none '.indexOf(suggestionDisplay) > -1">
               <isotope ref="together" :list="tagSuggestions" :options='{}' >
-                <tag v-for="tag in tagSuggestions" :key="tag.setID" :tag="tag" :display="'thumb'" v-on:main="addToQuery(tag)" v-on:include="addToQuery(tag)" v-on:exclude="addToQuery(tag)" v-on:focus="addToQuery(tag)" v-on:pin="addToQuery(tag)">
+                <tag v-for="tag in tagSuggestions" :key="tag.setID" :tag="tag" :settings='settings' :display="'thumb'" v-on:main="addToQuery(tag)" v-on:include="addToQuery(tag)" v-on:exclude="addToQuery(tag)" v-on:focus="addToQuery(tag)" v-on:pin="addToQuery(tag)">
                 </tag>
               </isotope>
             </div>
@@ -137,26 +139,26 @@
         </span>
         <span v-else>
 				<span @click.stop.prevent="flipViewed" class="left viewBtn" :class="{'fade': !showViewed}" ><i class="material-icons ">remove_red_eye</i>
-          <q-tooltip :delay="500" :offset="[0, 5]">show / hide viewed resources</q-tooltip>
+          <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">show / hide viewed resources</q-tooltip>
         </span>
         <span class="viewBtn"  @click.stop.prevent="changeDisplay('list')"><i class="material-icons">view_list</i>
-         <q-tooltip :delay="500" :offset="[0, 5]">List view</q-tooltip>
+         <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">List view</q-tooltip>
         </span>
         <span class="viewBtn" @click.stop.prevent="changeDisplay('card')"><i class="material-icons">dashboard</i>
-         <q-tooltip :delay="500" :offset="[0, 5]">Grid view</q-tooltip>
+         <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">Grid view</q-tooltip>
         </span>
         <span class="viewBtn" @click.stop.prevent="changeDisplay('thumb')"><i class="material-icons">dialpad</i>
-          <q-tooltip :delay="500" :offset="[0, 5]">Icon view</q-tooltip>
+          <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">Icon view</q-tooltip>
         </span>
         <span class='right'>
 					<a @click.stop="" class="dropdown-button viewBtn orderby" >
             <span class="dropdown-button" data-activates='order' data-hover="true" data-alignment='right'>
               {{orderby}}
-              <q-tooltip :delay="500" :offset="[0, 5]">order by</q-tooltip>
+              <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">order by</q-tooltip>
             </span>
             <i @click="descending = !descending; setOrderAndDescending(orderby); fetchResources()" class="material-icons " :class="{'flipVert': !descending }">
               sort
-              <q-tooltip :delay="500" :offset="[0, 5]">ascending / descending</q-tooltip>
+              <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">ascending / descending</q-tooltip>
             </i>
           </a>
         <ul id='order' class='dropdown-content sort'>
@@ -177,11 +179,12 @@
           <div>Showing {{resources.length}} of {{resourcesRelated}}</div>
           <div v-if='member.uid'><span v-if="showViewed">Including</span><span v-else>Excluding</span> {{resourcesViewed}} viewed</div>
         </div>
-        <tag-suggestions v-if="selectedPane ==='resources'" :tagQuery="tagQuery" v-on:add="addToQuery"></tag-suggestions>
+        <tag-suggestions v-if="selectedPane ==='resources'" :settings='settings' :tagQuery="tagQuery" v-on:add="addToQuery"></tag-suggestions>
 
         <!-- <transition name="fade">
 							<div>
 								<tag v-for="tag in base"
+                  :settings='settings'
 									:tag="tag"
 									:display="'thumb'"
 									>
@@ -193,7 +196,7 @@
           <div id='crossSectionNav' class=" crossSectionNav ">
             <!-- flick navigation for isotope containers -->
             <div v-for="step in crossSection">
-              <tag :tag="step" :display="'thumb'">
+              <tag :tag="step" :display="'thumb'" :settings='settings'>
               </tag>
             </div>
           </div>
@@ -208,6 +211,7 @@
                 <div v-for="step in crossSection" class="">
                   <isotope :ref='"resourceBin" + step.setID' :list="resources" :options='{}'>
                     <resource :key="re.resource.uid"
+                      :settings='settings'
                       v-for="re in resources"
                       v-if="re.tagIDs.includes(step.setID)"
                       :re="re"
@@ -227,6 +231,7 @@
               <isotope ref="resourceBin" :list="resources" :options='{}'>
                 <resource v-for="re in resources"
                   :key="re.resource.uid"
+                  :settings='settings'
                   :re="re"
                   :display="resourceDisplay"
                   v-on:changedDisplay="layout"
@@ -291,7 +296,7 @@ export default {
   name: 'explore',
   components: { tag, Notify, resource, search, Spinner, isotope, Flickity, QBtn, QIcon, QRadio, tagSuggestions },
   directives: {infiniteScroll, BackToTop},
-  props: ['tagQuery', 'member'],
+  props: ['tagQuery', 'member','settings'],
   data () {
     return {
       db: null, // search results to display - array of material objects

@@ -74,7 +74,8 @@ module.exports = function (ctx) {
         'QItem',
         'QItemMain',
         'QItemSide',
-        'QTooltip'
+        'QTooltip',
+        'QToggle'
       ],
       directives: [
         'Ripple'

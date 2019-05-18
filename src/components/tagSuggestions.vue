@@ -13,6 +13,7 @@
     <tag v-if='displayed === "groups"' v-for="tag, i in tags"
       :tag="tag"
       :key="tag.tag.uid+i"
+      :settings='settings'
       v-on:include="addTag(tag)"
       v-on:pin="addTag(tag)"
       v-on:focus="addTag(tag)"
@@ -24,6 +25,7 @@
     <tag v-else
       :tag="tag"
       :key="tag.tag.uid+i"
+      :settings='settings'
       v-on:include="addTag(tag)"
       v-on:pin="addTag(tag)"
       v-on:focus="addTag(tag)"
@@ -43,7 +45,7 @@ import {QRadio, QBtn, QIcon} from 'quasar'
 export default {
   name: 'tagSuggestions',
   components: { tag, isotope, QRadio, QBtn, QIcon },
-  props: ['tagQuery'],
+  props: ['tagQuery', 'settings'],
   data () {
     return {
       show: true,

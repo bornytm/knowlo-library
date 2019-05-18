@@ -46,6 +46,7 @@
     v-on:updateTagQuery="updateTagQuery"
     :tag-query="tagQuery"
     :member="member"
+    :settings="settings"
     style="padding-top:50px" />
   </transition>
 
@@ -80,7 +81,10 @@ export default {
       member: {
         uid: null
       }, // id and info for member if logged in, uid null if not
-      tagQuery: [] // array of tag objects to be queried
+      tagQuery: [], // array of tag objects to be queried
+      settings: { // user setting defaults
+      //   showToolTips: undefined
+      }
     }
   },
   methods: {
@@ -116,6 +120,11 @@ export default {
     // get tag query
     if (Cookies.get('tagQuery')) {
       this.tagQuery = Cookies.getJSON('tagQuery')
+    }
+
+    // get settings
+    if (Cookies.get('settings')) {
+      this.settings = Cookies.getJSON('settings')
     }
 
     // TODO: use this...
