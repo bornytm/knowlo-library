@@ -1,5 +1,5 @@
 <template>
-<div id="q-app">
+<div id="q-app" >
 
   <!-- TODO: make component - top nav -->
   <div id="nav-slide" class="navbar-fixed">
@@ -44,6 +44,7 @@
     <router-view
     v-on:clear="tagQuery = []"
     v-on:updateTagQuery="updateTagQuery"
+    @updateSettings="updateSettings"
     :tag-query="tagQuery"
     :member="member"
     :settings="settings"
@@ -57,7 +58,7 @@
     </div>
     <div class="footer-copyright">
       <div class="container center">knowlo</div>
-      <a style="margin-left:20px; margin-top:5px; position:absolute;" href="https://github.com/bornytm/knowlo-landing"><img style="width:25px" src="statics/github.png"></a>
+      <a style="margin-left:20px; margin-top:5px; position:absolute;" href="https://github.com/bornytm/knowlo-library"><img style="width:25px" src="statics/github.png"></a>
     </div>
   </footer>
 
@@ -106,6 +107,10 @@ export default {
       }, response => {
         Materialize.toast('Something went wrong...are you online?', 4000)
       })
+    },
+    updateSettings (settingsObj) {
+      this.settings = settingsObj
+      Cookies.set('settings', settingsObj)
     }
   },
   mounted () {

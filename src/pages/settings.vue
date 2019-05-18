@@ -20,7 +20,8 @@ export default {
   watch: {
     settings: {
       handler: function(val) {
-        Cookies.set('settings', this.settings)
+        console.log('going to emit')
+        this.$emit('updateSettings', this.settings)
       },
       deep: true
     }

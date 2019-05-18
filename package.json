@@ -18,10 +18,10 @@
     "body-parser": "^1.17.1",
     "chart.js": "^2.7.1",
     "express": "^4.16.4",
-    "express-firebase-middleware": "^1.0.0",
-    "firebase": "^5.11.1",
-    "firebase-admin": "^5.8.0",
-    "firebaseui": "^3.6.0",
+    "express-firebase-middleware": "^2.0.0",
+    "firebase": "^6.0.2",
+    "firebase-admin": "^7.3.0",
+    "firebaseui": "^4.0.0",
     "headroom.js": "^0.9.4",
     "jquery": "^3.1.1",
     "js-cookie": "^2.1.3",
@@ -37,7 +37,7 @@
     "vue-headroom": "^0.3.0",
     "vue-infinite-scroll": "^2.0.2",
     "vue-simple-spinner": "^1.2.8",
-    "vuefire": "^1.4.0",
+    "vuefire": "^1.4.5",
     "vueisotope": "^3.1.1"
   },
   "devDependencies": {

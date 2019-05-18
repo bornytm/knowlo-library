@@ -103,7 +103,7 @@
           <ul :id='tag.setID' class='dropdown-content  tag-dropdown'>
             <li @click="focus"><a><i class="fa fa-crosshairs"></i>Focus</a></li>
             <li @click="include"><a><i class="fa fa-plus"></i>Add</a></li>
-            <li @click="pin"><a><i class="fa fa-thumb-tack"></i>Pin</a></li>
+            <li @click="pin"><a><i class="fa fa-thumbtack"></i>Pin</a></li>
             <!-- <li @click="lens"><a><i class="fa fa-crosshairs"></i>Cross Section</a></li> -->
             <li @click="remove"><a><i class="fa fa-times"></i>Remove</a></li>
             <li @click=""><router-link :to="{ name: 'tag', params: { uid: tag.setID, name: tag.translation.name }}"><i class="fa fa-info"></i>tag Page</router-link></li>

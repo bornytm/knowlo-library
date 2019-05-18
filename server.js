@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-// var admin = require('firebase-admin');
+var admin = require('firebase-admin');
 var serveStatic = require('serve-static');
 var firebaseMiddleware = require('express-firebase-middleware');
 
@@ -19,7 +19,7 @@ if (process.env.GRAPHENEDB_URL) {
     pass: 'dev'
   });
 }
-
+//
 // admin.initializeApp({
 //   credential: admin.credential.cert({
 //     "project_id": "knowlo-952cc",

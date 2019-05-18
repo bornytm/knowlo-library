@@ -257,7 +257,7 @@
                 </q-btn>
               </router-link>
               <q-btn @click="random" color='primary' round >
-                <i class="far fa-random fa-2x "></i>
+                <i class="far fa-random "></i>
               </q-btn>
             </div>
           </div>
@@ -570,6 +570,7 @@ export default {
       })
     },
     fetchResources (infinite) {
+      console.log('gonna fetch?')
       if (!this.loadingResources && !(infinite && this.resources.length === 0)) { // don't fetch if initial resrouces hadn't had time to load to avoid ending up with top resources twice
         this.loadingResources = true
         this.endOfResources = false
@@ -800,7 +801,7 @@ export default {
         this.suggestionDisplay = 'disciplines'
       }
       Cookies.set('tagQuery', val)
-      if (this.loginCheck) { // don't fetch before checking member login
+      // if (this.loginCheck) { // don't fetch before checking member login
         this.$nextTick(() => {
           if (this.selectedPane === 'resources') {
             this.fetchResources()
@@ -809,7 +810,7 @@ export default {
           }
           this.fetchResourceQuantity()
         })
-      }
+      // }
     },
     suggestionDisplay (val, x) {
       Cookies.set('suggestionDisplay', val)
