@@ -18,7 +18,7 @@
     <!--  youtube/vimeo -->
     <div v-if='resource.displayType=="embed"' class="vid-container-container">
       <div class="video-container ">
-        <iframe :src="'http://youtube.com/embed/'+resource.ytID"></iframe>
+        <iframe :src="'https://youtube.com/embed/'+resource.ytID"></iframe>
       </div>
     </div>
 
@@ -121,7 +121,7 @@
           </q-btn>
         </div>
         <isotope v-else ref="discussionBin" :list="discussion" :options='discussionIsotope()' id="container">
-          <resource :key="re.resource.uid" v-for="re in discussion" :re="re" :class="{'fullWidth': discussionDisplay=='list'}" :display="discussionDisplay">
+          <resource :key="re.resource.uid" :settings="settings" v-for="re in discussion" :re="re" :class="{'fullWidth': discussionDisplay=='list'}" :display="discussionDisplay">
           </resource>
         </isotope>
         <q-btn color='primary' round @click="addResourceType='discussion'; addResource = true;" >
@@ -164,6 +164,7 @@
         <isotope ref='relatedBin' :list="related" :options='{}'>
           <resource
           v-for="re in related"
+          :settings="settings"
           v-on:selected="toTop"
           v-on:changedDisplay="layout"
           :re="re"
@@ -192,7 +193,7 @@ import {BackToTop, scroll, AppFullscreen, QTabs, QTab, QBtn, QIcon} from 'quasar
 const { setScrollPosition } = scroll
 
 export default {
-  props: ['member'],
+  props: ['member','settings'],
   name: 'resourcev',
   components: { isotope, search, tag, resource, Flickity, addResource, QTabs, QTab, QBtn, QIcon },
   directives: {BackToTop},

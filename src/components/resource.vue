@@ -76,10 +76,10 @@
     >
       <div class="">
 				<i  @click="ratingDisplay='global'" @mouseenter="ratingDisplay='global'" class="far fa-lg fa-globe-americas rating" :class="{'selected': ratingDisplay==='global'}">
-          <q-tooltip :disable="!settings.showToolTips" :delay="500" :offset="[0, 5]">global rating</q-tooltip>
+          <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">global rating</q-tooltip>
         </i>
 				<i  @click="ratingDisplay='member'" @mouseenter="ratingDisplay='member'" class="fa fa-lg fa-user rating" :class="{'selected': ratingDisplay==='member'}">
-          <q-tooltip :disable="!settings.showToolTips" :delay="500" :offset="[0, 5]">your rating</q-tooltip>
+          <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">your rating</q-tooltip>
         </i>
         <span class='right'><span class='text-orange'> Q<span v-if='display === "list"'>uality</span>: </span> {{displayQuality.toString().substring(0, 4)}} <span class='text-blue'>C<span v-if='display === "list"'>omplexity</span>: </span> {{displayComplexity.toString().substring(0, 4)}}</span>
 			</div>
