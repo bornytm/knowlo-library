@@ -15,7 +15,7 @@ if (process.env.GRAPHENEDB_URL) {
 } else {
   var db = require("seraph")({
     server: "http://localhost:7474",
-    user: 'kdev',
+    user: 'neo4j',
     pass: 'dev'
   });
 }

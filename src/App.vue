@@ -5,7 +5,7 @@
   <div id="nav-slide" class="navbar-fixed">
     <nav class=''>
       <div class="nav-wrapper">
-        <router-link to="/" class="brand-logo center thin">knowlo library</router-link>
+        <router-link to="/" class="brand-logo center thin">knowlo <span class="gt-sm">library</span></router-link>
         <ul class="left ">
           <li><a data-activates="slide-out" class="navbar-collapse show-on-large"><i class="material-icons">menu</i></a></li>
         </ul>
