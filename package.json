@@ -10,7 +10,8 @@
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
     "start": "node server.js",
-    "devd": "node server.js | quasar dev"
+    "devd": "node server.js | quasar dev",
+    "build": "quasar build"
   },
   "dependencies": {
     "@quasar/app": "^1.0.4",

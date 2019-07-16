@@ -55,7 +55,7 @@ module.exports = function(app, db){
       req.query.limit = 50;
     }
 
-    var cypher = "MATCH (re:resource)-[:TAGGED_WITH]->(b:synSet)-[:IN_SET*0..3]->(synSet:synSet) "
+    var cypher = "MATCH (re:resource)-[:TAGGED_WITH]->(b:synSet)-[:IN_SET*0..2]->(synSet:synSet) "
            + "WITH distinct re, collect(synSet.uid) AS parentTags "
            + "WHERE all(tag IN {includedSets} WHERE tag IN parentTags) "              //  + "NOT synSet.uid IN {excludedSets} " // this doesn't work...
            + "MATCH (re)-[:TAGGED_WITH]->(synSet:synSet)<-[synR:IN_SET]-(syn:tag)-[tlang:HAS_TRANSLATION]->(tlangNode:translation) "
@@ -102,7 +102,8 @@ module.exports = function(app, db){
          if (typeof req.query.exclude === "undefined") {
              req.query.exclude = [];
          }
-
+        console.log(cypher)
+        console.log( req.query.include)
         db.query(cypher, {
             includedSets: req.query.include || [],
             excludedSets: req.query.exclude || [],
@@ -135,7 +136,7 @@ module.exports = function(app, db){
     if(parseInt(req.query.limit) > 50){
       req.query.limit = 50;
     }
-    var cypher = "MATCH (re:resource)-[:TAGGED_WITH]->(b:synSet)-[:IN_SET*0..3]->(synSet:synSet) "
+    var cypher = "MATCH (re:resource)-[:TAGGED_WITH]->(b:synSet)-[:IN_SET*0..2]->(synSet:synSet) "
            + "WITH distinct re, collect(synSet.uid) AS parentTags "
            +"WHERE all(tag IN {includedSets} WHERE tag IN parentTags) "
           //  + " AND NOT synSet.uid IN {excludedSets} " // this doesn't work...
@@ -214,7 +215,7 @@ module.exports = function(app, db){
 
   function memberCount(req, res){
 
-    var cypher = "MATCH (re:resource)-[:TAGGED_WITH]->(b:synSet)-[:IN_SET*0..3]->(synSet:synSet) "
+    var cypher = "MATCH (re:resource)-[:TAGGED_WITH]->(b:synSet)-[:IN_SET*0..2]->(synSet:synSet) "
            + "WITH distinct re, collect(synSet.uid) AS parentTags "
            + "WHERE all(tag IN {includedSets} WHERE tag IN parentTags) "
            + "WITH collect(re.uid) as ids, count(re) as relatedResources  "
@@ -236,7 +237,7 @@ module.exports = function(app, db){
   }
 
   function count(req, res){
-    var cypher = "MATCH (re:resource)-[:TAGGED_WITH]->(b:synSet)-[:IN_SET*0..3]->(synSet:synSet) "
+    var cypher = "MATCH (re:resource)-[:TAGGED_WITH]->(b:synSet)-[:IN_SET*0..2]->(synSet:synSet) "
            + "WITH distinct re, collect(synSet.uid) AS parentTags "
            + "WHERE all(tag IN {includedSets} WHERE tag IN parentTags) "
            + "RETURN count(re) as relatedResources"
