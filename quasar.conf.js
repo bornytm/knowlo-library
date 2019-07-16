@@ -10,6 +10,7 @@ module.exports = function (ctx) {
       'app.styl'
     ],
     extras: [
+      'roboto-font',
       'material-icons' // optional, you are not bound to it
       // 'ionicons-v4',
       // 'mdi-v3',
@@ -71,15 +72,23 @@ module.exports = function (ctx) {
         'QList',
         // 'QListHeader',
         'QItem',
+        'QItemSection',
+        'QItemLabel',
         // 'QItemMain',
         // 'QItemSide',
         'QPageScroller',
+        'QInfiniteScroll',
         'QTooltip',
         'QInput',
         'QSlider',
         'QTabs',
         'QTab',
-        'QToggle'
+        'QToggle',
+        'QAvatar',
+        'QChip',
+        'QBtnGroup',
+        'QBtnDropdown',
+        'QRadio'
       ],
       directives: [
         'Ripple'

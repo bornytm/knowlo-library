@@ -15,7 +15,7 @@
         <search exclude="" input-id="mainSearch" holder-text="Search" v-on:select="addToQuery"></search>
 
         <transition-group name='fade'>
-          <span v-for="tag in tagQuery" @click.stop.prevent='removeTag(tag.setID)' :key="tag.setID">
+          <span class="gt-xs" v-for="tag in tagQuery" @click.stop.prevent='removeTag(tag.setID)' :key="tag.setID">
   							<img v-if="tag.tag.iconURL" class='circle hoverable' style='height:40px;width:40px;margin-right:10px;padding:3px;' :src="tag.tag.iconURL" />
   							<span v-else class='circle hoverable' style='text-align:center;padding:10px;width:40px;width:40px;position:absolute;font-size;2em' >{{tag.translation.name[0]}}</span>
           </span>
@@ -141,14 +141,17 @@
 				<span @click.stop.prevent="flipViewed" class="left viewBtn" :class="{'fade': !showViewed}" ><i class="material-icons ">remove_red_eye</i>
           <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">show / hide viewed resources</q-tooltip>
         </span>
-        <span class="viewBtn"  @click.stop.prevent="changeDisplay('list')"><i class="material-icons">view_list</i>
-         <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">List view</q-tooltip>
-        </span>
-        <span class="viewBtn" @click.stop.prevent="changeDisplay('card')"><i class="material-icons">dashboard</i>
-         <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">Grid view</q-tooltip>
-        </span>
-        <span class="viewBtn" @click.stop.prevent="changeDisplay('thumb')"><i class="material-icons">dialpad</i>
-          <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">Icon view</q-tooltip>
+        <!-- display options select -->
+        <span class="gt-xs">
+          <span class="viewBtn"  @click.stop.prevent="changeDisplay('list')"><i class="material-icons">view_list</i>
+           <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">List view</q-tooltip>
+          </span>
+          <span class="viewBtn" @click.stop.prevent="changeDisplay('card')"><i class="material-icons">dashboard</i>
+           <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">Grid view</q-tooltip>
+          </span>
+          <span class="viewBtn" @click.stop.prevent="changeDisplay('thumb')"><i class="material-icons">dialpad</i>
+            <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">Icon view</q-tooltip>
+          </span>
         </span>
         <span class='right'>
 					<a @click.stop="" class="dropdown-button viewBtn orderby" >
@@ -227,13 +230,13 @@
 
           <!-- results all together -->
           <transition name="fade">
-            <div v-if="!crossSection" >
-            <!-- v-infinite-scroll="infinite"
+            <div v-if="!crossSection"
+            v-infinite-scroll="infinite"
             infinite-scroll-disabled="busy"
             infinite-scroll-distance="10"
             infinite-scroll-throttle-delay="1000"
             infinite-scroll-immediate-check="false"
-            > -->
+            >
               <isotope ref="resourceBin" :list="resources" :options='{}'>
                 <resource v-for="re in resources"
                   :key="re.resource.uid"
@@ -268,15 +271,6 @@
             </div>
           </div>
 
-          <!-- <q-btn
-            v-back-to-top.animate="{offset: 500, duration: 200}"
-            round
-            color="primary"
-            class="fixed-bottom-right animate-pop"
-            style="margin: 0 15px 15px 0; z-index:23;"
-          >
-            <q-icon name="keyboard_arrow_up" />
-          </q-btn> -->
           <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
            <q-btn fab icon="keyboard_arrow_up" color="primary" />
          </q-page-scroller>
@@ -303,7 +297,7 @@ import Flickity from 'vue-flickity'
 export default {
   name: 'explore',
   components: { tag, resource, search, Spinner, isotope, Flickity, tagSuggestions },
-  // directives: {infiniteScroll},
+  directives: {infiniteScroll},
   props: ['tagQuery', 'member','settings',],
   data () {
     return {

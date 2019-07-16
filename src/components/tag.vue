@@ -5,6 +5,15 @@
   		}"
   	>
 
+      <div  @click="main" v-if="display==='chip' ">
+        <q-chip class='hoverable' >
+          <q-avatar>
+            <img :src="tag.tag.iconURL">
+          </q-avatar>
+          {{tag.translation.name}}
+        </q-chip>
+      </div>
+
   		<div v-if="display==='thumb' ">
   			<span @mouseleave="leave()">
   				<div class="tagWidth">
@@ -402,7 +411,6 @@ export default {
   word-break: break-word;
 }
 .nameholder{
-  height: 43px;
   display: table;
   margin-top: -10px;
 }
@@ -412,7 +420,6 @@ export default {
 }
 .tagWidth {
   width: 100px;
-  margin-bottom: 10px;
 }
 /*increase hover target for info icon*/
 .fa-info {
