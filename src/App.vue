@@ -74,6 +74,7 @@ import Cookies from 'js-cookie'
 import firebase from 'firebase'
 import firebaseui from 'firebaseui'
 import sidemenu from 'components/sideMenu'
+
 export default {
   name: 'app',
   components: { sidemenu },

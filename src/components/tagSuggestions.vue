@@ -193,7 +193,7 @@ export default {
   min-height: 150px;
   margin-left: 30px;
 }
-.options div {
+.options {
   margin-left: 30px;
   margin-right: 10px;
   height: 40px;

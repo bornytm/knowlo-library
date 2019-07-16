@@ -113,12 +113,10 @@
 <script>
 import Materialize from 'materialize-css'
 import $ from 'jquery'
-import { QSlider, QCollapsible, QChip, QInput } from 'quasar'
 // import addResource from '@/components/addResource'
 
 export default {
   name: 'resource',
-  components: { QSlider, QCollapsible, QChip, QInput },
   props: {
     re: Object,
     display: String,
@@ -242,6 +240,10 @@ export default {
 </script>
 
 <style>
+.q-slider {
+  margin-left: 7px;
+  margin-right: 7px;
+}
 .vote {
   padding-left: 5px;
   padding-right: 5px;

@@ -2,19 +2,18 @@
 
 module.exports = function (ctx) {
   return {
-    // app plugins (/src/plugins)
-    plugins: [
+    // app boot (/src/boot)
+    boot: [
       'axios'
     ],
     css: [
       'app.styl'
     ],
     extras: [
-      ctx.theme.mat ? 'roboto-font' : null,
       'material-icons' // optional, you are not bound to it
-      // 'ionicons',
-      // 'mdi',
-      // 'fontawesome'
+      // 'ionicons-v4',
+      // 'mdi-v3',
+      // 'fontawesome-v5'
     ],
     supportIE: false,
     build: {
@@ -61,8 +60,8 @@ module.exports = function (ctx) {
     framework: {
       components: [
         'QLayout',
-        'QLayoutHeader',
-        'QLayoutDrawer',
+        // 'QLayoutHeader',
+        // 'QLayoutDrawer',
         'QPageContainer',
         'QPage',
         'QToolbar',
@@ -70,11 +69,16 @@ module.exports = function (ctx) {
         'QBtn',
         'QIcon',
         'QList',
-        'QListHeader',
+        // 'QListHeader',
         'QItem',
-        'QItemMain',
-        'QItemSide',
+        // 'QItemMain',
+        // 'QItemSide',
+        'QPageScroller',
         'QTooltip',
+        'QInput',
+        'QSlider',
+        'QTabs',
+        'QTab',
         'QToggle'
       ],
       directives: [
@@ -84,8 +88,7 @@ module.exports = function (ctx) {
       plugins: [
         'Notify'
       ]
-      // iconSet: ctx.theme.mat ? 'material-icons' : 'ionicons'
-      // i18n: 'de' // Quasar language
+      // lang: 'de' // Quasar language
     },
     // animations: 'all' --- includes all animations
     animations: [],

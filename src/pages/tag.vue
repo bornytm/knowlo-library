@@ -22,7 +22,7 @@
   <div class="tagMeta">
     <div class="metaNav tagNav">
       <q-tabs>
-        <q-tab @click="selectSection(i)" v-for="step, i in tagSection" :key="i" slot="title" :label="step" />
+        <q-tab @click="selectSection(i)" v-for="step, i in tagSection" :key="i" :label="step" />
       </q-tabs>
     </div>
     <!-- isotope contianers -->
@@ -475,5 +475,8 @@ and (max-width : 767px) {
   .stepContainer {
     width: 80vw;
   }
+}
+.metaNav {
+  color:white;
 }
 </style>

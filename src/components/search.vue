@@ -12,12 +12,12 @@
 <script>
 import $ from 'jquery'
 import Materialize from 'materialize-css'
-import { QInput } from 'quasar'
+// import { QInput } from 'quasar'
 // adapted from  http://stackoverflow.com/a/42757285/2061741
 // TODO: there is a LOT of direct DOM manipulation here that probably ought to be cleaned up.
 export default {
   props: ['ajaxUrl', 'inputId', 'exclude', 'holderText'],
-  components: { QInput },
+  // components: { QInput },
   name: 'search',
   data: () => {
     return {

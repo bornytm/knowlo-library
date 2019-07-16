@@ -202,7 +202,7 @@
           </div>
         </div>
 
-        <div class="resourceCont">
+        <q-layout class="resourceCont">
           <transition name="fade">
             <!-- results by cross section -->
             <div v-if="crossSection">
@@ -227,7 +227,13 @@
 
           <!-- results all together -->
           <transition name="fade">
-            <div v-if="!crossSection" v-infinite-scroll="infinite" infinite-scroll-disabled="busy" infinite-scroll-distance="10" infinite-scroll-throttle-delay="1000" infinite-scroll-immediate-check="false">
+            <div v-if="!crossSection" >
+            <!-- v-infinite-scroll="infinite"
+            infinite-scroll-disabled="busy"
+            infinite-scroll-distance="10"
+            infinite-scroll-throttle-delay="1000"
+            infinite-scroll-immediate-check="false"
+            > -->
               <isotope ref="resourceBin" :list="resources" :options='{}'>
                 <resource v-for="re in resources"
                   :key="re.resource.uid"
@@ -262,7 +268,7 @@
             </div>
           </div>
 
-          <q-btn
+          <!-- <q-btn
             v-back-to-top.animate="{offset: 500, duration: 200}"
             round
             color="primary"
@@ -270,8 +276,11 @@
             style="margin: 0 15px 15px 0; z-index:23;"
           >
             <q-icon name="keyboard_arrow_up" />
-          </q-btn>
-        </div>
+          </q-btn> -->
+          <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
+           <q-btn fab icon="keyboard_arrow_up" color="primary" />
+         </q-page-scroller>
+       </q-layout>
       </div>
     </li>
   </ul>
@@ -290,13 +299,12 @@ import infiniteScroll from 'vue-infinite-scroll'
 import Spinner from 'vue-simple-spinner'
 import isotope from 'vueisotope'
 import Flickity from 'vue-flickity'
-import {QBtn, QIcon, BackToTop, QRadio, Notify} from 'quasar'
 
 export default {
   name: 'explore',
-  components: { tag, Notify, resource, search, Spinner, isotope, Flickity, QBtn, QIcon, QRadio, tagSuggestions },
-  directives: {infiniteScroll, BackToTop},
-  props: ['tagQuery', 'member','settings'],
+  components: { tag, resource, search, Spinner, isotope, Flickity, tagSuggestions },
+  // directives: {infiniteScroll},
+  props: ['tagQuery', 'member','settings',],
   data () {
     return {
       db: null, // search results to display - array of material objects

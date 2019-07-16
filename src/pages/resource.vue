@@ -56,7 +56,7 @@
     <div class="metaNav" >
       <!-- <i @click="toggleFullScreen()" class="material-icons left">fullscreen</i> -->
       <q-tabs >
-        <q-tab @click="selectSection(i)" v-for="step, i in resourceSection" :key="i" slot="title" :label="step" :name="step"/>
+        <q-tab @click="selectSection(i)" v-for="step, i in resourceSection" :key="i" :label="step" :name="step"/>
       </q-tabs>
       <!-- <q-btn @click='' color='secondary'>delete</q-btn>{{selectedTab}} -->
     </div>
@@ -189,14 +189,12 @@ import search from 'components/search'
 import isotope from 'vueisotope'
 import Flickity from 'vue-flickity'
 import L from 'leaflet'
-import {BackToTop, scroll, AppFullscreen, QTabs, QTab, QBtn, QIcon} from 'quasar'
 const { setScrollPosition } = scroll
 
 export default {
   props: ['member','settings'],
   name: 'resourcev',
-  components: { isotope, search, tag, resource, Flickity, addResource, QTabs, QTab, QBtn, QIcon },
-  directives: {BackToTop},
+  components: { isotope, search, tag, resource, Flickity, addResource},
   data: function () {
     return {
       resource: {
@@ -448,6 +446,10 @@ export default {
 
       // tell leaflet that the map is exactly as big as the image
       map.setMaxBounds(bounds)
+
+      // remove attribution display
+      $('.leaflet-control-attribution').remove();
+
     },
     markViewed: function () {
       this.$http.put('/api/auth/resource/' + this.$route.params.uid + '/viewed').then(response => {
@@ -474,7 +476,7 @@ export default {
       outDuration: 225,
       constrainWidth: false, // Does not change width of dropdown to that of the activator
       hover: true, // Activate on hover
-      gutter: 0, // Spacing from edge
+      // gutter: 0, // Spacing from edge
       belowOrigin: false, // Displays dropdown below the button
       alignment: 'right', // Displays dropdown with edge aligned to the left of button
       stopPropagation: false // Stops event propagation
@@ -516,6 +518,9 @@ export default {
 </script>
 
 <style>
+.metaNav {
+  color: white;
+}
 .resource-container {
   height: auto;
   width: 100vw;
