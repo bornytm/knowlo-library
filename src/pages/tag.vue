@@ -98,7 +98,7 @@ import { QTabs, QTab, QBtn, QIcon } from 'quasar'
 export default {
   name: 'tagv',
   props: ['tagQuery', 'member'],
-  components: { isotope, addResource, search, tag, resource, Flickity, QTabs, QTab, QBtn, QIcon },
+  components: { isotope, addResource, search, tag, resource, Flickity },
   data: function () {
     return {
       tag: {

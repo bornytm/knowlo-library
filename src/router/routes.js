@@ -33,7 +33,7 @@ const routes = [
     },
     {
         path: '/:tagquery?',
-        component: () => import('pages/explore.vue'),
+        component: () => import('pages/explore-simple.vue'),
         name: 'explore',
         children: [
           { path: '/m/:uid', component: () => import('pages/member.vue'), name: 'member' },

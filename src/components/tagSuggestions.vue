@@ -1,15 +1,30 @@
 <template>
-  <div>
-  <span class='options'>
+  <div class='all'>
+  <div class='options'>
     <!-- <q-radio v-model="displayed" val="base" label="Base Tags" /> -->
     <q-radio v-model="displayed" val="tags" label="Tags" />
     <q-radio v-model="displayed" val="groups" label="Groups" />
     <!-- <q-radio v-model="displayed" val="disciplines" label="disciplines" /> -->
-  </span>
+  </div>
   <q-btn class='back' color='primary' small flat round v-show='displayed === "subGroup"' @click="showAllGroups">
     <q-icon name='arrow back' />
   </q-btn>
-  <isotope  v-if='show' class='rtags' ref='rtags' :list="tags" :options="{}">
+
+  <transition type='fade'>
+    <flick ref='sugg' v-if='show':options="sugg" id='sugg' class="sugg">
+
+      <div v-for="tag, i in tags">
+        <tag :tag="tag"
+        :display="'thumb'"
+        :settings='settings'
+        :key="tag.tag.uid+i"
+        >
+        </tag>
+      </div>
+    </flick>
+  </transition>
+
+  <!-- <isotope  v-if='show' class='rtags' ref='rtags' :list="tags" :options="{}">
     <tag v-if='displayed === "groups"' v-for="tag, i in tags"
       :tag="tag"
       :key="tag.tag.uid+i"
@@ -21,7 +36,7 @@
       v-on:main="showGroup(i)"
       display='thumb'>
     </tag>
-    <!-- TODO include lens option above... -->
+
     <tag v-else
       :tag="tag"
       :key="tag.tag.uid+i"
@@ -33,18 +48,20 @@
       v-on:main="tagQuery.push(tag)"
       display='thumb'>
     </tag>
-  </isotope>
+  </isotope> -->
   </div>
 </template>
 
 <script>
 import tag from 'components/tag'
+import flick from 'components/flick'
 import isotope from 'vueisotope'
 import {QRadio, QBtn, QIcon} from 'quasar'
+// import Flickity from 'vue-flickity'
 
 export default {
   name: 'tagSuggestions',
-  components: { tag, isotope, QRadio, QBtn, QIcon },
+  components: { tag, isotope, flick },
   props: ['tagQuery', 'settings'],
   data () {
     return {
@@ -54,10 +71,35 @@ export default {
       type: 'none',
       displayed: 'tags', // TODO save in cookie
       baseUID: 'rJlh4ZPpNG',
-      groupSet: []
+      groupSet: [],
+      sugg: {
+        pageDots: true,
+        prevNextButtons: false,
+        accessibility: false // to prevent jumping when focused
+      },
     }
   },
   methods: {
+    flicker () { // this looks very stupid. For forcing flickity component in tag directory to reinitalize
+  //     this.show = true
+  //     // $(".sugg").flickity()
+  //     console.log(    this.$refs.sugg)
+  // this.show = false
+  //       setTimeout(() => {
+  //           this.show = true
+  //           $(".sugg").flickity()
+  //           this.dumb()
+  //
+  //     }, 1000)
+
+    },
+    dumb(){
+
+        console.log(    this.$refs.sugg)
+        console.log(Math.round(this.tags.length / 2))
+      this.$refs.sugg.selectCell(Math.round(this.tags.length / 2), false, false)
+      // this.$refs.sugg.selectCell(Math.round(this.tags.length / 2), false, false) // why is this not working?
+    },
     showGroup (index) {
       this.tags = this.groupSet[index].contains
       this.displayed = 'subGroup'
@@ -68,7 +110,7 @@ export default {
         return x.group[0]
       })
       this.$nextTick(() => {
-        this.$refs.rtags.layout()
+        // this.$refs.rtags.layout()
       })
       this.displayed = 'groups'
     },
@@ -108,7 +150,7 @@ export default {
       }).then(response => {
         this.tags = response.data.map(x => x.group[0])
 
-        this.$refs.rtags.layout()
+        // this.$refs.rtags.layout()
         this.fetching = false
       })
     },
@@ -153,7 +195,7 @@ export default {
         }
       }).then(response => {
         this.tags = response.data
-        this.$refs.rtags.layout()
+        // this.$refs.rtags.layout()
         this.fetching = false
       })
     },
@@ -165,14 +207,16 @@ export default {
         }
       }).then(response => {
         this.tags = response.data
-        this.$refs.rtags.layout()
+        // this.$refs.rtags.layout()
         this.fetching = false
       })
     }
   },
   mounted () {
+    // this.flicker()
     setTimeout(() => { // wait for vue-isotope to be ready
       this.fetch()
+      this.dumb();
     }, 100)
   },
   watch: {
@@ -188,10 +232,12 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .rtags {
   min-height: 150px;
-  margin-left: 30px;
+  /* margin-left: 30px; */
+  /* max-height: 300px; */
+  /* width: 100vw; */
 }
 .options {
   margin-left: 30px;
@@ -200,5 +246,14 @@ export default {
 }
 .back {
   margin:10px;
+}
+.crossSectionNav .flickity-page-dots {
+  margin-bottom: -23px;
+}
+.crossSectionNav .flickity-page-dots {
+  bottom: 23px;
+}
+.sugg {
+  min-height: 100px;
 }
 </style>

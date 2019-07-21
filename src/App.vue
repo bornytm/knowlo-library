@@ -112,7 +112,67 @@ export default {
     updateSettings (settingsObj) {
       this.settings = settingsObj
       Cookies.set('settings', settingsObj)
-    }
+    },
+    getCookies () {
+      // alpha warning
+      if (!Cookies.get('alpha-warning-seen')) {
+        Cookies.set('alpha-warning-seen', true, {
+          expires: 7
+        })
+        Materialize.toast('Hi! Knowlo is in alpha right now...everthing is subject to change and break.', 10000)
+        this.$router.push('/about')
+      } else {
+        Cookies.set('alpha-warning-seen', true, {
+          expires: 7
+        }) // reset expiry
+      }
+
+      // get previously selected resource display Style
+      if (!Cookies.get('resourceDisplay')) {
+        this.resourceDisplay = 'card'
+      } else {
+        this.resourceDisplay = Cookies.get('resourceDisplay')
+      }
+
+      // get previously selected orderby
+      if (!Cookies.get('orderby')) {
+        this.orderby = 'quality'
+      } else {
+        this.orderby = Cookies.get('orderby')
+      }
+
+      // get previously selected desc/asc setting
+      if (!Cookies.get('descending')) {
+        this.descending = true
+      } else {
+        this.descending = (Cookies.get('descending') === 'true')
+      }
+
+      // get previously show viewed setting
+      if (!Cookies.get('showViewed')) {
+        this.showViewed = false
+      } else {
+        this.showViewed = (Cookies.get('showViewed') === 'true')
+      }
+
+      // get previously selected suggestionDisplay
+      if (!Cookies.get('suggestionDisplay')) {
+        this.suggestionDisplay = 'size'
+      } else {
+        this.suggestionDisplay = Cookies.get('suggestionDisplay')
+      }
+
+      // get tag query
+      if (Cookies.get('tagQuery')) {
+        this.tagQuery = Cookies.getJSON('tagQuery')
+      }
+
+      // get settings
+      if (Cookies.get('settings')) {
+        this.settings = Cookies.getJSON('settings')
+      }
+
+    },
   },
   mounted () {
     // needed to recover from occasional mystery DOM exception on resource/tag suggestion change
@@ -123,22 +183,13 @@ export default {
     //   //   this.$router.go(this.$route)
     //   // }, 2000)
     // }
-    // get tag query
-    if (Cookies.get('tagQuery')) {
-      this.tagQuery = Cookies.getJSON('tagQuery')
-    }
-
-    // get settings
-    if (Cookies.get('settings')) {
-      this.settings = Cookies.getJSON('settings')
-    }
 
     // TODO: use this...
     // var lang = window.navigator.userLanguage || window.navigator.language
     // lang = lang.substr(0, 2) // get two letter language code
 
     $('#login-modal').modal() // init login modal
-
+    this.getCookies();
     // init headroom (hide/show navbar on scroll down/up)
     var elem = document.querySelector('#nav-slide')
     new Headroom(elem, {
