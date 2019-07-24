@@ -18,7 +18,7 @@
     <!--  youtube/vimeo -->
     <div v-if='resource.displayType=="embed"' class="vid-container-container">
       <div class="video-container ">
-        <iframe :src="'https://youtube.com/embed/'+resource.ytID"+'?&autoplay=1'″  frameborder=”0″ allowfullscreen></iframe>
+        <iframe :src="'https://youtube.com/embed/'+resource.ytID+'?rel=0&autoplay=1'"  frameborder=”0″ allowfullscreen></iframe>
       </div>
     </div>
 

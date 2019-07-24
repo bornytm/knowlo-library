@@ -74,6 +74,10 @@ import Cookies from 'js-cookie'
 import firebase from 'firebase'
 import firebaseui from 'firebaseui'
 import sidemenu from 'components/sideMenu'
+import VuePlyr from 'vue-plyr'
+import 'vue-plyr/dist/vue-plyr.css'
+
+Vue.use(VuePlyr)
 
 export default {
   name: 'app',

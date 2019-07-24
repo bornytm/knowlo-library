@@ -7,6 +7,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bornytm/knowlo-library.git"
+  },
   "keywords": [
     "ecosystem:cordova"
   ],
@@ -15,7 +19,8 @@
   "dependencies": {
     "cordova-android": "^8.0.0",
     "cordova-ios": "^5.0.1",
-    "cordova-plugin-ionic-webview": "^4.1.1"
+    "cordova-plugin-ionic-webview": "^4.1.1",
+    "cordova-plugin-splashscreen": "^5.0.3"
   },
   "devDependencies": {
     "cordova-plugin-whitelist": "^1.3.4"
@@ -23,9 +28,8 @@
   "cordova": {
     "plugins": {
       "cordova-plugin-whitelist": {},
-      "cordova-plugin-ionic-webview": {
-        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
-      }
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-splashscreen": {}
     },
     "platforms": [
       "android",
