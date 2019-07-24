@@ -18,6 +18,11 @@
         :display="'thumb'"
         :settings='settings'
         :key="tag.tag.uid+i"
+        v-on:include="addTag(tag)"
+        v-on:pin="addTag(tag)"
+        v-on:focus="addTag(tag)"
+        hide="lens remove"
+        v-on:main="showGroup(i)"
         >
         </tag>
       </div>
@@ -57,8 +62,12 @@ import tag from 'components/tag'
 import flick from 'components/flick'
 import isotope from 'vueisotope'
 import {QRadio, QBtn, QIcon} from 'quasar'
-// import Flickity from 'vue-flickity'
 
+// select middle cell -- emit ready viaflick component? listen here and select
+// this.$nextTick(() => {
+//   console.log('in ticket')
+//   this.$refs.sugg.selectCell(Math.round(this.tags.length / 2), false, false)
+// })
 export default {
   name: 'tagSuggestions',
   components: { tag, isotope, flick },
@@ -73,33 +82,13 @@ export default {
       baseUID: 'rJlh4ZPpNG',
       groupSet: [],
       sugg: {
-        pageDots: true,
+        pageDots: false,
         prevNextButtons: false,
         accessibility: false // to prevent jumping when focused
       },
     }
   },
   methods: {
-    flicker () { // this looks very stupid. For forcing flickity component in tag directory to reinitalize
-  //     this.show = true
-  //     // $(".sugg").flickity()
-  //     console.log(    this.$refs.sugg)
-  // this.show = false
-  //       setTimeout(() => {
-  //           this.show = true
-  //           $(".sugg").flickity()
-  //           this.dumb()
-  //
-  //     }, 1000)
-
-    },
-    dumb(){
-
-        console.log(    this.$refs.sugg)
-        console.log(Math.round(this.tags.length / 2))
-      this.$refs.sugg.selectCell(Math.round(this.tags.length / 2), false, false)
-      // this.$refs.sugg.selectCell(Math.round(this.tags.length / 2), false, false) // why is this not working?
-    },
     showGroup (index) {
       this.tags = this.groupSet[index].contains
       this.displayed = 'subGroup'
@@ -177,6 +166,9 @@ export default {
         this.groupSet = response.data
         this.showAllGroups()
         this.fetching = false
+        // this.$refs.sugg.selectCell(Math.round(this.tags.length / 2), false, false)
+        console.log(this.$refs.sugg)
+        this.$refs.sugg.selectCell(5, false, false)
       })
     },
     getTopRelated () {
@@ -216,7 +208,6 @@ export default {
     // this.flicker()
     setTimeout(() => { // wait for vue-isotope to be ready
       this.fetch()
-      this.dumb();
     }, 100)
   },
   watch: {

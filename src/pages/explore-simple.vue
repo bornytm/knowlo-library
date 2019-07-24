@@ -23,6 +23,7 @@
       </span>
     </transition-group>
 
+    <tag-suggestions :settings='settings' :tagQuery="tagQuery" v-on:add="addToQuery"></tag-suggestions>
 
     <div class="">
       <div class="row container searchHead">
@@ -70,7 +71,6 @@
           <div>Showing {{resources.length}} of {{resourcesRelated}}</div>
           <div v-if='member.uid'><span v-if="showViewed">Including</span><span v-else>Excluding</span> {{resourcesViewed}} viewed</div>
         </div>
-        <tag-suggestions :settings='settings' :tagQuery="tagQuery" v-on:add="addToQuery"></tag-suggestions>
 
         <!-- <transition name="fade">
 							<div>
@@ -180,11 +180,10 @@ import tagSuggestions from 'components/tagSuggestions'
 import infiniteScroll from 'vue-infinite-scroll'
 import Spinner from 'vue-simple-spinner'
 import isotope from 'vueisotope'
-import Flickity from 'vue-flickity'
 
 export default {
   name: 'explore',
-  components: { tag, resource, search, Spinner, isotope, Flickity, tagSuggestions },
+  components: { tag, resource, search, Spinner, isotope, tagSuggestions },
   directives: {infiniteScroll},
   props: ['tagQuery', 'member','settings',],
   data () {
@@ -703,12 +702,6 @@ export default {
 .quantity {
   font-weight: 300;
   margin-right: 40px;
-}
-.crossSectionNav .flickity-page-dots {
-  margin-bottom: -23px;
-}
-.crossSectionNav .flickity-page-dots {
-  bottom: 23px;
 }
 .resourceCont {
     margin-top:50px;
