@@ -37,11 +37,11 @@ The Knowlo Library is a [Node.js](nodejs.org/en/) and [Vue app](vuejs.org/) usin
 ### Develop as Mobile app (via cordova)
 Instructions to follow - additional instillation steps required.
 
-### Develop as Destop app (via electron)
+### Develop as Desktop app (via electron)
 Instructions to follow - additional instillation steps required.
 
 # Build
-Instructions to follow.
+Instructions to follow. Varies by platform.
 
 # Contributing
 Knowlo is an open source project, collaboration is welcomed.
