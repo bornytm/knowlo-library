@@ -269,7 +269,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 /* tag radial button based on this pen: http://codepen.io/suez/pen/vAais/*/
 .menu, .menu .btn .fa, .menu .btn.trigger {
   position: relative;
@@ -556,4 +556,25 @@ and (max-device-width : 480px) { /* portrait tablets, portrait iPad, landscape e
       opacity: 1;
     }
   }
+
+  .thumb {
+      background-color: white;
+      min-width: 40px;
+      width: 40px;
+      height: 40px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 50%;
+  }
+  .thumb img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 100%;
+    width: auto;
+    -webkit-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+  }
+
 </style>

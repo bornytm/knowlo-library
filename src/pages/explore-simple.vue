@@ -24,7 +24,7 @@
     </transition-group>
 
     <tag-suggestions :settings='settings' :tagQuery="tagQuery" v-on:add="addToQuery"></tag-suggestions>
-
+    
     <div class="">
       <div class="row container searchHead">
 				<span @click.stop.prevent="flipViewed" class="col items-start viewBtn" :class="{'fade': !showViewed}" ><i class="material-icons ">remove_red_eye</i>

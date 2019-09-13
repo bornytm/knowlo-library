@@ -16,11 +16,21 @@
     </div>
 
     <!--  youtube/vimeo -->
+
     <div v-if='resource.displayType=="embed"' class="vid-container-container">
       <div class="video-container ">
         <iframe :src="'https://youtube.com/embed/'+resource.ytID+'?rel=0&autoplay=1'"  frameborder=”0″ allowfullscreen></iframe>
       </div>
     </div>
+
+    <!-- <vue-plyr ref="plyr":options='plyrOptions' v-if='true'>
+      <div class="plyr__video-embed">
+        <iframe
+          :src="'https://youtube.com/embed/'+resource.ytID+'?iv_load_policy=3&modestbranding=1&playsinline=1&showinfo=0&rel=0&enablejsapi=1'"
+          allowfullscreen allowtransparency allow="autoplay">
+        </iframe>
+      </div>
+    </vue-plyr> -->
 
     <!-- website -->
     <div v-if='resource.displayType=="webpage"' class="web-container">
@@ -28,11 +38,11 @@
     </div>
 
     <!-- video -->
-    <div v-if='resource.displayType=="video"' class="vid-container-container">
+    <!-- <div v-if='resource.displayType=="video"' class="vid-container-container">
       <div class="video-container ">
         <iframe :src="resource.url"></iframe>
       </div>
-    </div>
+    </div> -->
 
     <!-- imgur image/gallery -->
     <!-- <blockquote class="imgur-embed-pub" lang="en" data-id="a/Y26eX"><a href="//imgur.com/Y26eX">Eyes</a></blockquote>
@@ -199,6 +209,9 @@ export default {
     return {
       resource: {
         uid: undefined
+      },
+      plyrOptions: {
+        controls: ['play','progress', 'volume','pip']//['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
       },
       flickBody: {
         wrapAround: true,

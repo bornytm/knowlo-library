@@ -13,7 +13,14 @@
       <div class="collapsible-header searchHead shadowUnder">
 
         <search exclude="" input-id="mainSearch" holder-text="Search" v-on:select="addToQuery"></search>
-
+        <vue-plyr ref="plyr":options='plyrOptions' v-if='true'>
+          <div class="plyr__video-embed">
+            <iframe
+              :src="'https://youtube.com/embed/HkXLWHZwlZ'+'?iv_load_policy=3&modestbranding=1&playsinline=1&showinfo=0&rel=0&enablejsapi=1'"
+              allowfullscreen allowtransparency allow="autoplay">
+            </iframe>
+          </div>
+        </vue-plyr>
         <transition-group name='fade'>
           <span class="gt-xs" v-for="tag in tagQuery" @click.stop.prevent='removeTag(tag.setID)' :key="tag.setID">
   							<img v-if="tag.tag.iconURL" class='circle hoverable' style='height:40px;width:40px;margin-right:10px;padding:3px;' :src="tag.tag.iconURL" />

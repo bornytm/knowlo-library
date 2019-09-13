@@ -239,7 +239,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .q-slider {
   margin-left: 7px;
   margin-right: 7px;

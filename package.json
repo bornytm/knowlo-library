@@ -15,7 +15,8 @@
     "test": "echo \"No test specified\" && exit 0",
     "start": "node server.js",
     "devd": "node server.js | quasar dev",
-    "build": "quasar build"
+    "build": "quasar build",
+    "m": "quasar dev -m cordova -T android"
   },
   "dependencies": {
     "@quasar/app": "^1.0.4",
