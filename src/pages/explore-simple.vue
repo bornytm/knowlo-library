@@ -323,11 +323,11 @@ export default {
       this.resourceDisplay = disp
       Cookies.set('resourceDisplay', disp)
       // weird to wrap a timeout with next tick, but css lags and screws up the layout after transistion
-      this.$nextTick(function () {
-        window.setTimeout(() => {
-          this.layout()
-        }, 375)
-      })
+      // this.$nextTick(function () {
+      //   window.setTimeout(() => {
+      //     this.layout()
+      //   }, 375)
+      // })
     },
     changeLens (lens) {
       if (lens === null) {
@@ -429,6 +429,7 @@ export default {
         } else {
           route = '/api/resource'
         }
+        console.log(include,this.showViewed, this.orderby, this.descending)
         this.$http.get(route, {
           params: {
             languageCode: 'en',

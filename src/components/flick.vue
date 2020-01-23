@@ -14,18 +14,12 @@ export default {
 
   mounted() {
     this.init();
+    console.log('mounted flick')
   },
 
   beforeDestroy() {
     this.$flickity.destroy();
     this.$flickity = null;
-  },
-
-  updated: function () {
-    this.destroy();
-    this.$nextTick(function () {
-      this.init();
-    })
   },
 
   methods: {
@@ -34,6 +28,9 @@ export default {
      */
     init() {
       this.$flickity = new Flickity(this.$el, this.options);
+      this.$flickity.on( 'change', index => {
+        this.$emit('changee', index)
+      })
       this.$emit('init', this.$flickity);
     },
 
@@ -224,7 +221,7 @@ export default {
      * @return {Flickity}
      */
     data() {
-      return Flickity.data(this.$el);
+      return { firstEl: null };
     },
 
     /**

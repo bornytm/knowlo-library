@@ -7,7 +7,7 @@
     <li><div class="divider"></div></li>
     <li><a class="subheader"></a></li>
     <li v-if="member.uid"><router-link class="waves-effect" :to="'/m/'+member.uid"><i class="fa fa-lg fa-user"></i>Profile</router-link></li>
-    <li><router-link class="waves-effect" to="/"><i class="fa fa-lg fa-compass"></i>Explore</router-link></li>
+    <li><router-link class="waves-effect" to="/test"><i class="fa fa-lg fa-compass"></i>Explore</router-link></li>
     <!-- <li><router-link class="waves-effect" to="/trending"><i class="material-icons">trending_up</i>Trending</router-link></li> -->
     <li><router-link class="waves-effect" to="/status"><i class="fa fa-lg fa-chart-area"></i>Status | Stats</router-link></li>
     <li><a class="subheader"></a></li>

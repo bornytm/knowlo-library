@@ -12,6 +12,10 @@ const routes = [
       component: () => import('pages/cyto-graph-test.vue')
     },
     {
+      path: '/test',
+      component: () => import('pages/test.vue')
+    },
+    {
       path: '/cross-section',
       component: () => import('components/cross-section.vue')
     },
@@ -39,6 +43,7 @@ const routes = [
       path: '/settings',
       component: () => import('pages/settings.vue')
     },
+    // { path: '/r/:uid', component: () => import('pages/resource.vue'), name: 'resource' }, // test - does it hit this first or load explore?
     {
         path: '/:tagquery?',
         component: () => import('pages/explore-simple.vue'),

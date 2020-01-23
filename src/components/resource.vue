@@ -1,5 +1,6 @@
 <template>
   <div class='resource'
+  :id="re.resource.uid"
   @mouseenter="hovering = true"
   @mouseleave="hovering = false"
 		:class="{
