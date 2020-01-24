@@ -72,6 +72,16 @@ export default {
   name: 'tagSuggestions',
   components: { tag, isotope, flick },
   props: ['tagQuery', 'settings'],
+  watch: {
+        tags: function (x) {
+          
+            this.$refs.sugg.destroy()
+            this.$nextTick(() => {
+                this.$refs.sugg.init()
+
+            })           
+        }
+    },
   data () {
     return {
       show: true,

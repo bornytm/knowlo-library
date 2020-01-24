@@ -8,14 +8,7 @@
         v-on:changee='updateSliderPosition'
         >
            
-            <resource class="item" :key="re.resource.uid"
-                      :settings='{}'
-                      v-for="re in items"
-                      :re="re"
-                      :display="'card'"
-                      v-on:changedDisplay=""
-                    ></resource>
-           
+          <slot />
         
     </flick> 
 
@@ -26,21 +19,12 @@
 
 <script>
 import flick from 'components/flick'
-import Flickity from 'vue-flickity'
-import resource from 'components/resource'
-
 
 export default {
     name: 'cross-section',
-    components: {flick, Flickity, resource},
+    components: {flick},
     props: ['items'],
 
-    mounted () {
-        // this.$refs.itemContainer.on( 'change', index => { // v-on not working on flickity component
-        //     console.log('item c changed')
-        //     this.updateSliderPosition(index)
-        // } ) 
-    },
     watch: {
         items: function (x) {
             this.$refs.itemContainer.destroy()
@@ -129,6 +113,6 @@ template {
 }
 
 * {
-    outline: 1px solid black;
+    /* outline: 1px solid black; */
 }
 </style>

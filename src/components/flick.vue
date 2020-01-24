@@ -14,7 +14,6 @@ export default {
 
   mounted() {
     this.init();
-    console.log('mounted flick')
   },
 
   beforeDestroy() {
@@ -29,7 +28,7 @@ export default {
     init() {
       this.$flickity = new Flickity(this.$el, this.options);
       this.$flickity.on( 'change', index => {
-        this.$emit('changee', index)
+        this.$emit('change', index)
       })
       this.$emit('init', this.$flickity);
     },
