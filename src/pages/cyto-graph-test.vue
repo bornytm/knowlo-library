@@ -17,12 +17,20 @@
  
  <script>
  
-// import cxtmenu from 'cytoscape-cxtmenu';
+import cxtmenu from 'cytoscape-cxtmenu';
 
 let cyinst = null
 export default {
     name: "graph-test",
     methods: {
+        addThing () {
+            this.elements.push({
+                        data: { id: response.data[1].contains[x].tag.uid },
+                        style: {
+                            'background-image': response.data[1].contains[x].tag.iconURL,
+                            'background-fit': 'cover cover',
+                        },
+        },
         getTags () {
             var scaleIDs = {
                 'size': 'BJgVf2ZQYW',
@@ -146,7 +154,7 @@ export default {
            
         },
         afterCreated (cyt) {
-            // let menu = cyt.cxtmenu(this.menuOpt)
+            let menu = cyt.cxtmenu(this.menuOpt)
             cyinst = cyt;
             
         }
@@ -236,6 +244,7 @@ export default {
             // }
             ],
             config: {
+                userPanningEnabled: false,
             
                 style: [
                     {

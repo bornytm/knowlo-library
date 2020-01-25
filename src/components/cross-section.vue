@@ -23,9 +23,12 @@ import flick from 'components/flick'
 export default {
     name: 'cross-section',
     components: {flick},
-    props: ['items'],
+    props: ['items','selected'],
 
     watch: {
+        selected: function(x) {
+            this.selectItem(this.selected)
+        },
         items: function (x) {
             this.$refs.itemContainer.destroy()
             this.$nextTick(() => {
