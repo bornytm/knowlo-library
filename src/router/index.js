@@ -1,12 +1,8 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import VueCytoscape from 'vue-cytoscape'
-import cxtmenu from 'cytoscape-cxtmenu';
-
+import VueRouter from 'vue-router' 
 import routes from './routes'
 
 Vue.use(VueRouter)
-Vue.use(VueCytoscape)
 
 /*
  * If not building with SSR mode, you can

@@ -26,7 +26,7 @@ export default {
     props: ['items','selected'],
 
     watch: {
-        selected: function(x) {
+        selected: function (x) {
             this.selectItem(this.selected)
         },
         items: function (x) {

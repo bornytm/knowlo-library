@@ -8,12 +8,12 @@ const routes = [
   //   ]
   // },
     {
-      path: '/cyto-graph-test',
-      component: () => import('pages/cyto-graph-test.vue')
+      path: '/vis-vuedrag',
+      component: () => import('test/vis-vuedrag.vue')
     },
     {
       path: '/test',
-      component: () => import('pages/test.vue')
+      component: () => import('test/test.vue')
     },
     {
       path: '/cross-section',
