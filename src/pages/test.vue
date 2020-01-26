@@ -17,7 +17,7 @@
 <script>
 
 import crossSection from 'components/cross-section'
-import resAPI from 'api/resources'
+import resAPI from 'pages/resources'
 import resource from 'components/resource'
 
 export default {

@@ -11,7 +11,7 @@
   </q-btn>
 
   <transition type='fade'>
-    <flick ref='sugg' v-if='show':options="sugg" id='sugg' class="sugg">
+    <cross-section id="tagS" :items="tags">
 
       <div v-for="tag, i in tags">
         <tag :tag="tag"
@@ -26,7 +26,7 @@
         >
         </tag>
       </div>
-    </flick>
+    </cross-section>
   </transition>
 
   <!-- <isotope  v-if='show' class='rtags' ref='rtags' :list="tags" :options="{}">
@@ -62,6 +62,8 @@ import tag from 'components/tag'
 import flick from 'components/flick'
 import isotope from 'vueisotope'
 import {QRadio, QBtn, QIcon} from 'quasar'
+import crossSection from 'components/cross-section'
+
 
 // select middle cell -- emit ready viaflick component? listen here and select
 // this.$nextTick(() => {
@@ -70,7 +72,7 @@ import {QRadio, QBtn, QIcon} from 'quasar'
 // })
 export default {
   name: 'tagSuggestions',
-  components: { tag, isotope, flick },
+  components: { tag, isotope, flick, crossSection },
   props: ['tagQuery', 'settings'],
   watch: {
         tags: function (x) {
@@ -256,5 +258,8 @@ export default {
 }
 .sugg {
   min-height: 100px;
+}
+#tagS {
+  height: 300px;
 }
 </style>

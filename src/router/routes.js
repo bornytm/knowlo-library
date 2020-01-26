@@ -9,11 +9,11 @@ const routes = [
   // },
     {
       path: '/vis-vuedrag',
-      component: () => import('test/vis-vuedrag.vue')
+      component: () => import('pages/vis-vuedrag.vue')
     },
     {
       path: '/test',
-      component: () => import('test/test.vue')
+      component: () => import('pages/test.vue')
     },
     {
       path: '/cross-section',
