@@ -2,7 +2,7 @@
 
 > For the design and proliferation of knowledge.
 
-Knowlo is a radically transparent collective, optimizing access to and proliferation of insight.
+Knowlo is a principled, community driven, open source, radically transparent, not-for-profit educational organization driven to optimize access to and proliferation of insight.
 
 # [Knowlo Library](knowlo.io)
 
@@ -35,13 +35,18 @@ The Knowlo Library is a [Node.js](nodejs.org/en/) and [Vue app](vuejs.org/) usin
 
 
 ### Develop as Mobile app (via cordova)
-Instructions to follow - additional instillation steps required.
+Additional installation steps required (details to follow - check out quasar [mobile docs](https://quasar.dev/quasar-cli/developing-mobile-apps))
+
+Once installed, develop on android with `npm run m`
 
 ### Develop as Desktop app (via electron)
-Instructions to follow - additional instillation steps required.
+Instructions to follow - additional installation steps required.
 
 # Build
 Instructions to follow. Varies by platform.
 
+# Deploy
+Currently, pushing to the master branch automatically builds the app on heroku. 
+
 # Contributing
-Knowlo is an open source project, collaboration is welcomed.
+Knowlo is an open source project, collaboration is welcomed- contribution guidelines are under development. For now, reach out to @bornytm.
