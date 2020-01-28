@@ -178,9 +178,6 @@ export default {
         this.groupSet = response.data
         this.showAllGroups()
         this.fetching = false
-        // this.$refs.sugg.selectCell(Math.round(this.tags.length / 2), false, false)
-        console.log(this.$refs.sugg)
-        this.$refs.sugg.selectCell(5, false, false)
       })
     },
     getTopRelated () {
@@ -260,6 +257,6 @@ export default {
   min-height: 100px;
 }
 #tagS {
-  height: 300px;
+  height:170px;
 }
 </style>

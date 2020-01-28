@@ -42,7 +42,10 @@ export default {
                     set[el].style.height = '100%'
                     set[el].style.touchAction = 'pan-y'                     
                 }
-                this.updateSliderPosition(0)
+
+                // start in the middle...maybe this should be configurable?
+                this.selectItem(x.length/2)
+                this.updateSliderPosition(x.length/2)
             })
         }
     },
@@ -114,13 +117,7 @@ export default {
 
 }
 
-
 template {
     height: 100%;
-    /* max-height: 200px; */
-}
-
-* {
-    outline: 1px solid black;
 }
 </style>
