@@ -1,5 +1,6 @@
 <template>
   <div class='resource'
+  :style="{ width: width }"
   :id="re.resource.uid"
   @mouseenter="hovering = true"
   @mouseleave="hovering = false"
@@ -42,7 +43,6 @@
 				<span >{{re.resource.text.substring(0,5)}}...</span>
 			</div>
 		</router-link>
-
 		<div v-if="editing || (re.resource.title && display =='card' || display =='list')"
 			:class="{
       'truncate inline tmargin titleText': display === 'list',
@@ -122,11 +122,13 @@ export default {
     re: Object,
     display: String,
     settings: Object,
+    resourcesPerRow: Number,
   },
   data: () => {
     return {
       editing: false,
       test: '',
+      width: 'calc(25% - 10px)',
       hovering: false,
       displayQuality: 0,
       displayComplexity: 0,
@@ -217,6 +219,11 @@ export default {
     }
   },
   watch: {
+     resourcesPerRow (x) {
+      if(this.display == 'card'){
+        this.width = "calc(" + (1/this.resourcesPerRow)*100 + "% - 10px)"
+      }
+    },
     ratingDisplay (val) {
       if (val === 'global') {
         this.re.globalVote && this.re.globalVote.quality !== null ? this.displayQuality = this.re.globalVote.quality : this.displayQuality = 0
@@ -354,9 +361,9 @@ export default {
 @media only screen
 and (min-width : 768px)
 and (max-width : 1024px) {
-  .card{
+  /* .card{
     width: calc(25% - 10px)!important;
-  }
+  } */
   .list {
     margin-left: 0;
     width: 100%;
@@ -365,18 +372,18 @@ and (max-width : 1024px) {
 /* Desktops and laptops ----------- */
 @media only screen
 and (min-width : 1224px) {
-  .card{
+  /* .card{
     width: calc(20% - 10px)!important;
-  }
+  } */
 }
 _:-moz-tree-row(hover), .card {
     width: calc(20% - 15px)!important;
 }
 @media only screen
 and (max-width : 375px) {
-  .card{
+  /* .card{
     width: calc(100% - 10px)!important;
-  }
+  } */
   .voteHalf {
     width: 100%;
     display: block;
@@ -394,9 +401,9 @@ and (max-width : 375px) {
 @media only screen
 and (min-width : 376px)
 and (max-width : 767px) {
-  .card{
+  /* .card{
     width: calc(50% - 10px)!important;
-  }
+  } */
   .voteHalf {
     width: 100%;
     display: block;
