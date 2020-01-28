@@ -1,3 +1,4 @@
+// lightly adapted from vue-flickity: https://github.com/hvaughan3/vue-flickity
 <template>
   <div>
     <slot/>

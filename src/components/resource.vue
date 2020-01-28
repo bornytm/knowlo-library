@@ -32,7 +32,7 @@
       'inline mb': display==='list'}"
 			>
 			<router-link @click='selected' :to="{ name: 'resource', params: { uid: re.resource.uid }}">
-				<img @click='selected' :src="re.resource.mThumb" />
+				<img @click='selected' :src="re.resource.mThumb" :stop-propagation="true" />
 			</router-link>
       <q-input v-if="editing" v-model="re.resource.mThumb" float-label="Thumbnail URL" type='url'/>
       <q-input v-if="editing" v-model="re.resource.url" float-label="URL" type='url' />
@@ -264,6 +264,9 @@ export default {
   align-items: center;
 }
 .resource a {color:black;}
+.resource {
+  /* max-height: 100%; */
+}
 .list span {
   font-size: 15px;
 }

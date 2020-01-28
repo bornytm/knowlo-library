@@ -2,7 +2,7 @@
   <div>
     <q-btn round color="primary" icon="shopping_cart" @click="test" />
     <cross-section :items="items">
-          <resource class="item" :key="re.resource.uid"
+          <resource :key="re.resource.uid"
                       :settings='{}'
                       v-for="re in items"
                       :re="re"

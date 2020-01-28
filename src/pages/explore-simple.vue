@@ -41,6 +41,12 @@
           <span class="viewBtn" @click.stop.prevent="changeDisplay('thumb')"><i class="material-icons">dialpad</i>
             <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">Icon view</q-tooltip>
           </span>
+          <span class="viewBtn" ><i class="material-icons">photo_size_select_large</i>
+            <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">Change Size</q-tooltip>
+             <q-popup-edit class="sizec" v-model="sizeChange">
+              <q-slider class='slider' v-model="size" :min="1" :max="20" :step="1" @input="" />
+            </q-popup-edit>
+          </span>
         </span>
         <span class='col self-end'>
 					<a @click.stop="" class="right dropdown-button viewBtn orderby" >
@@ -198,6 +204,9 @@ export default {
       resources: [], // db when no lens, replace with db even though less items? - array of tag objects
       showViewed: false, // whether or not viewed resources should be returned.
       resourcesRelated: null, // total number of resources related
+      // resourcesSizeSlider: 
+      size: {},
+      sizeChange: {},
       resourcesViewed: null, // number of related resources logged in member has viwed
       resourceDisplay: null, // display option for materials in search result - string name of displaytype (thumb, list, card)
       searchStr: null, // current member entered search text - string
@@ -647,6 +656,12 @@ export default {
   margin-right: 10%;
   margin-top: 2em;
   /* margin-right: 10%; */
+}
+.slider {
+  /* width: 10%; */
+}
+.scroll {
+  width: 20%;
 }
 [type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:before, [type="radio"].with-gap:checked+label:after {
     border: 2px solid #2196F3!important;

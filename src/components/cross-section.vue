@@ -24,7 +24,6 @@ export default {
     name: 'cross-section',
     components: {flick},
     props: ['items','selected'],
-
     watch: {
         selected: function (x) {
             this.selectItem(this.selected)
@@ -32,9 +31,19 @@ export default {
         items: function (x) {
             this.$refs.itemContainer.destroy()
             this.$nextTick(() => {
+                
                 this.$refs.itemContainer.init()
+
+                // allow items to be vertically scrollable 
+                let set = document.getElementsByClassName('flickity-slider')[0].children
+                for(let el = 0; el < set.length; el++) {
+                    // set[el].classList.add('cell') // the class gets added, but not applied if <style> is scoped
+                    set[el].style.overflowY = 'scroll'
+                    set[el].style.height = '100%'
+                    set[el].style.touchAction = 'pan-y'                     
+                }
                 this.updateSliderPosition(0)
-            })           
+            })
         }
     },
 
@@ -64,23 +73,19 @@ export default {
 </script>
 
 <style scoped>
-.itemContainer div {
-    height: 100vh;
-    width: 80vw;
-}
+
 .itemContainer {
-    /* overflow: scroll; */
-    height: 80vh;
-    width: 100vw;
-    padding-top: 50px;
+    height: 100%;
+    width: 100%;
 }
 
-.item {
-    height: 200vh;
-    /* overflow-x: scroll; */
+/* applied directly on items watch */
+/* 
+.cell {
     overflow-y:scroll;
-  touch-action: pan-y;
-}
+    touch-action: pan-y;
+    height: 100%;
+} */
 
 /* fade in image when loaded */
 .carousel-cell-image {
@@ -95,17 +100,16 @@ export default {
 }
 
 .slider {
-    margin: 10vw;
-    width: 80vw;
-    /* position: fixed;
-    bottom: 5%; */
+    width: 80%;
+    margin: 0 auto;
+    bottom: 40px;
+    background-color: #ffffff82;
+    /* opacity: 20%; */
+    border-radius: 20px;
+    /* padding-left: 20px; */
+    /* padding-right: 20px; */
 }
-
-.carousel-cell {
- touch-action: pan-y;
-}
-
-/* hide progress bar on slider */
+/* hide progress bar on slider ? */
 {
 
 }
@@ -113,9 +117,10 @@ export default {
 
 template {
     height: 100%;
+    /* max-height: 200px; */
 }
 
 * {
-    /* outline: 1px solid black; */
+    outline: 1px solid black;
 }
 </style>
