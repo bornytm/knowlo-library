@@ -31,7 +31,7 @@
           <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">show / hide viewed resources</q-tooltip>
         </span>
         <!-- display options select -->
-        <span class="gt-xs">
+        <span class="">
           <span class="viewBtn"  @click.stop.prevent="changeDisplay('list')"><i class="material-icons">view_list</i>
            <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">List view</q-tooltip>
           </span>
@@ -197,7 +197,6 @@ export default {
   data () {
     return {
       perRow: 4,
-      db: null, // search results to display - array of material objects
       loginCheck: false, // true after login status is checked
       crossSection: null, // object containing the name of the cross section and tags in lens group - object containing array of tag objects and string name
       tagSuggestions: [], // holds suggestion groups and tags within
@@ -206,13 +205,10 @@ export default {
       show: true,
       resources: [], // db when no lens, replace with db even though less items? - array of tag objects
       showViewed: false, // whether or not viewed resources should be returned.
-      resourcesRelated: null, // total number of resources related
-      // resourcesSizeSlider: 
       size: {},
       sizeChange: {},
       resourcesViewed: null, // number of related resources logged in member has viwed
       resourceDisplay: null, // display option for materials in search result - string name of displaytype (thumb, list, card)
-      searchStr: null, // current member entered search text - string
       endOfResources: false, // status for reached end of infinite scroll
       loadingResources: false, // status for fetching resources
       orderby: 'quality', // order for returned resources (quality, complexity, number of views, etc.)
@@ -221,25 +217,6 @@ export default {
         pageDots: false,
         prevNextButtons: false,
         accessibility: false // to prevent jumping when focused
-      },
-      crossSectionSteps: {
-        wrapAround: true,
-        pageDots: false,
-        prevNextButtons: true,
-        accessibility: false, // to prevent jumping when focused
-        dragThreshold: 40 // play around with this more?
-      },
-      suggestionNav: {
-        pageDots: false,
-        prevNextButtons: true,
-        accessibility: false
-      },
-      suggestionSteps: {
-        wrapAround: true,
-        pageDots: false,
-        prevNextButtons: true,
-        accessibility: false, // to prevent jumping when focused
-        dragThreshold: 40
       }
     }
   },
@@ -630,6 +607,9 @@ export default {
 </script>
 
 <style>
+.sizec {
+  width: 200px;
+}
 .collapsible-header {
   position:sticky;
   top:0;
@@ -660,9 +640,7 @@ export default {
   margin-top: 2em;
   /* margin-right: 10%; */
 }
-.slider {
-  /* width: 10%; */
-}
+
 .scroll {
   width: 20%;
 }

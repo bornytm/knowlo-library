@@ -5,7 +5,7 @@
         ref='itemContainer' 
         key="itemContainer" 
         :options="itemContainer" 
-        v-on:changee='updateSliderPosition'
+        v-on:change='updateSliderPosition'
         >
            
           <slot />
@@ -34,10 +34,10 @@ export default {
                 
                 this.$refs.itemContainer.init()
 
-                // allow items to be vertically scrollable 
+                // allow items to be vertically scrollable. Hacky due to inability to pass styles to scoped components.
                 let set = document.getElementsByClassName('flickity-slider')[0].children
                 for(let el = 0; el < set.length; el++) {
-                    // set[el].classList.add('cell') // the class gets added, but not applied if <style> is scoped
+                    // set[el].classList.add('cell') // the class gets added, but attributes not applied if <style> is scoped
                     set[el].style.overflowY = 'scroll'
                     set[el].style.height = '100%'
                     set[el].style.touchAction = 'pan-y'                     
@@ -91,6 +91,7 @@ export default {
 } */
 
 /* fade in image when loaded */
+/* 
 .carousel-cell-image {
   transition: opacity 0.4s;
   opacity: 0;
@@ -100,7 +101,7 @@ export default {
 .carousel-cell-image.flickity-lazyloaded,
 .carousel-cell-image.flickity-lazyerror {
   opacity: 1;
-}
+} */
 
 .slider {
     width: 80%;
