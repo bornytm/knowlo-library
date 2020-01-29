@@ -69,7 +69,6 @@
             <li class='disabled'><a># responses</a></li>
           </ul>
         </span>
-        </span>
       </div>
       <div style="border-bottom:none;">
         <br/>
@@ -92,8 +91,8 @@
         <div v-if="crossSection">
           <div id='crossSectionNav' class=" crossSectionNav ">
             <!-- flick navigation for isotope containers -->
-            <div v-for="step in crossSection">
-              <tag :tag="step" :display="'thumb'" :settings='settings'>
+            <div :key="step[0]" v-for="step in crossSection">
+              <tag  :tag="step" :display="'thumb'" :settings='settings'>
               </tag>
             </div>
           </div>
@@ -105,13 +104,12 @@
             <div v-if="crossSection">
               <!-- isotope contianers -->
               <div id='crossSectionSteps' class=" crossSectionSteps">
-                <div v-for="step in crossSection" class="">
+                <div :key="step[0]"  v-for="step in crossSection" class="">
                   <isotope :ref='"resourceBin" + step.setID' :list="resources" :options='{}'>
                     <resource :key="re.resource.uid"
                       :resourcesPerRow="perRow"
                       :settings='settings'
                       v-for="re in resources"
-                      v-if="re.tagIDs.includes(step.setID)"
                       :re="re"
                       :display="resourceDisplay"
                       v-on:changedDisplay="layout"

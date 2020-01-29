@@ -13,7 +13,7 @@ const routes = [
     },
     {
       path: '/test',
-      component: () => import('pages/test.vue')
+      component: () => import('components/resourceDisplayOptions.vue')
     },
     {
       path: '/cross-section',
@@ -46,7 +46,7 @@ const routes = [
     // { path: '/r/:uid', component: () => import('pages/resource.vue'), name: 'resource' }, // test - does it hit this first or load explore?
     {
         path: '/:tagquery?',
-        component: () => import('pages/explore-simple.vue'),
+        component: () => import('pages/explore.vue'),
         name: 'explore',
         children: [
           { path: '/m/:uid', component: () => import('pages/member.vue'), name: 'member' },

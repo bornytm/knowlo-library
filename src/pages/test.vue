@@ -7,7 +7,7 @@
                       v-for="re in items"
                       :re="re"
                       :display="'card'"
-                      v-on:changedDisplay=""
+                      v-on:changedDisplay="test"
                     ></resource>
            
     </cross-section>
