@@ -1,0 +1,8 @@
+export enum PropertyTypes {
+	STRING = "STRING",
+	STRING_NON_EMPTY = "STRING_NON_EMPTY",
+	INTEGER = "INTEGER",
+	FLOAT = "FLOAT",
+	DATE = "DATE",
+	BOOLEAN = "BOOLEAN",
+}
