@@ -5,6 +5,7 @@
   @mouseenter="hovering = true"
   @mouseleave="hovering = false"
 		:class="{
+    'listFullWidth': display=='list',
     'list z-depth-1 hoverable': display === 'list',
     'card z-depth-1 hoverable': display === 'card'}"
 		>
@@ -29,6 +30,7 @@
 			:class="{
       'thumb waves-effect waves-block waves-light z-depth-1 hoverable': display==='thumb' || display =='list' || display === 'godMode',
       'card-image': display==='card',
+      'list-image': display==='list',
       'margin20': display==='thumb' || display==='list' ,
       'inline mb': display==='list'}"
 			>
@@ -77,10 +79,10 @@
     >
       <div class="">
 				<i  @click="ratingDisplay='global'" @mouseenter="ratingDisplay='global'" class="far fa-lg fa-globe-americas rating" :class="{'selected': ratingDisplay==='global'}">
-          <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">global rating</q-tooltip>
+          <q-tooltip :disable="!$q.showToolTips" :delay="500" :offset="[0, 5]">global rating</q-tooltip>
         </i>
 				<i  @click="ratingDisplay='member'" @mouseenter="ratingDisplay='member'" class="fa fa-lg fa-user rating" :class="{'selected': ratingDisplay==='member'}">
-          <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">your rating</q-tooltip>
+          <q-tooltip :disable="!$q.showToolTips" :delay="500" :offset="[0, 5]">your rating</q-tooltip>
         </i>
         <span class='right'><span class='text-orange'> Q<span v-if='display === "list"'>uality</span>: </span> {{displayQuality.toString().substring(0, 4)}} <span class='text-blue'>C<span v-if='display === "list"'>omplexity</span>: </span> {{displayComplexity.toString().substring(0, 4)}}</span>
 			</div>
@@ -264,6 +266,7 @@ export default {
   border-radius: 0;
   height: 50px;
   width: 50px;
+  overflow: hidden;
 }
 .voteView {
   display: flex;
@@ -292,6 +295,9 @@ export default {
 }
 .list:hover {
   z-index: 20;
+}
+.list-image img {
+  max-height: 100%;
 }
 .card {
 		box-shadow: none!important;
@@ -412,6 +418,10 @@ and (max-width : 767px) {
     margin-left: 0;
     width: 100%;
   }
+.listFullWidth {
+  width: 100%!important;
+  margin-left: 0%!important;
+}
   .titleText {
     max-width: calc(100% - 110px);
   }

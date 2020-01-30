@@ -10,6 +10,9 @@
           <q-btn class="viewBtn"  flat round @click.stop.prevent="display = 'list'"><i class="material-icons">view_list</i>
            <q-tooltip :disable="!this.$q.cookies.get('showToolTips')" :delay="500" :offset="[0, 5]">List view</q-tooltip>
           </q-btn>
+           <q-btn class="viewBtn"  flat round @click.stop.prevent="display = 'slider'"><i class="material-icons">view_array</i>
+           <q-tooltip :disable="!this.$q.cookies.get('showToolTips')" :delay="500" :offset="[0, 5]">Slider view</q-tooltip>
+          </q-btn>
           <q-btn class="viewBtn" flat round  @click.stop.prevent="display = 'card'"><i class="material-icons">dashboard</i>
            <q-tooltip :disable="!this.$q.cookies.get('showToolTips')" :delay="500" :offset="[0, 5]">Grid view</q-tooltip>
           </q-btn>
@@ -81,6 +84,15 @@ export default {
       perRow: 3,
     }
   },
+  watch: {
+    orderBy(x) {
+      this.$emit('update-order',x)
+    },
+    display(x) {
+      console.log('display update', x)
+      this.$emit('update-display',x)
+    }
+  },
   methods: {
     test () {
       this.$q.notify({
@@ -96,10 +108,7 @@ export default {
 </script>
 
 <style >
-.test {
-  min-height: 400px;
-  display: block;
-}
+
 .flipVert {
   transform: scaleY(-1);
 }
@@ -109,7 +118,10 @@ export default {
 
 /* is this going to overwrite the style everywhere in the app? It doesn't work when it the CSS is scoped */
 .q-btn-dropdown__arrow-container {
-  display: none;
+  display: none!important;
+}
+.q-btn-dropdown {
+  color: black!important;
 }
 
 .sizeSlider {

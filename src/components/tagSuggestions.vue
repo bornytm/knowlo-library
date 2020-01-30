@@ -102,8 +102,10 @@ export default {
   },
   methods: {
     showGroup (index) {
-      this.tags = this.groupSet[index].contains
-      this.displayed = 'subGroup'
+      if(this.groupSet[index]){
+        this.tags = this.groupSet[index].contains
+        this.displayed = 'subGroup'
+      }
     },
     showAllGroups () {
       this.tags = this.groupSet.map(x => {

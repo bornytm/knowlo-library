@@ -1,17 +1,15 @@
 <template>
     <div>
         <!-- tag query -->
-        <search class ='col' exclude="" input-id="mainSearch" holder-text="Search" v-on:select=""></search>
+
         <!-- tag search -->
+        <search class ='col' exclude="" input-id="mainSearch" holder-text="Search" v-on:select=""></search>
+        
+        <!-- tag navigation/explorer -->
         <tag-suggestions :tagQuery="tagQuery" v-on:add=""></tag-suggestions>
 
-        <!-- tag navigation/explorer -->
-
-        <!-- resource view options -->
-        <resource-display-options></resource-display-options>
-
         <!-- resource results  -->
-        <resource-collection></resource-collection>
+        <resource-collection :resources="resources" ></resource-collection>
 
     </div>
 </template>
@@ -19,15 +17,24 @@
 <script>
 import search from 'components/search'
 import tagSuggestions from 'components/tagSuggestions'
-import resourceDisplayOptions from 'components/resourceDisplayOptions'
 import resourceCollection from 'components/resourceCollection'
+import resAPI from 'pages/resources'
+
 
 export default {
-    components: { search, tagSuggestions, resourceDisplayOptions, resourceCollection },
-
+    components: { search, tagSuggestions, resourceCollection },
+    mounted() {
+        resAPI.getResourcesRelatedToTagQuery()
+                .then(resources => {
+                    console.log(resources)
+                    this.resources = resources.data
+                })
+                .catch(error => console.log(error))
+    },
     data () {
         return {
-            tagQuery: {}
+            tagQuery: {},
+            resources: []
         }
     }
 
