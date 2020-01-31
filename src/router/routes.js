@@ -9,11 +9,11 @@ const routes = [
   // },
     {
       path: '/vis-vuedrag',
-      component: () => import('pages/vis-vuedrag.vue')
+      component: () => import('../testing/vis-vuedrag.vue')
     },
     {
       path: '/test',
-      component: () => import('components/resourceDisplayOptions.vue')
+      component: () => import('../testing/vis-timeline.vue')
     },
     {
       path: '/cross-section',
@@ -43,9 +43,14 @@ const routes = [
       path: '/settings',
       component: () => import('pages/settings.vue')
     },
+    {
+      path: '/r/:uid',
+      component: () => import('pages/resource.vue'),
+      name: 'resource'
+    },
     // { path: '/r/:uid', component: () => import('pages/resource.vue'), name: 'resource' }, // test - does it hit this first or load explore?
     {
-        path: '/:tagquery?',
+        path: '/explore/:tagquery?',
         component: () => import('pages/explore.vue'),
         name: 'explore',
         children: [

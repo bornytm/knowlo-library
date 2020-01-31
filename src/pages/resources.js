@@ -2,7 +2,9 @@ import axios from 'axios'
 
 export default {
   getResourcesRelatedToTagQuery(tags) {
-    let tag = ['BkZDEiK--',"B1TJziFZW","SySR1sK-W","Sy4Cyjt--","SyEaysY-b","BkWUx2mp4JW","HJ0Se37TVy-"]
+    // let tag = ['BkZDEiK--',"B1TJziFZW","SySR1sK-W","Sy4Cyjt--","SyEaysY-b","BkWUx2mp4JW","HJ0Se37TVy-"]
+    let tag = ['Syh41sK--']
+    
     let include = tag[Math.floor(Math.random() * tag.length)]
     return axios.get('/api/resource', {
       params: {

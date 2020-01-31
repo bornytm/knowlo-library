@@ -346,32 +346,6 @@ export default {
   cursor: not-allowed!important;
   background-color: #eee!important;
 }
-/* dots are lines */
-.flickity-page-dots .dot {
-  height: 4px;
-  width: 40px;
-  margin: 0px;
-  border-radius: 0;
-}
-
-.flickContainer{
-	position: relative;
-	border-right: 1px solid darkgray;
-	border-left: 1px solid darkgray;
-	width: 100%;
-	margin:15px;
-}
-.flickItem{
-	margin-left: 15px;
-	margin-right: 15px;
-	margin-top: 10px;
-}
-.flickity-page-dots {
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  bottom: 0px;
-}
 .input-field{
   margin-top: 0;
   max-width: 100%;
@@ -400,21 +374,6 @@ export default {
 /*hide scroll bars*/
 ::-webkit-scrollbar {
     display: none;
-}
-html {
-  -ms-overflow-style: none;
-}
-.bold {
-	font-weight: 700;
-}
-.dropdown-content li>a {
-	color: #2196F3;
-}
-.dropdown-content li>span {
-  color: #2196F3;
-}
-.dropdown-content {
-  z-index: 2000;
 }
 [v-cloak] { display: none }
 .headroom {
