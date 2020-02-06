@@ -8,12 +8,16 @@ const routes = [
   //   ]
   // },
     {
-      path: '/vis-vuedrag',
-      component: () => import('../testing/vis-vuedrag.vue')
+      path: '/graph',
+      component: () => import('../testing/vis-graph-test.vue')
+    },
+    {
+      path: '/t',
+      component: () => import('../testing/vis-timeline.vue')
     },
     {
       path: '/test',
-      component: () => import('../testing/vis-timeline.vue')
+      component: () => import('../testing/vis-graph-test.vue')
     },
     {
       path: '/cross-section',
@@ -47,6 +51,14 @@ const routes = [
       path: '/r/:uid',
       component: () => import('pages/resource.vue'),
       name: 'resource'
+    },
+    {
+      path: '/explore/:tagquery?',
+      component: () => import('pages/explore.vue'),
+    },
+    {
+      path: '/',
+      component: () => import('pages/explore.vue')
     },
     // { path: '/r/:uid', component: () => import('pages/resource.vue'), name: 'resource' }, // test - does it hit this first or load explore?
     {

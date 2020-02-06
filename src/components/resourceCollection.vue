@@ -14,7 +14,7 @@
         {src: 'http://example.org/xxl.jpg',thumbnail: 'http://example.org/sm2.jpg',w: 1200,h: 900}
     ]"></vue-picture-swipe> -->
 
-          <!-- cross section view -->
+          <!-- slider view -->
         <cross-section v-if="display=='slider'" :items="resources">
             <resource v-for="res in resources"
                 :resourcesPerRow="resourcesPerRow"
@@ -25,7 +25,7 @@
         </cross-section>
 
         <!-- card and list view -->
-        <isotope v-else ref="resourceBin" :list="resources" :options='{}'>
+        <isotope v-else ref="resourceBin" :list="resources" :options='{}'  v-images-loaded:on.progress="layout">
             <resource v-for="res in resources"
                 :resourcesPerRow="resourcesPerRow"
                 :display="display"
@@ -49,11 +49,16 @@ import resource from 'components/resource'
 import crossSection from 'components/cross-section'
 import Spinner from 'vue-simple-spinner'
 import isotope from 'vueisotope'
+import imagesLoaded from 'vue-images-loaded'
 
 export default {
     components: { resourceDisplayOptions, VuePictureSwipe, resource, Spinner, isotope, crossSection },
+    directives: { imagesLoaded },
     props: ['tagQuery', 'resources'],
     methods: {
+        layout() {
+            this.$refs.resourceBin.layout('masonry')
+        },
         updateOrder(order) {
             this.order = order;
         },
