@@ -1,9 +1,12 @@
+// #1
 :params {includedSets: ['Sku1yjYb-', 'B1c4loFWb'], language: "en" }
 
+// #2
+PROFILE
 MATCH (re:resource)-[:TAGGED_WITH]->(b:synSet)-[:IN_SET*0..2]->(synSet:synSet)
            WITH distinct re, collect(synSet.uid) AS parentTags
            WHERE all(tag IN $includedSets WHERE tag IN parentTags)
-           return *
+		   // return *
                          //  NOT synSet.uid IN {excludedSets} // this doesn't work...
            MATCH (re)-[:TAGGED_WITH]->(synSet:synSet)<-[synR:IN_SET]-(syn:tag)-[tlang:HAS_TRANSLATION]->(tlangNode:translation)
            WHERE
@@ -22,7 +25,6 @@ MATCH (re:resource)-[:TAGGED_WITH]->(b:synSet)-[:IN_SET*0..2]->(synSet:synSet)
              votes,
              re AS resource
 
-
 PROFILE
 MATCH (synSet:synSet)
 USING INDEX SEEK synSet:synSet(uid)
@@ -35,9 +37,9 @@ MATCH (tag) <-[:TAGGED_WITH]- (re)
 WITH DISTINCT re
 MATCH (re) -[:TAGGED_WITH]-> (synSet:synSet)
 WITH re, collect(synSet) AS reTags
-           return *
-WHERE all(tag IN $includedSets WHERE tag IN reTags) 
-           return *
+WHERE all(tag IN $includedSets WHERE tag IN reTags)
+return re
+        //    return *
  <-[synR:IN_SET]- (tag:tag)
 WHERE synR.order = 1
 MATCH (tag) -[tlang:HAS_TRANSLATION]-> (tlangNode)
