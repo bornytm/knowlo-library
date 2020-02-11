@@ -89,8 +89,10 @@ export default {
       this.$emit('update-order',x)
     },
     display(x) {
-      console.log('display update', x)
       this.$emit('update-display',x)
+    },
+    perRow(x) {
+      this.$emit('update-size',x)
     }
   },
   methods: {

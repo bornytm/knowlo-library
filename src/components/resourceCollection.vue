@@ -5,7 +5,7 @@
         <resource-display-options
             v-on:update-order="updateOrder"
             v-on:update-display="updateDisplay"
-            
+            v-on:update-size="updateSize"
         ></resource-display-options>
 
         <!-- photoSwipe for resource previews -->
@@ -57,7 +57,9 @@ export default {
     props: ['tagQuery', 'resources'],
     methods: {
         layout() {
-            this.$refs.resourceBin.layout('masonry')
+            if(this.$refs.resourceBin){
+                this.$refs.resourceBin.layout('masonry')
+            }
         },
         updateOrder(order) {
             this.order = order;
@@ -69,7 +71,11 @@ export default {
                     this.$refs.resourceBin.layout()
                 }, 200);
             }
-        }
+        },
+        updateSize(size) {
+            this.resourcesPerRow = size;
+            setTimeout( x => { this.layout() }, 100)
+        },
     },
     data () {
         return {

@@ -75,7 +75,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 .itemContainer {
     height: 100%;
@@ -113,9 +113,9 @@ export default {
     /* padding-left: 20px; */
     /* padding-right: 20px; */
 }
-/* hide progress bar on slider ? */
-{
-
+/* hide progress bar on slider  */
+.slider .q-slider__track {
+    width: 0!important;
 }
 
 template {

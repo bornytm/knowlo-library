@@ -52,7 +52,7 @@ export default {
           this.quickAdd()
         }
       } else {
-        // item.status = {includeIcon: true} // having to add item.status here feels dumb.
+        item.status = {includeIcon: true} // having to add item.status here feels dumb.
         this.$emit('select', item)
       }
     },

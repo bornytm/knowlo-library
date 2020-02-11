@@ -76,6 +76,12 @@ import firebaseui from 'firebaseui'
 import sidemenu from 'components/sideMenu'
 import VuePlyr from 'vue-plyr'
 import 'vue-plyr/dist/vue-plyr.css'
+import VueMeta from 'vue-meta'
+
+Vue.use(VueMeta, {
+  // optional pluginOptions
+  refreshOnceOnNavigation: true
+})
 
 Vue.use(VuePlyr)
 

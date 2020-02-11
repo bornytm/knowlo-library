@@ -176,7 +176,6 @@
           v-for="re in related"
           :settings="settings"
           v-on:selected="toTop"
-          v-on:changedDisplay="layout"
           :re="re"
           :key="re.resource.uid"
           :display="relatedDisplay"
@@ -205,6 +204,21 @@ export default {
   props: ['member','settings'],
   name: 'resourcev',
   components: { isotope, search, tag, resource, Flickity, addResource},
+  metaInfo: {
+      // title: 'My Example App',
+      // titleTemplate: '%s - Yay!',
+      // htmlAttrs: {
+      //   lang: 'en',
+      // },
+      meta: [
+        { property: 'og:title', content: resource.title, vmid: 'test', },
+        { property: 'og:description', content: 'howdyhowdy', vmid: 'test', },
+        { property: 'og:image', content: resource.mThumb, vmid: 'test', },
+        // { property: 'og:url', content: 'knowlo.io' + Vue.route.fullPath, vmid: 'test', },
+        // { name: 'description', content: 'Hello', vmid: 'test', },
+        // { name: 'description', content: 'Hello', vmid: 'test', }
+      ],
+    },
   data: function () {
     return {
       resource: {
@@ -233,7 +247,6 @@ export default {
       addResourceType: '',
       modalOpen: false,
       discussionFilter: ['insight', 'question', 'criticism', 'quote'], // which types of discussions should be displayed
-      tempIntervalID: '', // ID for layout() set interval (fix layout if images are loaded)
       filterIDs: { // setIDS for filtering by switch
         'insight': 'rJxPWooTO-',
         'question': 'B1pnQsYW-',
@@ -263,12 +276,6 @@ export default {
     },
     changeDisplay: function (disp) {
       this.discussionDisplay = disp
-      // weird to wrap a timeout with next tick, but css lags and screws up the layout after transistion
-      this.$nextTick(function () {
-        window.setTimeout(() => {
-          this.layout()
-        }, 375)
-      })
     },
     fetchResource: function () {
       this.$http.get('/api/resource/' + this.$route.params.uid + '/full', {
@@ -347,13 +354,6 @@ export default {
     addCreatedDiscussion: function (dis) {
       this.discussion.push(dis)
     },
-    layout: function () {
-      if (this.discussion.length > 0) {
-        this.$refs.discussionBin.layout('masonry')
-      }
-      this.$refs.relatedBin.layout('masonry')
-      this.$refs.rTagBin.layout('masonry')
-    },
     fetchRelated: function () {
       this.$nextTick(() => {
         this.$http.get('/api/resource/' + this.$route.params.uid + '/related', {
@@ -362,9 +362,6 @@ export default {
           }
         }).then(response => {
           this.related = response.data
-          window.setTimeout(() => {
-            this.layout()
-          }, 250)
         }, response => {
           // Materialize.toast('Something went wrong...are you online?', 4000)
         })
@@ -473,27 +470,13 @@ export default {
     }
   },
   mounted: function () {
+    console.log(this.$route)
     this.fetchResource()
     if (this.member.uid) {
       window.setTimeout(() => {
         this.markViewed()
       }, 5000) // 5 seconds is pretty arbitrary...
     }
-    // workaround as long as imagesLoaded() non-functional
-    this.tempIntervalID = setInterval(x => {
-      this.layout()
-    }, 3000)
-
-    $('.dropdown-button').dropdown({
-      inDuration: 300,
-      outDuration: 225,
-      constrainWidth: false, // Does not change width of dropdown to that of the activator
-      hover: true, // Activate on hover
-      // gutter: 0, // Spacing from edge
-      belowOrigin: false, // Displays dropdown below the button
-      alignment: 'right', // Displays dropdown with edge aligned to the left of button
-      stopPropagation: false // Stops event propagation
-    })
   },
   beforeRouteLeave: function (to, from, next) {
     $('body').css('overflow', 'auto')
@@ -510,13 +493,6 @@ export default {
     discussionFilter: function (a, b) {
       if (this.$refs.discussionBin) { // don't try to filter when there are no comments
         this.$refs.discussionBin.filter('type')
-      }
-    },
-    relatedDisplay: function (a, b) {
-      if (a !== b) {
-        setTimeout(() => {
-          this.layout()
-        }, 300)
       }
     },
     'member': function (member) {

@@ -13,10 +13,10 @@
         </transition-group>
 
         <!-- tag search -->
-        <search class ='col' exclude="" input-id="mainSearch" holder-text="Search" v-on:select=""></search>
+        <search class ='col' exclude="" input-id="mainSearch" holder-text="Search" v-on:select="addTag"></search>
         
         <!-- tag navigation/explorer -->
-        <tag-suggestions :tagQuery="tagQuery" v-on:add="test"></tag-suggestions>
+        <tag-suggestions :tagQuery="tagQuery" v-on:add="addTag"></tag-suggestions>
         <!-- <graph></graph> -->
 
         <!-- resource results  -->
@@ -41,8 +41,13 @@ export default {
         // this.fetchResources()
     },
     methods: {
-        test(x,y){
+        addTag(x){
             this.tagQuery.push(x)
+        },
+        removeTag(id) {
+            for (var i = this.tagQuery.length - 1; i >= 0; i--) {
+                if (this.tagQuery[i].setID === id) this.tagQuery.splice(i, 1)
+            }
         },
         prepResourceQuery(tags) { // takes tags and status and converts to query options object?
             let options = {
