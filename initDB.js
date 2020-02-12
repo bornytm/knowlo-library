@@ -28,7 +28,10 @@ module.exports = function(app, db){
     if(err){console.log(err)};
     console.log(constraint);
   });
-
+  db.constraints.uniqueness.createIfNone('synSet', 'uid', function(err, constraint) {
+    if(err){console.log(err)};
+    console.log(constraint);
+  });
   // set DB indexes
 
   db.index.createIfNone('translation', 'name', function(err, index) {
