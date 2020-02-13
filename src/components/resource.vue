@@ -51,7 +51,7 @@
       'card-content': display === 'card'}"
 			>
 			<router-link v-show='!editing' @click='selected' :to="{ name: 'resource', params: { uid: re.resource.uid }}">
-				<span :class="{'title': display === 'card'}">{{re.resource.title}}</span>
+				<span v-if="resourcesPerRow < 6" :class="{'title': display === 'card'}">{{re.resource.title}}</span>
 			</router-link>
       <q-input v-if="editing" v-model="re.resource.title" float-label="Title" type='textarea'/>
 
@@ -70,7 +70,7 @@
 		</div>
     <q-input v-if='editing' v-model="re.resource.text" float-label="Body Text" type='textarea'/>
 
-
+<!-- 
     <div v-if="display !== 'thumb' && !editing"
       class='vote'
       @click.stop.prevent=""
@@ -88,7 +88,7 @@
 			</div>
       <q-slider @change="qualityChange" color="orange"  v-model="displayQuality" :min="0" :max="1" :step="0.001" label :label-value="displayQuality | strr"/>
       <q-slider @change="complexityChange" color="blue" v-model="displayComplexity" :min="0" :max="1" :step="0.001" label :label-value="displayComplexity | strr"/>
-    </div>
+    </div> -->
 
 		<div v-if="display === 'card' && !editing" class='card-action'>
  			<span class='left card-bottom'><i class="tiny material-icons">visibility</i>{{trimNumber(re.resource.viewCount,1) || 0}}</span>

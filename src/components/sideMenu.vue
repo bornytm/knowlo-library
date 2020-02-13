@@ -14,7 +14,7 @@
     <li><a class="subheader"></a></li>
 		<li><div class="divider"></div></li>
     <li><router-link class="waves-effect" to="/about"><i class="fa fa-lg fa-info"></i>About</router-link></li>
-    <li><router-link class="waves-effect" to="/principals"><i class="far fa-lg fa-lightbulb"></i>Principals</router-link></li>
+    <li><a class="waves-effect" href="https://knowlo.org/principals"><i class="far fa-lg fa-lightbulb"></i>Principals</a></li>
     <li><router-link class="waves-effect" to="/getInvolved"><i class="fa fa-lg fa-users"></i>Get Involved</router-link></li>
     <li><router-link class="waves-effect" to="/legal"><i class="fa fa-lg fa-gavel"></i>Legal</router-link></li>
 		<li><router-link class="waves-effect" to="/settings"><i class="far fa-lg fa-user-cog"></i>Settings</router-link></li>

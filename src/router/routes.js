@@ -32,10 +32,6 @@ const routes = [
       component: () => import('pages/landing.vue')
     },
     {
-      path: '/principals',
-      component: () => import('pages/principals.vue')
-    },
-    {
       path: '/getInvolved',
       component: () => import('pages/getInvolved.vue')
     },

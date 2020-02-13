@@ -12,7 +12,7 @@
         
     </flick> 
 
-    <q-slider class='slider' v-model="slide" :min="0" :max="items.length - 1" @input="selectItem" />
+    <q-slider id='slider' v-model="slide" :min="0" :max="items.length - 1" @input="selectItem" />
   </div>
     
 </template>
@@ -103,7 +103,7 @@ export default {
   opacity: 1;
 } */
 
-.slider {
+#slider {
     width: 80%;
     margin: 0 auto;
     bottom: 40px;
