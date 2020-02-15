@@ -1,28 +1,5 @@
 
-const routes = [
-  // {
-  //   path: '/',
-  //   component: () => import('layouts/MyLayout.vue'),
-  //   children: [
-  //     { path: '', component: () => import('pages/Index.vue') }
-  //   ]
-  // },
-    {
-      path: '/graph',
-      component: () => import('../testing/vis-graph-test.vue')
-    },
-    {
-      path: '/t',
-      component: () => import('../testing/vis-timeline.vue')
-    },
-    {
-      path: '/test',
-      component: () => import('../testing/vis-graph-test.vue')
-    },
-    {
-      path: '/cross-section',
-      component: () => import('components/cross-section.vue')
-    },
+const mainRoutes = [
     {
       path: '/status',
       component: () => import('pages/status.vue')
@@ -44,38 +21,35 @@ const routes = [
       component: () => import('pages/settings.vue')
     },
     {
-      path: '/r/:uid',
+      path: '/r/:uid', // heloooooooo
       component: () => import('pages/resource.vue'),
       name: 'resource'
     },
+    // {
+    //   path: '/explore/:tagquery?',
+    //   component: () => import('pages/explore.vue'),
+    // },
+    // {
+    //   path: '/',
+    //   component: () => import('pages/explore.vue')
+    // },
     {
-      path: '/explore/:tagquery?',
-      component: () => import('pages/explore.vue'),
-    },
-    {
-      path: '/',
-      component: () => import('pages/explore.vue')
-    },
-    // { path: '/r/:uid', component: () => import('pages/resource.vue'), name: 'resource' }, // test - does it hit this first or load explore?
-    {
-        path: '/explore/:tagquery?',
+        path: '/:tagquery?',
         component: () => import('pages/explore.vue'),
         name: 'explore',
         children: [
-          { path: '/m/:uid', component: () => import('pages/member.vue'), name: 'member' },
-          { path: '/r/:uid', component: () => import('pages/resource.vue'), name: 'resource' },
+          { path: 'r/:uid', component: () => import('pages/resource.vue'), name: 'resourceSub' },
           { path: '/t/:name/:uid?', component: () => import('pages/tag.vue'), name: 'tag' },
-          { path: '/addResource', component: () => import('components/addResource.vue'), name: 'addResource' }
         ]
       }
 ]
 
 // Always leave this as last one
 if (process.env.MODE !== 'ssr') {
-  routes.push({
+  mainRoutes.push({
     path: '*',
     component: () => import('pages/Error404.vue')
   })
 }
 
-export default routes
+export default mainRoutes

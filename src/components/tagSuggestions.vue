@@ -1,9 +1,12 @@
 <template>
   <div class='all'>
-  <div class='options'>
+  <div class='options center'>
     <!-- <q-radio v-model="displayed" val="base" label="Base Tags" /> -->
-    <q-radio v-model="displayed" val="tags" label="Tags" />
-    <q-radio v-model="displayed" val="groups" label="Groups" />
+    <q-radio v-model="displayed" val="tags" label="Related Tags" />
+    <q-radio v-model="displayed" val="groups" label="Related Groups" />
+    <q-radio v-model="displayed" val="Time" label="Time" />
+    <q-radio v-model="displayed" val="Size" label="Size" />
+    <q-radio v-model="displayed" val="Types" label="Types" />
     <!-- <q-radio v-model="displayed" val="disciplines" label="disciplines" /> -->
   </div>
   <q-btn class='back' color='primary' small flat round v-show='displayed === "subGroup"' @click="showAllGroups">
@@ -63,51 +66,31 @@ import flick from 'components/flick'
 import isotope from 'vueisotope'
 import {QRadio, QBtn, QIcon} from 'quasar'
 import crossSection from 'components/cross-section'
+import tagAPI from '../api/tags'
 
-
-// select middle cell -- emit ready viaflick component? listen here and select
-// this.$nextTick(() => {
-//   console.log('in ticket')
-//   this.$refs.sugg.selectCell(Math.round(this.tags.length / 2), false, false)
-// })
 export default {
   name: 'tagSuggestions',
   components: { tag, isotope, flick, crossSection },
   props: ['tagQuery', 'settings'],
-  watch: {
-        tags: function (x) {
-          
-            this.$refs.sugg.destroy()
-            this.$nextTick(() => {
-                this.$refs.sugg.init()
-
-            })           
-        }
-    },
-  data () {
+  data() {
     return {
       show: true,
       fetching: false, // currently fetching
       tags: [],
       type: 'none',
-      displayed: 'tags', // TODO save in cookie
+      displayed: 'tags', // TODO save in cookie?
       baseUID: 'rJlh4ZPpNG',
-      groupSet: [],
-      sugg: {
-        pageDots: false,
-        prevNextButtons: false,
-        accessibility: false // to prevent jumping when focused
-      },
+      groupSet: []
     }
   },
   methods: {
-    showGroup (index) {
+    showGroup(index) {
       if(this.groupSet[index]){
         this.tags = this.groupSet[index].contains
         this.displayed = 'subGroup'
       }
     },
-    showAllGroups () {
+    showAllGroups() {
       this.tags = this.groupSet.map(x => {
         x.group[0].connections = x.contains.length // show number of tags contained
         return x.group[0]
@@ -117,35 +100,56 @@ export default {
       })
       this.displayed = 'groups'
     },
-    addTag (tag) {
+    addTag(tag) {
       this.$emit('add', tag) // with pin/include/focus flag
     },
-    fetch () { // determine which method to get
-      if (!this.fetching) { // TODO: fix me. This prevents isotope from screwing up (breaking due to multiple assignments of the tag suggestion array) but also prevents the right tag suggestions from loading after loading the tag query from cookies
+    fetch() { // determine which method to get
+      if(!this.fetching) { // TODO: fix me. This prevents isotope from screwing up(breaking due to multiple assignments of the tag suggestion array) but also prevents the right tag suggestions from loading after loading the tag query from cookies
         this.tags = []
-        if (this.displayed === 'subGroup') {
+        if(this.displayed === 'subGroup') {
           this.displayed = 'groups'
         }
-        if (this.displayed === 'base') {
+        if(this.displayed === 'base') {
           this.getBase()
-        } else if (this.displayed === 'groups') {
+        } else if(this.displayed === 'groups') {
           this.getGroups()
-        } else if (this.tagQuery.length > 0) {
+        }else if(this.displayed === 'Time') { // save in local storage if already fetched? no reason to hit the db more than necessary...
+          tagAPI.getContains('BJNgnDdk-')
+                .then(response => {
+                  console.log(response)
+                   this.tags = response.data
+                })
+                .catch(error => console.log(error))
+        }else if(this.displayed === 'Size') {
+          tagAPI.getContains('BJgVf2ZQYW')
+                .then(response => {
+                  console.log(response)
+                   this.tags = response.data
+                })
+                .catch(error => console.log(error))
+        }else if(this.displayed === 'Types') {
+          tagAPI.getContains('HywG30RSyW')
+                .then(response => {
+                  console.log(response)
+                   this.tags = response.data
+                })
+                .catch(error => console.log(error))
+        } else if(this.tagQuery.length > 0) {
           this.getTopRelated()
         } else {
           this.getTopAll()
         }
       }
     },
-    getBase () {
+    getBase() {
       this.fetching = true
       this.tagSuggestions = []
       this.$http.get('/api/set/' + 'rJgyQNK64f' + '/crossSection', { // hard coding base-set uid
         params: {
           languageCode: 'en'
         },
-        before (request) {
-          if (this.previousRequest) {
+        before(request) {
+          if(this.previousRequest) {
             this.previousRequest.abort()
           }
           this.previousRequest = request
@@ -157,10 +161,10 @@ export default {
         this.fetching = false
       })
     },
-    getGroups () {
+    getGroups() {
       this.fetching = true
       var include = []
-      for (var tagIndex = 0; tagIndex < this.tagQuery.length; tagIndex++) {
+      for(var tagIndex = 0; tagIndex < this.tagQuery.length; tagIndex++) {
         include.push(this.tagQuery[tagIndex].setID)
       }
       this.$http.get('/api/set/', {
@@ -170,8 +174,8 @@ export default {
           exclude: [''],
           type: this.displayed
         },
-        before (request) {
-          if (this.previousRequest) {
+        before(request) {
+          if(this.previousRequest) {
             this.previousRequest.abort()
           }
           this.previousRequest = request
@@ -182,11 +186,11 @@ export default {
         this.fetching = false
       })
     },
-    getTopRelated () {
+    getTopRelated() {
       this.fetching = true
       let include = []
       // var exclude = []
-      for (var tagIndex = 0; tagIndex < this.tagQuery.length; tagIndex++) {
+      for(var tagIndex = 0; tagIndex < this.tagQuery.length; tagIndex++) {
         include.push(this.tagQuery[tagIndex].setID)
       }
       this.$http.get('/api/set/', {
@@ -202,7 +206,7 @@ export default {
         this.fetching = false
       })
     },
-    getTopAll () {
+    getTopAll() {
       this.fetching = true
       this.$http.get('/api/tag/most', {
         params: {
@@ -215,18 +219,18 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted() {
     // this.flicker()
     setTimeout(() => { // wait for vue-isotope to be ready
       this.fetch()
     }, 100)
   },
   watch: {
-    tagQuery (val) {
+    tagQuery(val) {
       this.fetch()
     },
-    displayed (val) {
-      if (val !== 'subGroup') {
+    displayed(val) {
+      if(val !== 'subGroup') {
         this.fetch()
       }
     }

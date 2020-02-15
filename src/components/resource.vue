@@ -34,13 +34,13 @@
       'margin20': display==='thumb' || display==='list' ,
       'inline mb': display==='list'}"
 			>
-			<router-link @click='selected' :to="{ name: 'resource', params: { uid: re.resource.uid }}">
+			<router-link @click='selected' :to="{ name: 'resourceSub', params: { uid: re.resource.uid }}">
 				<img @click='selected' :src="re.resource.mThumb" :stop-propagation="true" />
 			</router-link>
       <q-input v-if="editing" v-model="re.resource.mThumb" float-label="Thumbnail URL" type='url'/>
       <q-input v-if="editing" v-model="re.resource.url" float-label="URL" type='url' />
 		</div>
-		<router-link @click='selected' v-if="re.resource.text && re.resource.text.length > 0 && display =='thumb'" :to="{ name: 'resource', params: { uid: re.resource.uid }}">
+		<router-link @click='selected' v-if="re.resource.text && re.resource.text.length > 0 && display =='thumb'" :to="{ name: 'resourceSub', params: { uid: re.resource.uid }}">
 			<div class="margin20 hoverable thumb">
 				<span >{{re.resource.text.substring(0,5)}}...</span>
 			</div>
@@ -50,7 +50,7 @@
       'truncate inline tmargin titleText': display === 'list',
       'card-content': display === 'card'}"
 			>
-			<router-link v-show='!editing' @click='selected' :to="{ name: 'resource', params: { uid: re.resource.uid }}">
+			<router-link v-show='!editing' @click='selected' :to="{ name: 'resourceSub', params: { uid: re.resource.uid }}">
 				<span v-if="resourcesPerRow < 6" :class="{'title': display === 'card'}">{{re.resource.title}}</span>
 			</router-link>
       <q-input v-if="editing" v-model="re.resource.title" float-label="Title" type='textarea'/>
@@ -64,7 +64,7 @@
     :class="{
     'titleText truncate': display === 'list' && $route.name != 'tag'}"
     >
-			<router-link @click='selected' :to="{ name: 'resource', params: { uid: re.resource.uid }}">
+			<router-link @click='selected' :to="{ name: 'resourceSub', params: { uid: re.resource.uid }}">
 				{{re.resource.text.substring(0,300)}}
 			</router-link>
 		</div>
@@ -119,7 +119,7 @@ import $ from 'jquery'
 // import addResource from '@/components/addResource'
 
 export default {
-  name: 'resource',
+  name: 'resourceComponent',
   props: {
     re: Object,
     display: String,
@@ -250,6 +250,13 @@ export default {
 </script>
 
 <style scoped>
+
+.hoverable {
+  box-shadow: none!important;
+}
+.hoverable:hover {
+  box-shadow: 0 8px 17px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19)!important;
+}
 .q-slider {
   margin-left: 7px;
   margin-right: 7px;
@@ -276,6 +283,10 @@ export default {
 .resource a {color:black;}
 .resource {
   /* max-height: 100%; */
+}
+.listFullWidth {
+  width: 100%!important;
+  margin-left: 0%!important;
 }
 .list span {
   font-size: 15px;

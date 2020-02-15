@@ -17,20 +17,20 @@
 
     <!--  youtube/vimeo -->
 
-    <div v-if='resource.displayType=="embed"' class="vid-container-container">
+    <!-- <div v-if='resource.displayType=="embed"' class="vid-container-container">
       <div class="video-container ">
         <iframe :src="'https://youtube.com/embed/'+resource.ytID+'?rel=0&autoplay=1'"  frameborder=”0″ allowfullscreen></iframe>
       </div>
-    </div>
+    </div> -->
 
-    <!-- <vue-plyr ref="plyr":options='plyrOptions' v-if='true'>
+    <vue-plyr ref="plyr":options='plyrOptions' v-if='resource.displayType=="embed"'>
       <div class="plyr__video-embed">
         <iframe
           :src="'https://youtube.com/embed/'+resource.ytID+'?iv_load_policy=3&modestbranding=1&playsinline=1&showinfo=0&rel=0&enablejsapi=1'"
           allowfullscreen allowtransparency allow="autoplay">
         </iframe>
       </div>
-    </vue-plyr> -->
+    </vue-plyr>
 
     <!-- website -->
     <div v-if='resource.displayType=="webpage"' class="web-container">
@@ -198,11 +198,12 @@ import search from 'components/search'
 import isotope from 'vueisotope'
 import Flickity from 'vue-flickity'
 import L from 'leaflet'
-const { setScrollPosition } = scroll
+import { scroll } from 'quasar'
+const { getScrollPosition, setScrollPosition } = scroll
 
 export default {
   props: ['member','settings'],
-  name: 'resourcev',
+  name: 'resourcePage',
   components: { isotope, search, tag, resource, Flickity, addResource},
   metaInfo: {
       // title: 'My Example App',
@@ -328,7 +329,7 @@ export default {
               $('body').css('overflow', 'hidden')
             },
             complete: () => {
-              this.$router.push('/')
+              this.$router.push('/e')
             }
           }).modal('open')
         }
@@ -472,11 +473,11 @@ export default {
   mounted: function () {
     console.log(this.$route)
     this.fetchResource()
-    if (this.member.uid) {
-      window.setTimeout(() => {
-        this.markViewed()
-      }, 5000) // 5 seconds is pretty arbitrary...
-    }
+    // if (this.member.uid) {
+    //   window.setTimeout(() => {
+    //     this.markViewed()
+    //   }, 5000) // 5 seconds is pretty arbitrary...
+    // }
   },
   beforeRouteLeave: function (to, from, next) {
     $('body').css('overflow', 'auto')
@@ -507,6 +508,9 @@ export default {
 </script>
 
 <style>
+.leaflet-container {
+  background: black;
+}
 .metaNav {
   color: white;
 }

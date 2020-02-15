@@ -631,7 +631,6 @@ function most(req,res){
              + "ORDER BY score DESC limit 10"
   db.query(cypher, {code: req.query.languageCode || 'en'},function(err, result) {
     if (err) console.log(err);
-    console.log('in most')
       res.send(result) // resource not found
     })
   }

@@ -78,6 +78,7 @@ module.exports = function (ctx) {
         // 'QItemMain',
         // 'QItemSide',
         'QPageScroller',
+        'QSpinner',
         'QInfiniteScroll',
         'QTooltip',
         'QInput',

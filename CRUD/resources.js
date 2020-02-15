@@ -54,7 +54,7 @@ module.exports = function(app, db){
     if(parseInt(req.query.limit) > 50){
       req.query.limit = 50;
     }
-
+    console.log(req.query)
     var cypher = "MATCH (re:resource)-[:TAGGED_WITH]->(b:synSet)-[:IN_SET*0..2]->(synSet:synSet) "
            + "WITH distinct re, collect(synSet.uid) AS parentTags "
            + "WHERE all(tag IN {includedSets} WHERE tag IN parentTags) "              //  + "NOT synSet.uid IN {excludedSets} " // this doesn't work...
@@ -74,7 +74,7 @@ module.exports = function(app, db){
              + "{quality: gq , complexity: gc } AS globalVote, "
              + "votes, "
              + "re AS resource ";
-             // detagine orderby
+             // define orderby
              if(req.query.orderby === 'quality'){
                cypher += "ORDER BY COALESCE(globalVote.quality, -1) ";//IS NOT NULL, globalVote.quality DESC  "
              } else if (req.query.orderby === 'complexity') {
@@ -102,14 +102,12 @@ module.exports = function(app, db){
          if (typeof req.query.exclude === "undefined") {
              req.query.exclude = [];
          }
-        console.log(cypher)
-        console.log( req.query.include)
         db.query(cypher, {
             includedSets: req.query.include || [],
             excludedSets: req.query.exclude || [],
             skip: parseInt(req.query.skip),
             limit: parseInt(req.query.limit),
-            language: 'en'
+            language: req.query.languageCode || 'en'
         }, function(err, result) {
 
       if (err) {console.log(err);res.status(500).send()};
