@@ -21,7 +21,7 @@
         </cross-section>
 
         <!-- card and list view -->
-        <isotope v-else ref="resourceBin" :list="resources" v-images-loaded:on.progress="layout" :options="opt()" v-on:sort="o" v-on:layout="0">
+        <isotope v-else ref="resourceBin" :list="resources" v-images-loaded:on.progress="layout" :options="getOptions()">
             <resource v-for="res in resources"
                 :resourcesPerRow="resourcesPerRow"
                 :display="display"
@@ -59,7 +59,7 @@ export default {
         console.log(  this.$refs.resourceBin)
     },
     methods: {
-        opt() {
+        getOptions() {
             return {
                 sortAscending: false,
                 getSortData: {
@@ -85,13 +85,8 @@ export default {
                 }
             }
         },
-        o(x){
-            console.log("i've been sorted: ",x)
-            // this.$refs.resourceBin.sort(this.sort)
-        },
         order(){
-            console.log(this.descending)
-            console.log(this.$refs.resourceBin.options.sortAscending)
+
             this.$refs.resourceBin.options.sortAscending = !this.descending
             // this.opt.sortAscending = !this.descending
             // this.$refs.resourceBin.updateSortData()
@@ -121,7 +116,7 @@ export default {
             // this.$emit('update')
             setTimeout( x => { this.layout() }, 100)
         },
-        updateDescending(asc){
+        updateDescending(des){
             this.$emit('update')
         }
     },

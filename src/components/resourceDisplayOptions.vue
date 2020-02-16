@@ -29,29 +29,29 @@
           <span class="right orderby">
             <q-btn-dropdown auto-close color="primary" flat dropdown-icon="none">
               <template v-slot:label>
-                  {{orderBy}}
+                  {{orderby}}
                   <q-tooltip :disable="!$q.cookies.get('showToolTips')" :delay="500" :offset="[0, 5]">Change Resource Order</q-tooltip>
               </template> 
               <q-list>
-                <q-item clickable @click="orderBy = 'quality'">
+                <q-item clickable @click="orderby = 'quality'">
                   <q-item-section >quality</q-item-section>
                 </q-item>
-                <q-item clickable @click="orderBy = 'complexity'">
+                <q-item clickable @click="orderby = 'complexity'">
                   <q-item-section >complexity</q-item-section>
                 </q-item>
-                <q-item clickable @click="orderBy = 'added'">
+                <q-item clickable @click="orderby = 'added'">
                   <q-item-section >date added</q-item-section>
                 </q-item>
-                <q-item clickable @click="orderBy = 'votes'">
+                <q-item clickable @click="orderby = 'votes'">
                   <q-item-section >votes</q-item-section>
                 </q-item>
-                <q-item clickable @click="orderBy = 'views'">
+                <q-item clickable @click="orderby = 'views'">
                   <q-item-section >views</q-item-section>
                 </q-item>
-                <q-item disable @click="orderBy = 'activity'">
+                <q-item disable @click="orderby = 'activity'">
                   <q-item-section >responses</q-item-section>
                 </q-item>
-                <q-item disable @click="orderBy = 'time'">
+                <q-item disable @click="orderby = 'time'">
                   <q-item-section >time to view</q-item-section>
                 </q-item>
               </q-list>         
@@ -79,19 +79,16 @@
 export default {
   data () {
     return {
-      orderBy: "quality",
+      orderby: this.$q.localStorage.getItem('exploreOrder') || 'quality',
       showViewed: true,
-      display: "card",
-      descending: true,
-      perRow: 3,
+      display: this.$q.localStorage.getItem('exploreDisplay') || "card",
+      descending: typeof (this.$q.localStorage.getItem('exploreDescending')) === 'Boolean'? true : this.$q.localStorage.getItem('exploreDescending'),
+      perRow: this.$q.localStorage.getItem('explorePerRow') || 4,
       sizePopup: null
     }
   },
   watch: {
-    orderBy(x) {
-    
-      console.log('in orderby')
-   
+    orderby(x) {
       if(this.$route.name == 'explore'){ // is this dumb? what's the alternative?
         try {
           this.$q.localStorage.set('exploreOrder', x)    
@@ -105,13 +102,20 @@ export default {
 
     },
     display(x) {
+      if(this.$route.name == 'explore'){ 
+        try {
+          this.$q.localStorage.set('exploreDisplay', x)    
+        } catch (e) {
+        // data wasn't successfully saved due to
+        // a Web Storage API error
+        }
+      }
       this.$emit('update-display',x)
     },
     perRow(x) {
       this.$emit('update-size',x)
     },
     descending (x){
-      this.$emit('update-descending',x)
       if(this.$route.name == 'explore'){ // is this dumb? what's the alternative?
         try {
           this.$q.localStorage.set('exploreDescending', x)    
@@ -120,13 +124,14 @@ export default {
         // a Web Storage API error
         }
       }
+      this.$emit('update-descending',x)
       this.orderNotification()
     }
   },
   methods: {
     orderNotification() {
       this.$q.notify({
-        message: 'Order by ' + this.orderBy + ', ' + (this.descending ? 'high to low' : 'low to high'),
+        message: 'Order by ' + this.orderby + ', ' + (this.descending ? 'high to low' : 'low to high'),
         timeout: 1500,
         position: 'bottom-left',
       })

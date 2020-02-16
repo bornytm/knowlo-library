@@ -21,7 +21,7 @@
         <!-- resource results  -->
         <q-layout>
         <q-infinite-scroll ref='infiniteScroll' @load="more" :offset="250">
-            <resource-collection v-on:update="orderUpdate" :resources="resources" :sort="sort" :descending="descending"></resource-collection>
+            <resource-collection v-on:update="orderUpdate" :resources="resources" :sort="sort" :descending="descending" :display="display"></resource-collection>
              <template v-slot:loading>
                 <div class="row justify-center q-my-md">
                     <q-spinner color="primary" size="40px" />
@@ -57,11 +57,11 @@ export default {
         },
         orderUpdate(){
 
-            if(this.noMore){
-                this.descending = this.$q.localStorage.getItem('exploreDescending')
-                this.sort = this.$q.localStorage.getItem('exploreOrder') 
+            if(this.noMore){ 
+                this.descending = this.$q.localStorage.getItem('exploreDescending') //used for local sorting (without going to db?)
+                this.sort = this.$q.localStorage.getItem('exploreOrder') //used for local sorting (without going to db?)
             } else {
-                this.fetchResources({})
+                this.fetchResources()
             }
         },
         removeTag(id) {
@@ -102,14 +102,18 @@ export default {
                 this.fetchResources(options, done)
             }
         },
-        resQueryOptions(infinite) { // takes tags ids and status and converts to query options object? gets others from cookies/storage?
-            // defaults
+        resQueryOptions(infinite) { 
+            // takes tags ids and status and converts to query options object? 
+            // gets others from cookies/storage?
+            // the default values are duplicated three times... explore, disp options, and api
+            
             let options = {
                 include: [],
                 exclude: [],
                 skip: 0,
-                limit: 30,
-                orderBy: this.$q.localStorage.getItem('exploreOrder') || 'quality'
+                limit: 30, // base on resources per row and mobile v desktop?
+                orderby: this.$q.localStorage.getItem('exploreOrder') || 'quality',
+                descending: typeof (this.$q.localStorage.getItem('exploreDescending')) === 'boolean'? this.$q.localStorage.getItem('exploreDescending') : true
             }
 
             // infinite scrolling
@@ -124,7 +128,6 @@ export default {
                     options.exclude.push(this.tagQuery[tag].setID)
                 }
             }
-            
             return options
         }
     },
@@ -140,6 +143,7 @@ export default {
             infinite: false,
             sort: '',
             descending: '',
+            display: this.$q.localStorage.getItem('exploreDisplay') || 'card',
             noMore: false // flag for no more related resources
         }
     }
