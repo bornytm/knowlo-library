@@ -16,16 +16,15 @@
   <transition type='fade'>
     <cross-section id="tagS" :items="tags">
 
-      <div v-for="tag, i in tags">
+      <div v-for="(tag, index) in tags"  :key="tag.tag.uid+index">
         <tag :tag="tag"
         :display="'thumb'"
         :settings='settings'
-        :key="tag.tag.uid+i"
         v-on:include="addTag(tag)"
         v-on:pin="addTag(tag)"
         v-on:focus="addTag(tag)"
         hide="lens remove"
-        v-on:main="showGroup(i)"
+        v-on:main="showGroup(index)"
         >
         </tag>
       </div>

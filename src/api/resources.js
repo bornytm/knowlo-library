@@ -7,17 +7,21 @@ export default {
     // let tag = ['Syh41sK--']
     
     // let include = tag[Math.floor(Math.random() * tag.length)]
+    // console.log(options.include.length)
+  
+    if(typeof options == 'undefined'){
+      options = {}
+    }
     let params = {
       languageCode: 'en',
-      include: options.include || [],
+      include: !options.include || options.include.length === 0? ['HywG30RSyW'] : options.include,
       exclude: [],
       // showViewed: this.showViewed, // option only if user is logged in
       skip: options.skip || 0,
       limit: options.limit || 10,
-      orderby: options.orderBy || "votes",
+      orderby: options.orderBy || "quality",
       descending: options.descending || false
     }
-    console.log(params)
     return axios.get('/api/resource', {
       params: params,
       before(request) { // abort current request, if there is one

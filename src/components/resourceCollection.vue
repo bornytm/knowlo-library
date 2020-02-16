@@ -1,20 +1,16 @@
 <template>
     <div>
 
-        <!-- resource view options -->
+        <!-- resource view options -- is this a dumb way to organize? -->
         <resource-display-options
             v-on:update-order="updateOrder"
             v-on:update-display="updateDisplay"
             v-on:update-size="updateSize"
+            v-on:update-descending="updateDescending"
         ></resource-display-options>
-
-        <!-- photoSwipe for resource previews -->
-        <!-- <vue-picture-swipe :items="[
-        {src: 'http://example.org/xl.jpg',thumbnail: 'http://example.org/sm1.jpg',w: 600,h: 400, title: 'Will be used for caption'},
-        {src: 'http://example.org/xxl.jpg',thumbnail: 'http://example.org/sm2.jpg',w: 1200,h: 900}
-    ]"></vue-picture-swipe> -->
-
-          <!-- slider view -->
+        <div>{{resources.length}}</div>
+        
+        <!-- slider view -->
         <cross-section v-if="display=='slider'" :items="resources">
             <resource v-for="res in resources"
                 :resourcesPerRow="resourcesPerRow"
@@ -25,7 +21,7 @@
         </cross-section>
 
         <!-- card and list view -->
-        <isotope v-else ref="resourceBin" :list="resources" :options='{}'  v-images-loaded:on.progress="layout">
+        <isotope v-else ref="resourceBin" :list="resources" v-images-loaded:on.progress="layout" :options="opt()" v-on:sort="o" v-on:layout="0">
             <resource v-for="res in resources"
                 :resourcesPerRow="resourcesPerRow"
                 :display="display"
@@ -33,10 +29,7 @@
                 :re="res"
             ></resource>
         </isotope>
-
-        <!-- <Spinner v-show='loadingResources'></Spinner> -->
-
-      
+    
 
     </div>
 </template>
@@ -44,25 +37,75 @@
 <script>
 
 import resourceDisplayOptions from 'components/resourceDisplayOptions'
-import VuePictureSwipe from 'vue-picture-swipe'
 import resource from 'components/resource'
 import crossSection from 'components/cross-section'
-import Spinner from 'vue-simple-spinner'
 import isotope from 'vueisotope'
 import imagesLoaded from 'vue-images-loaded'
 
 export default {
-    components: { resourceDisplayOptions, VuePictureSwipe, resource, Spinner, isotope, crossSection },
+    components: { resourceDisplayOptions, resource, isotope, crossSection },
     directives: { imagesLoaded },
-    props: ['tagQuery', 'resources'],
+    props: ['tagQuery', 'resources', 'sort','descending'],
+    watch: {
+        descending: function(x) {
+            console.log('in descending watch. descending:', !this.descending)
+            this.order(x)
+        },
+        sort: function(x) {
+            this.order(x)
+        }
+    },
+    mounted(){
+        console.log(  this.$refs.resourceBin)
+    },
     methods: {
+        opt() {
+            return {
+                sortAscending: false,
+                getSortData: {
+                    quality: function(res) {
+                        return res.globalVote.quality 
+                    },
+                    complexity: function(res) {
+                        return res.globalVote.complexity
+                    },
+                    added: function(res) {
+                        return res.resource.dateAdded 
+                    },
+                    votes: 'votes',
+                    views: function(res) {
+                        return res.resource.viewCount 
+                    },
+                    // 'activity': function(res) {
+                    //     return res. 
+                    // },
+                    // 'time': function(res) {
+                    //     return res.
+                    // },
+                }
+            }
+        },
+        o(x){
+            console.log("i've been sorted: ",x)
+            // this.$refs.resourceBin.sort(this.sort)
+        },
+        order(){
+            console.log(this.descending)
+            console.log(this.$refs.resourceBin.options.sortAscending)
+            this.$refs.resourceBin.options.sortAscending = !this.descending
+            // this.opt.sortAscending = !this.descending
+            // this.$refs.resourceBin.updateSortData()
+            this.$refs.resourceBin.sort(this.sort)
+                        console.log(this.$refs.resourceBin.options.sortAscending)
+
+        },
         layout() {
             if(this.$refs.resourceBin){
                 this.$refs.resourceBin.layout('masonry')
             }
         },
         updateOrder(order) {
-            this.order = order;
+            this.$emit('update')
         },
         updateDisplay(display) {
             this.display = display;
@@ -71,16 +114,22 @@ export default {
                     this.$refs.resourceBin.layout()
                 }, 200);
             }
+            // this.$emit('update')
         },
         updateSize(size) {
             this.resourcesPerRow = size;
+            // this.$emit('update')
             setTimeout( x => { this.layout() }, 100)
         },
+        updateDescending(asc){
+            this.$emit('update')
+        }
     },
     data () {
         return {
             display: 'card',
-            resourcesPerRow: 3
+            resourcesPerRow: 3,
+            
         }
     }
 

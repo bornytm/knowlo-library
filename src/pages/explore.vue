@@ -19,8 +19,9 @@
         <tag-suggestions :tagQuery="tagQuery" v-on:add="addTag"></tag-suggestions>
 
         <!-- resource results  -->
-        <q-infinite-scroll @load="more" :offset="250">
-            <resource-collection :resources="resources" ></resource-collection>
+        <q-layout>
+        <q-infinite-scroll ref='infiniteScroll' @load="more" :offset="250">
+            <resource-collection v-on:update="orderUpdate" :resources="resources" :sort="sort" :descending="descending"></resource-collection>
              <template v-slot:loading>
                 <div class="row justify-center q-my-md">
                     <q-spinner color="primary" size="40px" />
@@ -28,11 +29,11 @@
             </template>
         </q-infinite-scroll>
 
-        <span v-if='noMore'>aint' no mo</span>
-        <!-- <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
+        <h1 v-if='noMore'>aint' no mo</h1>
+        <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
            <q-btn fab icon="keyboard_arrow_up" color="primary" />
-        </q-page-scroller> -->
-
+        </q-page-scroller>
+        </q-layout>
     </div>
 </template>
 
@@ -47,33 +48,59 @@ import resAPI from '../api/resources'
 
 export default {
     components: { search, tagSuggestions, resourceCollection, tag },
+    mounted () {
+        // inital fetch?
+    },
     methods: {
         addTag(x){
-            this.tagQuery.push(x)
+            this.tagQuery.push(x)  // check if it's alreay there before adding?
+        },
+        orderUpdate(){
+
+            if(this.noMore){
+                this.descending = this.$q.localStorage.getItem('exploreDescending')
+                this.sort = this.$q.localStorage.getItem('exploreOrder') 
+            } else {
+                this.fetchResources({})
+            }
         },
         removeTag(id) {
             for (var i = this.tagQuery.length - 1; i >= 0; i--) {
                 if (this.tagQuery[i].setID === id) this.tagQuery.splice(i, 1)
             }
         },
-        more(index, done){
-            this.noMore = false
-            console.log('in more')
-            let options = this.resQueryOptions(true)
+        fetchResources(options, callback){
+            // these if statements feel a little dumb...is taking in options and/or callback dumb? 
+            // currently used to let infinite scroll know the query is done
+            if(typeof options == 'undefined') { 
+                options = this.resQueryOptions(false)
+            }
+            if(typeof callback == 'undefined') {
+                callback = function dummy(){}
+            }
             resAPI.getResourcesRelatedToTags(options)
                 .then(resources => {
-                    console.log(resources)
-                    console.log(resources.data.length)
                     if(resources.data.length == 0){
                         this.noMore = true
                     } else if(options.skip > 0){
-                        this.resources.push(resources.data) 
+                        this.resources = this.resources.concat(resources.data) 
+                        this.noMore = false
                     } else {
                         this.resources = resources.data
+                        this.noMore = false
                     }
-                    done()
+                    callback(resources)
                 })
                 .catch(error => console.log(error))
+        },
+        more(index, done){
+            console.log('in more')
+            if(this.noMore){
+               done()
+            } else {
+                let options = this.resQueryOptions(true)
+                this.fetchResources(options, done)
+            }
         },
         resQueryOptions(infinite) { // takes tags ids and status and converts to query options object? gets others from cookies/storage?
             // defaults
@@ -82,7 +109,7 @@ export default {
                 exclude: [],
                 skip: 0,
                 limit: 30,
-                orderBy: 'quality'
+                orderBy: this.$q.localStorage.getItem('exploreOrder') || 'quality'
             }
 
             // infinite scrolling
@@ -111,6 +138,8 @@ export default {
             tagQuery: [],
             resources: [],
             infinite: false,
+            sort: '',
+            descending: '',
             noMore: false // flag for no more related resources
         }
     }

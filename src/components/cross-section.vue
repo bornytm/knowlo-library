@@ -12,7 +12,7 @@
         
     </flick> 
 
-    <q-slider id='slider' v-model="slide" :min="0" :max="items.length - 1" @input="selectItem" />
+    <q-slider id='slider' class='cs-slider' v-model="slide" :min="0" :max="items.length - 1" @input="selectItem" />
   </div>
     
 </template>
@@ -82,6 +82,7 @@ export default {
     width: 100%;
 }
 
+
 /* applied directly on items watch */
 /* 
 .cell {
@@ -114,7 +115,7 @@ export default {
     /* padding-right: 20px; */
 }
 /* hide progress bar on slider  */
-.slider .q-slider__track {
+.cs-slider .q-slider__track {
     width: 0!important;
 }
 

@@ -18,8 +18,8 @@
           </q-btn>
           <q-btn class="viewBtn" flat round  ><i class="material-icons">photo_size_select_large</i>
             <q-tooltip :disable="!this.$q.cookies.get('showToolTips')" :delay="500" :offset="[0, 5]">Change Size</q-tooltip>
-            <q-popup-edit class="sizeSlider" v-model="test" >
-              <q-slider class='slider' v-model="perRow" :min="1" :max="20" :step="1" />
+            <q-popup-edit class="" v-model="sizePopup" >
+              <q-slider class='sizeSlider' v-model="perRow" :min="1" :max="20" :step="1" reverse />
             </q-popup-edit>
           </q-btn>
         </span>
@@ -30,7 +30,7 @@
             <q-btn-dropdown auto-close color="primary" flat dropdown-icon="none">
               <template v-slot:label>
                   {{orderBy}}
-                  <q-tooltip :disable="!$q.cookies.get('showToolTips')" :delay="500" :offset="[0, 5]">order by</q-tooltip>
+                  <q-tooltip :disable="!$q.cookies.get('showToolTips')" :delay="500" :offset="[0, 5]">Change Resource Order</q-tooltip>
               </template> 
               <q-list>
                 <q-item clickable @click="orderBy = 'quality'">
@@ -43,23 +43,25 @@
                   <q-item-section >date added</q-item-section>
                 </q-item>
                 <q-item clickable @click="orderBy = 'votes'">
-                  <q-item-section ># of votes</q-item-section>
+                  <q-item-section >votes</q-item-section>
                 </q-item>
                 <q-item clickable @click="orderBy = 'views'">
-                  <q-item-section ># of views</q-item-section>
+                  <q-item-section >views</q-item-section>
                 </q-item>
                 <q-item disable @click="orderBy = 'activity'">
-                  <q-item-section ># of responses</q-item-section>
+                  <q-item-section >responses</q-item-section>
                 </q-item>
                 <q-item disable @click="orderBy = 'time'">
                   <q-item-section >time to view</q-item-section>
                 </q-item>
               </q-list>         
             </q-btn-dropdown>
-              <i @click="descending = !descending; test()" class="material-icons ascDec" :class="{'flipVert': !descending }">
+              <q-btn flat round @click="descending = !descending">
+                <i class="material-icons ascDec" :class="{'flipVert': !descending }">
                   sort
-                  <q-tooltip :disable="!$q.cookies.get('showToolTips')" :delay="500" :offset="[0, 5]">ascending / descending</q-tooltip>
-              </i>
+                  <q-tooltip :disable="!$q.cookies.get('showToolTips')" :delay="500" :offset="[0, 5]">Ascending / Descending</q-tooltip>
+                </i>
+              </q-btn>
           </span>
         </span>
       </div>
@@ -82,21 +84,47 @@ export default {
       display: "card",
       descending: true,
       perRow: 3,
+      sizePopup: null
     }
   },
   watch: {
     orderBy(x) {
+    
+      console.log('in orderby')
+   
+      if(this.$route.name == 'explore'){ // is this dumb? what's the alternative?
+        try {
+          this.$q.localStorage.set('exploreOrder', x)    
+        } catch (e) {
+        // data wasn't successfully saved due to
+        // a Web Storage API error
+        }
+      }
       this.$emit('update-order',x)
+      this.orderNotification()
+
     },
     display(x) {
       this.$emit('update-display',x)
     },
     perRow(x) {
       this.$emit('update-size',x)
+    },
+    descending (x){
+      this.$emit('update-descending',x)
+      if(this.$route.name == 'explore'){ // is this dumb? what's the alternative?
+        try {
+          this.$q.localStorage.set('exploreDescending', x)    
+        } catch (e) {
+        // data wasn't successfully saved due to
+        // a Web Storage API error
+        }
+      }
+      this.orderNotification()
     }
   },
   methods: {
-    test () {
+    orderNotification() {
       this.$q.notify({
         message: 'Order by ' + this.orderBy + ', ' + (this.descending ? 'high to low' : 'low to high'),
         timeout: 1500,
@@ -109,7 +137,16 @@ export default {
 }
 </script>
 
-<style >
+<style  >
+.sizeSlider .q-slider__track {
+    width: 0!important;
+}
+.q-item__section {
+  text-transform: capitalize;
+}
+.q-btn__content {
+  text-transform: capitalize;
+}
 
 .flipVert {
   transform: scaleY(-1);
@@ -126,9 +163,6 @@ export default {
   color: black!important;
 }
 
-.sizeSlider {
-  /* width: 200px; */
-}
 .q-popup-edit {
   width: 70%;
 }
