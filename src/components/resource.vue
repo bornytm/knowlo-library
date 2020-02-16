@@ -105,9 +105,9 @@
 		<div v-if='display === "godMode"'>
 			<input v-model='re.resource.uid'></input>
 
-			<input type="text" v-if='re.resource.title' v-model='re.resource.title' v-on:blur="" />
+			<input type="text" v-if='re.resource.title' v-model='re.resource.title' @blur="" />
 			<!-- <span> ({{tag.translation.languageCode}})</span> -->
-			<input type='text' v-if='re.resource.text' v-model='re.resource.text' v-on:blur="" />
+			<input type='text' v-if='re.resource.text' v-model='re.resource.text' @blur="" />
 			<span class='btn blue'@click='deleteResource(re.resource.uid)'>delete resource</span>
 		</div>
  	</div>

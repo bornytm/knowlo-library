@@ -5,7 +5,7 @@
         ref='itemContainer' 
         key="itemContainer" 
         :options="itemContainer" 
-        v-on:change='updateSliderPosition'
+        @change='updateSliderPosition'
         >
            
           <slot />

@@ -20,7 +20,7 @@
         <radar class="rchart" :data="scale.data" :data-label="scale.dataLabel" :labels="scale.labels"></radar>
         <isotope ref='scale' :list="scale.all" :options='{}'>
           <div v-for="tag in scale.all" :key="tag.setID">
-            <tag :tag="tag" :display="'thumb'" :key="tag.setID" v-on:include="addToQuery(tag)" v-on:exclude="removeSynonym(tag.tag.uid)" v-on:focus="addToQuery(tag)" v-on:pin="addToQuery(tag)">
+            <tag :tag="tag" :display="'thumb'" :key="tag.setID" @include="addToQuery(tag)" @exclude="removeSynonym(tag.tag.uid)" @focus="addToQuery(tag)" @pin="addToQuery(tag)">
             </tag>
           </div>
         </isotope>
@@ -53,7 +53,7 @@
 
       <div class="resourceStep tags">
         <isotope ref='top' :list="top" :options='{}'>
-            <tag v-for="tag in top" :key="tag.setID" :tag="tag" :display="'list'" v-on:include="addToQuery(tag)" v-on:exclude="removeSynonym(tag.tag.uid)" v-on:focus="addToQuery(tag)" v-on:pin="addToQuery(tag)">
+            <tag v-for="tag in top" :key="tag.setID" :tag="tag" :display="'list'" @include="addToQuery(tag)" @exclude="removeSynonym(tag.tag.uid)" @focus="addToQuery(tag)" @pin="addToQuery(tag)">
             </tag>
         </isotope>
       </div>

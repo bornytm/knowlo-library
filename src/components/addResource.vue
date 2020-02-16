@@ -63,7 +63,7 @@
       </div>
 
       <div v-if="type==='discussion' || type==='resource'" class="addContainer">
-        <search exclude="" input-id="tagNewResources" v-on:select="addTag"></search>
+        <search exclude="" input-id="tagNewResources" @select="addTag"></search>
         <div v-if='type==="discussion"'>
           <div class='disSwitch center'>
    					 <div class="switch">
@@ -102,7 +102,7 @@
             :display="'thumb'"
             :key="tag.setID"
             hide="lens include focus info pin"
-            v-on:remove="removeTag(tag.setID)">
+            @remove="removeTag(tag.setID)">
             </tag>
           </div>
         </isotope>

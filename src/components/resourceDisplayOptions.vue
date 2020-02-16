@@ -18,8 +18,8 @@
           </q-btn>
           <q-btn class="viewBtn" flat round  ><i class="material-icons">photo_size_select_large</i>
             <q-tooltip :disable="!this.$q.cookies.get('showToolTips')" :delay="500" :offset="[0, 5]">Change Size</q-tooltip>
-            <q-popup-edit class="" v-model="sizePopup" >
-              <q-slider class='sizeSlider' v-model="perRow" :min="1" :max="20" :step="1" reverse />
+            <q-popup-edit class="" v-model="sizePopup" cover title='Resource Size'>
+              <q-slider class='sizeSlider'  v-model="perRow" :min="1" :max="20" :step="1" reverse label />
             </q-popup-edit>
           </q-btn>
         </span>

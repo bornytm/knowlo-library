@@ -20,11 +20,11 @@
         <tag :tag="tag"
         :display="'thumb'"
         :settings='settings'
-        v-on:include="addTag(tag)"
-        v-on:pin="addTag(tag)"
-        v-on:focus="addTag(tag)"
+        @include="addTag(tag)"
+        @pin="addTag(tag)"
+        @focus="addTag(tag)"
         hide="lens remove"
-        v-on:main="showGroup(index)"
+        @main="showGroup(index)"
         >
         </tag>
       </div>
@@ -36,11 +36,11 @@
       :tag="tag"
       :key="tag.tag.uid+i"
       :settings='settings'
-      v-on:include="addTag(tag)"
-      v-on:pin="addTag(tag)"
-      v-on:focus="addTag(tag)"
+      @include="addTag(tag)"
+      @pin="addTag(tag)"
+      @focus="addTag(tag)"
       hide="lens remove"
-      v-on:main="showGroup(i)"
+      @main="showGroup(i)"
       display='thumb'>
     </tag>
 
@@ -48,11 +48,11 @@
       :tag="tag"
       :key="tag.tag.uid+i"
       :settings='settings'
-      v-on:include="addTag(tag)"
-      v-on:pin="addTag(tag)"
-      v-on:focus="addTag(tag)"
+      @include="addTag(tag)"
+      @pin="addTag(tag)"
+      @focus="addTag(tag)"
       hide="remove lens"
-      v-on:main="tagQuery.push(tag)"
+      @main="tagQuery.push(tag)"
       display='thumb'>
     </tag>
   </isotope> -->

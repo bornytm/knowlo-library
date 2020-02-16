@@ -42,8 +42,8 @@
   <!-- main view -->
   <transition name="fade" mode="out-in" appear>
     <router-view
-    v-on:clear="tagQuery = []"
-    v-on:updateTagQuery="updateTagQuery"
+    @clear="tagQuery = []"
+    @updateTagQuery="updateTagQuery"
     @updateSettings="updateSettings"
     :tag-query="tagQuery"
     :member="member"

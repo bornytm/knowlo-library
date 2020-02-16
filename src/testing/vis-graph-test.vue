@@ -1,27 +1,27 @@
 <template>
   <div>
-      <!-- <search class ='col' exclude="" input-id="mainSearch" holder-text="Search" v-on:select="test"></search>       -->
+      <!-- <search class ='col' exclude="" input-id="mainSearch" holder-text="Search" @select="test"></search>       -->
       <network ref="network" class='net'
       :nodes="nodes"
       :edges="edges"
       :options="options"
-      v-on:hold="hold"
-      v-on:select-node="choose"
+      @hold="hold"
+      @select-node="choose"
       >
       </network>
       <div class='opt'>
-        <q-btn fab v-on:click="getRelated">size</q-btn>
-        <q-btn fab  v-on:click="remove">scale</q-btn>
+        <q-btn fab @click="getRelated">size</q-btn>
+        <q-btn fab  @click="remove">scale</q-btn>
       </div>
    
       <q-input v-model="name" type="textarea" filled />
 
-      <q-btn v-on:click="add">add</q-btn>
-      <q-btn v-on:click="remove">remove</q-btn>
-      <q-btn v-on:click="reset">reset</q-btn>
-      <q-btn v-on:click="fit">fit</q-btn>
-      <q-btn v-on:click="getTop">getTop</q-btn>
-      <!-- <q-btn v-on:click="getTop">getTop</q-btn> -->
+      <q-btn @click="add">add</q-btn>
+      <q-btn @click="remove">remove</q-btn>
+      <q-btn @click="reset">reset</q-btn>
+      <q-btn @click="fit">fit</q-btn>
+      <q-btn @click="getTop">getTop</q-btn>
+      <!-- <q-btn @click="getTop">getTop</q-btn> -->
 
     <!-- <draggable class='drag' v-model="items" group="people" @start="drag=true" @end="drag=false">
    <div v-for="element in items" :key="element.id">{{element.name}}</div>

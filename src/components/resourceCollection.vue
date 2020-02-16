@@ -3,10 +3,10 @@
 
         <!-- resource view options -- is this a dumb way to organize? -->
         <resource-display-options
-            v-on:update-order="updateOrder"
-            v-on:update-display="updateDisplay"
-            v-on:update-size="updateSize"
-            v-on:update-descending="updateDescending"
+            @update-order="updateOrder"
+            @update-display="updateDisplay"
+            @update-size="updateSize"
+            @update-descending="updateDescending"
         ></resource-display-options>
         <div>{{resources.length}}</div>
         

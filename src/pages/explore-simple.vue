@@ -1,18 +1,18 @@
 <template>
 <div style='min-height:100vh;'>
   <!-- view for tag and resource page -->
-  <router-view :member='member' :tag-Query='tagQuery' :settings='settings' v-on:add='addToQuery'></router-view>
+  <router-view :member='member' :tag-Query='tagQuery' :settings='settings' @add='addToQuery'></router-view>
   <div>
     <!-- search -->
     <div class="row searchHead">
-      <search class ='col' exclude="" input-id="mainSearch" holder-text="Search" v-on:select="addToQuery"></search>
+      <search class ='col' exclude="" input-id="mainSearch" holder-text="Search" @select="addToQuery"></search>
       <span v-if="tagQuery.length > 1" class="col-1 clear btn white waves-light" @click.stop.prevent="$emit('clear')">
         clear tags
       </span>
     </div>
 
     <!-- <isotope class='row' style="min-height:150px" ref="tagQuery" :list="tagQuery" :options='{}' >
-      <tag v-for="tag in tagQuery" :settings='settings' :key="tag.setID" :tag="tag" display="thumb" v-on:include="removeTag(tag.setID)" v-on:remove="removeTag(tag.setID)" v-on:focus="focus" v-on:lens="fetchContains" v-on:main="removeTag(tag.setID)">
+      <tag v-for="tag in tagQuery" :settings='settings' :key="tag.setID" :tag="tag" display="thumb" @include="removeTag(tag.setID)" @remove="removeTag(tag.setID)" @focus="focus" @lens="fetchContains" @main="removeTag(tag.setID)">
       </tag>
     </isotope> -->
 
@@ -23,7 +23,7 @@
       </span>
     </transition-group>
 
-    <tag-suggestions :settings='settings' :tagQuery="tagQuery" v-on:add="addToQuery"></tag-suggestions>
+    <tag-suggestions :settings='settings' :tagQuery="tagQuery" @add="addToQuery"></tag-suggestions>
     
     <div class="">
       <div class="row container searchHead">
@@ -112,7 +112,7 @@
                       v-for="re in resources"
                       :re="re"
                       :display="resourceDisplay"
-                      v-on:changedDisplay="layout"
+                      @changedDisplay="layout"
                     >
                     </resource>
                   </isotope>
@@ -137,7 +137,7 @@
                   :settings='settings'
                   :re="re"
                   :display="resourceDisplay"
-                  v-on:changedDisplay="layout"
+                  @changedDisplay="layout"
                   :class="{'listFullWidth': resourceDisplay=='list'}"
                 >
                 </resource>

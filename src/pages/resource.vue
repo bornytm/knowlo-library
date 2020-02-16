@@ -3,7 +3,7 @@
   <span class="exit hide-on-med-and-down modal-close"><i class="fa fa-3x fa-times"></i></span>
 
   <!-- modal for adding to discussion -->
-  <add-resource v-if='addResource===true' :type="addResourceType" v-on:close="addResource=false" v-on:added="addCreatedDiscussion">
+  <add-resource v-if='addResource===true' :type="addResourceType" @close="addResource=false" @added="addCreatedDiscussion">
   </add-resource>
 
 
@@ -156,13 +156,13 @@
           :key="tag.tag.uid"
           :tag="tag"
           display="list"
-          v-on:include="addToQuery(tag)"
-          v-on:remove="removeTag(tag.setID)"
-          v-on:focus="addToQuery(tag)"
-          v-on:pin="addToQuery(tag)">
+          @include="addToQuery(tag)"
+          @remove="removeTag(tag.setID)"
+          @focus="addToQuery(tag)"
+          @pin="addToQuery(tag)">
           </tag>
         </isotope>
-        <search exclude="" input-id="resourceTest" v-on:select="addTag"></search>
+        <search exclude="" input-id="resourceTest" @select="addTag"></search>
       </div>
       <!-- related -->
       <div class="resourceStep discussion">
@@ -175,7 +175,7 @@
           <resource
           v-for="re in related"
           :settings="settings"
-          v-on:selected="toTop"
+          @selected="toTop"
           :re="re"
           :key="re.resource.uid"
           :display="relatedDisplay"

@@ -17,10 +17,10 @@
   		<div v-if="display==='thumb' ">
   			<span @mouseleave="leave()">
   				<div class="tagWidth">
-  					<div class="menu" @mouseenter="delayHover()"  v-bind:class="{'active': hovering}">
+  					<div class="menu" @mouseenter="delayHover()"  :class="{'active': hovering}">
   						<div class="">
 
-  							<div @click="main" class="mbtn trigger" v-bind:class="{'scaleIcon': hovering}">
+  							<div @click="main" class="mbtn trigger" :class="{'scaleIcon': hovering}">
   								<span v-if="!tag.tag.iconURL" class="flexCenter border letter">{{tag.translation.name[0]}}</span>
   								<div v-else class="thumb card-image border">
   									<img :src="tag.tag.iconURL">
@@ -126,10 +126,10 @@
   		<div class='hoverable' v-if="display==='godMode'">
   			<span>{{tag.tag.uid}}</span>
   			<!-- <span>{{tag.setID}}</span> -->
-  			<input type="text" v-model='tag.translation.name' v-on:blur="name(tag.translation.uid,tag.translation.name)" />
+  			<input type="text" v-model='tag.translation.name' @blur="name(tag.translation.uid,tag.translation.name)" />
   			<!-- <span> ({{tag.translation.languageCode}})</span> -->
 
-  			<input type='text' v-model='tag.order' v-on:blur="order(tag.tag.uid,tag.order)" />
+  			<input type='text' v-model='tag.order' @blur="order(tag.tag.uid,tag.order)" />
   			<i  @click="exclude" class="fa fa-minus"></i>
   		</div>
 

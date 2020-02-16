@@ -2,7 +2,7 @@
     <div>
         <!-- view for pop-up tag and resource page -->
         <router-view ></router-view>
-        <!-- <router-view :member='member' :tag-Query='tagQuery' :settings='settings' v-on:add='addToQuery'></router-view> -->
+        <!-- <router-view :member='member' :tag-Query='tagQuery' :settings='settings' @add='addToQuery'></router-view> -->
         
         <!-- tag query -->
         <transition-group class='container row' name='fade'>
@@ -13,15 +13,20 @@
         </transition-group>
 
         <!-- tag search -->
-        <search class ='col' exclude="" input-id="mainSearch" holder-text="Search" v-on:select="addTag"></search>
+        <search class ='col' exclude="" input-id="mainSearch" holder-text="Search" @select="addTag"></search>
         
         <!-- tag navigation/explorer -->
-        <tag-suggestions :tagQuery="tagQuery" v-on:add="addTag"></tag-suggestions>
+        <tag-suggestions :tagQuery="tagQuery" @add="addTag"></tag-suggestions>
 
         <!-- resource results  -->
         <q-layout>
         <q-infinite-scroll ref='infiniteScroll' @load="more" :offset="250">
-            <resource-collection v-on:update="orderUpdate" :resources="resources" :sort="sort" :descending="descending" :display="display"></resource-collection>
+            <resource-collection 
+                @update="orderUpdate" 
+                :resources="resources" 
+                :sort="sort" 
+                :descending="descending" 
+                :display="display"></resource-collection>
              <template v-slot:loading>
                 <div class="row justify-center q-my-md">
                     <q-spinner color="primary" size="40px" />
@@ -49,7 +54,7 @@ import resAPI from '../api/resources'
 export default {
     components: { search, tagSuggestions, resourceCollection, tag },
     mounted () {
-        // inital fetch?
+        this.fetchResources()
     },
     methods: {
         addTag(x){

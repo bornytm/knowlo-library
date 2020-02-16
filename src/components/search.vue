@@ -1,6 +1,6 @@
 <template>
   <div :id="'cont' + inputId" class="input-field ">
-    <q-input type="search" label="Search" v-on:click.stop.prevent=""  class="search" v-model="input"  @focus="hidden=false" @blur="delayBlur">
+    <q-input type="search" label="Search" @click.stop.prevent=""  class="search" v-model="input"  @focus="hidden=false" @blur="delayBlur">
       <template v-slot:append>
           <q-icon name="search" />
       </template>

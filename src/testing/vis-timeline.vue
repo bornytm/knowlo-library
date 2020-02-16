@@ -2,7 +2,7 @@
     <div class='time'>
         <!--  test with -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet">
-        <timeline ref='time' v-bind:items="items" :start="start" :end="end" :option="option" v-bind:groups="groups" :hide-tools=true></timeline>
+        <timeline ref='time' :items="items" :start="start" :end="end" :option="option" :groups="groups" :hide-tools=true></timeline>
     </div>
 </template>
 

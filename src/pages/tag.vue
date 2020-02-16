@@ -2,7 +2,7 @@
 <div id='tagModal' class="modal fullPage">
 
   <!-- modal for adding to discussion -->
-  <add-resource v-if='addResource === true' :type='addResourceType' v-on:close="addResource=false" v-on:added="newMeta">
+  <add-resource v-if='addResource === true' :type='addResourceType' @close="addResource=false" @added="newMeta">
   </add-resource>
 
   <div class="tagTitle">
@@ -14,7 +14,7 @@
     </span>
 
     <!-- setdelete -->
-    <!-- <span v-if='true' class='btn' v-on:click="deleteSet(tag.setID)">delete set</span> -->
+    <!-- <span v-if='true' class='btn' @click="deleteSet(tag.setID)">delete set</span> -->
 
     <span class="right modal-close"><i class="fa fa-2x fa-times"></i></span>
   </div>
@@ -33,7 +33,7 @@
           <q-icon name="add" />
         </q-btn>
         <div v-for="icon in icons" :key="icon['resource']['uid']">
-          <resource :re="icon" :display="'list'" v-on:vote-cast='evalTopTag'>
+          <resource :re="icon" :display="'list'" @vote-cast='evalTopTag'>
           </resource>
         </div>
       </div>
@@ -51,31 +51,31 @@
 
       <div class="stepContainer">
         <isotope ref='syno' :list="synonyms" :options='{}'>
-          <tag v-for="tag in synonyms" :key="tag.tag.uid" :tag="tag" :display="'list'" v-on:include="addToQuery(tag)" v-on:exclude="removeSynonym(tag.tag.uid)" v-on:focus="addToQuery(tag)" v-on:pin="addToQuery(tag)" hide="remove">
+          <tag v-for="tag in synonyms" :key="tag.tag.uid" :tag="tag" :display="'list'" @include="addToQuery(tag)" @exclude="removeSynonym(tag.tag.uid)" @focus="addToQuery(tag)" @pin="addToQuery(tag)" hide="remove">
           </tag>
         </isotope>
-        <!-- <search v-if='addSyn' :exclude="$route.params.uid" input-id="syn" v-on:select="addSynonym"></search> -->
-        <!-- <search v-if='mergeSyn' :exclude="$route.params.uid" input-id="syn" v-on:select="mergeSynonym"></search> -->
+        <!-- <search v-if='addSyn' :exclude="$route.params.uid" input-id="syn" @select="addSynonym"></search> -->
+        <!-- <search v-if='mergeSyn' :exclude="$route.params.uid" input-id="syn" @select="mergeSynonym"></search> -->
       </div>
       <div class="stepContainer">
         <isotope ref='within' :list="within" :options='{}'>
-          <tag :tag="tag" v-for="tag in within" :key="tag.tag.uid" :display="tagDisplay" v-on:include="addToQuery(tag)" v-on:exclude="removeWithin(tag.tag.uid)" v-on:focus="addToQuery(tag)" v-on:pin="addToQuery(tag)" hide="remove">
+          <tag :tag="tag" v-for="tag in within" :key="tag.tag.uid" :display="tagDisplay" @include="addToQuery(tag)" @exclude="removeWithin(tag.tag.uid)" @focus="addToQuery(tag)" @pin="addToQuery(tag)" hide="remove">
           </tag>
-          <!-- v-on:exclude="removeSynonym(tag.tag.uid)" -->
+          <!-- @exclude="removeSynonym(tag.tag.uid)" -->
         </isotope>
-        <search exclude="" input-id="within" v-on:select="addWithin"></search>
+        <search exclude="" input-id="within" @select="addWithin"></search>
       </div>
       <div class="stepContainer">
         <isotope ref='contains' :list="contains" :options='{}'>
-          <tag :tag="tag" v-for="tag in contains" :display="tagDisplay" :key="tag.tag.uid" v-on:include="addToQuery(tag)" v-on:remove="removeContains(tag.tag.uid)" v-on:focus="addToQuery(tag)" v-on:pin="addToQuery(tag)" hide="remove">
+          <tag :tag="tag" v-for="tag in contains" :display="tagDisplay" :key="tag.tag.uid" @include="addToQuery(tag)" @remove="removeContains(tag.tag.uid)" @focus="addToQuery(tag)" @pin="addToQuery(tag)" hide="remove">
           </tag>
-          <!-- v-on:exclude="removeSynonym(tag.tag.uid)" -->
+          <!-- @exclude="removeSynonym(tag.tag.uid)" -->
         </isotope>
-        <search exclude="" input-id="contains" v-on:select="addContains"></search>
+        <search exclude="" input-id="contains" @select="addContains"></search>
       </div>
       <div class="stepContainer">
         <isotope ref='trans' :list="translations" :options='{}'>
-          <tag :tag="tag" v-for="tag, i in translations" :key="i" :display="tagDisplay" v-on:include="addToQuery(tag)" v-on:exclude="addToQuery(tag)" v-on:focus="addToQuery(tag)" v-on:pin="addToQuery(tag)" hide="remove">
+          <tag :tag="tag" v-for="tag, i in translations" :key="i" :display="tagDisplay" @include="addToQuery(tag)" @exclude="addToQuery(tag)" @focus="addToQuery(tag)" @pin="addToQuery(tag)" hide="remove">
           </tag>
         </isotope>
       </div>
