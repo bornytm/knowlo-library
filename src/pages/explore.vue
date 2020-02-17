@@ -9,7 +9,7 @@
         <!-- tag navigation/explorer -->
         <tag-suggestions :tagQuery="tagQuery" @add="addTag"></tag-suggestions>
 
-        <div class='sticky-ui-stuff'>
+        <div class='sticky-ui-stuff' :class="{'extraPadding': this.$q.platform.is.desktop }">
         <!-- tag query display -->
         <transition-group class='tagQuery row pad' name='fade' style='text-overflow: ellipsis;background-color:white;'>
             <span style='width:50px;padding:10px'class="col  center" v-for="tag in tagQuery" @click.stop.prevent='removeTag(tag.setID)' :key="tag.setID">
@@ -19,7 +19,7 @@
             </span>
         </transition-group>
 
-        <!-- resource view options -- is this a dumb way to organize? -->
+        <!-- resource view options -->
         <resource-display-options
             @update-order="updateOrder"
             @update-display="updateDisplay"
@@ -27,7 +27,7 @@
             @update-descending="updateDescending"
         ></resource-display-options>
         </div>  
-       {{resources.length}}
+       <!-- {{resources.length}} -->
         <q-layout>
             <!-- resource results  -->
             <q-infinite-scroll ref='infiniteScroll' @load="infiniteResources" :offset="250">
@@ -225,5 +225,8 @@ export default {
     top:0px;
     background: white;
     z-index: 21;
+}
+.extraPadding {
+    padding: 20px;
 }
 </style>
