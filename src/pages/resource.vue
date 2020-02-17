@@ -1,5 +1,5 @@
 <template :member="member" >
-<div style="opacity:0" :id="'resourceModal'+resource.uid" class="modal fullPage resourceModal">
+<div style="opacity:0" :id="'resourceModal'+resource.uid" :class="{ 'primaryPage': $route.name == 'resourcePage' }" class="modal fullPage resourceModal">
   <span class="exit hide-on-med-and-down modal-close"><i class="fa fa-3x fa-times"></i></span>
 
   <!-- modal for adding to discussion -->
@@ -199,27 +199,33 @@ import isotope from 'vueisotope'
 import Flickity from 'vue-flickity'
 import L from 'leaflet'
 import { scroll } from 'quasar'
+import resources from '../api/resources'
 const { getScrollPosition, setScrollPosition } = scroll
 
 export default {
   props: ['member','settings'],
   name: 'resourcePage',
   components: { isotope, search, tag, resource, Flickity, addResource},
-  metaInfo: {
+  meta () {
+    return {// not support in my version?
       // title: 'My Example App',
       // titleTemplate: '%s - Yay!',
       // htmlAttrs: {
       //   lang: 'en',
       // },
-      meta: [
-        { property: 'og:title', content: resource.title, vmid: 'test', },
-        { property: 'og:description', content: 'howdyhowdy', vmid: 'test', },
-        { property: 'og:image', content: resource.mThumb, vmid: 'test', },
-        // { property: 'og:url', content: 'knowlo.io' + Vue.route.fullPath, vmid: 'test', },
-        // { name: 'description', content: 'Hello', vmid: 'test', },
-        // { name: 'description', content: 'Hello', vmid: 'test', }
-      ],
-    },
+      meta: {
+        description: { name: 'descriptionssssssssssssssssssss', content: 'Page 1' }
+      }
+      // meta: [
+      //   { property: 'og:title', content: resource.title, vmid: 'test', },
+      //   { property: 'og:description', content: 'howdyhowdy', vmid: 'test', },
+      //   { property: 'og:image', content: resource.mThumb, vmid: 'test', },
+      //   { property: 'og:url', content: 'knowlo.io' + Vue.route.fullPath, vmid: 'test', },
+      //   // { name: 'description', content: 'Hello', vmid: 'test', },
+      //   // { name: 'description', content: 'Hello', vmid: 'test', }
+      // ],
+    }
+  },
   data: function () {
     return {
       resource: {
@@ -317,6 +323,8 @@ export default {
       this.fetchDiscussion()
       this.fetchRelated() // TODO: only fetch when on related panel
       this.$nextTick(function () {
+        console.log(this.$route)
+        console.log(this)
         if (!this.modalOpen) {
           this.modalOpen = true
           $('#resourceModal' + this.resource.uid).modal({
@@ -471,7 +479,7 @@ export default {
     }
   },
   mounted: function () {
-    console.log(this.$route)
+    console.log(this.$route.meta)
     this.fetchResource()
     // if (this.member.uid) {
     //   window.setTimeout(() => {
@@ -508,6 +516,14 @@ export default {
 </script>
 
 <style>
+.q-tab {
+  text-transform: capitalize;
+  letter-spacing: 1px;
+}
+.primaryPage {
+  padding-top:0!important;
+  opacity: 1!important;
+}
 .leaflet-container {
   background: black;
 }

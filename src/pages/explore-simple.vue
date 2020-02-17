@@ -44,7 +44,7 @@
           <span class="viewBtn" ><i class="material-icons">photo_size_select_large</i>
             <q-tooltip :disable="!this.settings.showToolTips" :delay="500" :offset="[0, 5]">Change Size</q-tooltip>
              <q-popup-edit class="sizec" v-model="sizeChange">
-              <q-slider class='slider' v-model="perRow" :min="1" :max="20" :step="1" />
+              <q-slider class='slider' v-model="size" :min="1" :max="20" :step="1" />
             </q-popup-edit>
           </span>
         </span>
@@ -107,7 +107,7 @@
                 <div :key="step[0]"  v-for="step in crossSection" class="">
                   <isotope :ref='"resourceBin" + step.setID' :list="resources" :options='{}'>
                     <resource :key="re.resource.uid"
-                      :resourcesPerRow="perRow"
+                      :size="size"
                       :settings='settings'
                       v-for="re in resources"
                       :re="re"
@@ -132,7 +132,7 @@
             >
               <isotope ref="resourceBin" :list="resources" :options='{}'>
                 <resource v-for="re in resources"
-                  :resourcesPerRow="perRow"
+                  :size="size"
                   :key="re.resource.uid"
                   :settings='settings'
                   :re="re"
@@ -194,7 +194,7 @@ export default {
   props: ['tagQuery', 'member','settings',],
   data () {
     return {
-      perRow: 4,
+      size: 4,
       loginCheck: false, // true after login status is checked
       crossSection: null, // object containing the name of the cross section and tags in lens group - object containing array of tag objects and string name
       tagSuggestions: [], // holds suggestion groups and tags within

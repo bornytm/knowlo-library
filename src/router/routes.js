@@ -23,7 +23,7 @@ const mainRoutes = [
     {
       path: '/r/:uid', // heloooooooo
       component: () => import('pages/resource.vue'),
-      name: 'resource'
+      name: 'resourcePage'
     },
     // {
     //   path: '/explore/:tagquery?',

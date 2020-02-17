@@ -7,7 +7,6 @@ export default {
     // let tag = ['Syh41sK--']
     
     // let include = tag[Math.floor(Math.random() * tag.length)]
-    
   
     if(typeof options == 'undefined'){
       options = {}

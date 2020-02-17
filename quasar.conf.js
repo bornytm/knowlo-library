@@ -18,8 +18,8 @@ module.exports = function (ctx) {
     ],
     supportIE: false,
     build: {
-      // devtool: false,
-      // sourceMaps: false,
+      // devtool: 'eval',
+      // sourceMaps: true,
       // minify: false,
       scopeHoisting: true,
       // uglifyOptions: {
@@ -62,8 +62,6 @@ module.exports = function (ctx) {
       components: [
         'QPopupEdit',
         'QLayout',
-        // 'QLayoutHeader',
-        // 'QLayoutDrawer',
         'QPageContainer',
         'QPage',
         'QToolbar',
@@ -71,7 +69,6 @@ module.exports = function (ctx) {
         'QBtn',
         'QIcon',
         'QList',
-        // 'QListHeader',
         'QItem',
         'QItemSection',
         'QItemLabel',

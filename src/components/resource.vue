@@ -51,7 +51,7 @@
       'card-content': display === 'card'}"
 			>
 			<router-link v-show='!editing' @click='selected' :to="{ name: 'resourceSub', params: { uid: re.resource.uid }}">
-				<span v-if="resourcesPerRow < 6" :class="{'title': display === 'card'}">{{re.resource.title}}</span>
+				<span v-if="size < 6" :class="{'title': display === 'card'}">{{re.resource.title}}</span>
 			</router-link>
       <q-input v-if="editing" v-model="re.resource.title" float-label="Title" type='textarea'/>
 
@@ -124,7 +124,7 @@ export default {
     re: Object,
     display: String,
     settings: Object,
-    resourcesPerRow: Number,
+    size: Number,
   },
   data: () => {
     return {
@@ -221,9 +221,9 @@ export default {
     }
   },
   watch: {
-     resourcesPerRow (x) {
+     size (x) {
       if(this.display == 'card'){
-        this.width = "calc(" + (1/this.resourcesPerRow)*100 + "% - 10px)"
+        this.width = "calc(" + (1/this.size)*100 + "% - 10px)"
       }
     },
     ratingDisplay (val) {

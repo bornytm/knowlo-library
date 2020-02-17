@@ -18,8 +18,9 @@
           </q-btn>
           <q-btn class="viewBtn" flat round  ><i class="material-icons">photo_size_select_large</i>
             <q-tooltip :disable="!this.$q.cookies.get('showToolTips')" :delay="500" :offset="[0, 5]">Change Size</q-tooltip>
-            <q-popup-edit class="" v-model="sizePopup" cover title='Resource Size'>
-              <q-slider class='sizeSlider'  v-model="perRow" :min="1" :max="20" :step="1" reverse label />
+            <q-popup-edit class="" v-model="sizePopup" cover >
+              <q-slider class='sizeSlider' @mouseup="test" v-model="size" :min="1" :max="20" :step="1" reverse />
+              <!-- <q-btn round>hi</q-btn> -->
             </q-popup-edit>
           </q-btn>
         </span>
@@ -79,56 +80,36 @@
 export default {
   data () {
     return {
-      orderby: this.$q.localStorage.getItem('exploreOrder') || 'quality',
-      showViewed: true,
       display: this.$q.localStorage.getItem('exploreDisplay') || "card",
-      descending: typeof (this.$q.localStorage.getItem('exploreDescending')) === 'Boolean'? true : this.$q.localStorage.getItem('exploreDescending'),
-      perRow: this.$q.localStorage.getItem('explorePerRow') || 4,
-      sizePopup: null
+      size: this.$q.localStorage.getItem('exploreSize') || 4,
+      orderby: this.$q.localStorage.getItem('exploreOrder') || 'quality',
+      descending: typeof (this.$q.localStorage.getItem('exploreDescending')) === 'boolean'? true : this.$q.localStorage.getItem('exploreDescending'),
+      sizePopup: null,
+      showViewed: true,
     }
   },
   watch: {
-    orderby(x) {
-      if(this.$route.name == 'explore'){ // is this dumb? what's the alternative?
-        try {
-          this.$q.localStorage.set('exploreOrder', x)    
-        } catch (e) {
-        // data wasn't successfully saved due to
-        // a Web Storage API error
-        }
-      }
-      this.$emit('update-order',x)
-      this.orderNotification()
-
-    },
     display(x) {
-      if(this.$route.name == 'explore'){ 
-        try {
-          this.$q.localStorage.set('exploreDisplay', x)    
-        } catch (e) {
-        // data wasn't successfully saved due to
-        // a Web Storage API error
-        }
-      }
       this.$emit('update-display',x)
     },
-    perRow(x) {
+    size(x) {
+      console.log('in size change')
       this.$emit('update-size',x)
+      this.layout()
+    },
+    orderby(x) {
+      this.$emit('update-order',x)
+      this.orderNotification()
     },
     descending (x){
-      if(this.$route.name == 'explore'){ // is this dumb? what's the alternative?
-        try {
-          this.$q.localStorage.set('exploreDescending', x)    
-        } catch (e) {
-        // data wasn't successfully saved due to
-        // a Web Storage API error
-        }
-      }
       this.$emit('update-descending',x)
       this.orderNotification()
     }
   },
   methods: {
+    test(x){
+      console.log('selected ',x)
+    },
     orderNotification() {
       this.$q.notify({
         message: 'Order by ' + this.orderby + ', ' + (this.descending ? 'high to low' : 'low to high'),

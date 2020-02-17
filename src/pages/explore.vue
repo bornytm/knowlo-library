@@ -1,10 +1,9 @@
 <template>
     <div>
-        <!-- view for pop-up tag and resource page -->
+        <!-- view for pop-up tag and resource pages -->
         <router-view ></router-view>
-        <!-- <router-view :member='member' :tag-Query='tagQuery' :settings='settings' @add='addToQuery'></router-view> -->
         
-        <!-- tag query -->
+        <!-- tag query display -->
         <transition-group class='container row' name='fade'>
             <span class="col  center" v-for="tag in tagQuery" @click.stop.prevent='removeTag(tag.setID)' :key="tag.setID">
                 <img v-if="tag.tag.iconURL" class='circle hoverable' style='height:40px;width:40px;margin-right:10px;padding:3px;' :src="tag.tag.iconURL" />
@@ -18,23 +17,41 @@
         <!-- tag navigation/explorer -->
         <tag-suggestions :tagQuery="tagQuery" @add="addTag"></tag-suggestions>
 
-        <!-- resource results  -->
+        <!-- resource view options -- is this a dumb way to organize? -->
+        <resource-display-options
+            @update-order="updateOrder"
+            @update-display="updateDisplay"
+            @update-size="updateSize"
+            @update-descending="updateDescending"
+        ></resource-display-options>
+                
+       
         <q-layout>
-        <q-infinite-scroll ref='infiniteScroll' @load="more" :offset="250">
-            <resource-collection 
-                @update="orderUpdate" 
-                :resources="resources" 
-                :sort="sort" 
-                :descending="descending" 
-                :display="display"></resource-collection>
-             <template v-slot:loading>
-                <div class="row justify-center q-my-md">
-                    <q-spinner color="primary" size="40px" />
-                </div>
-            </template>
-        </q-infinite-scroll>
+            <!-- resource results  -->
+            <q-infinite-scroll ref='infiniteScroll' @load="infiniteResources" :offset="250">
+                <resource-collection ref='collection' :resources="resources" :options="collectionOptions"></resource-collection>
+                <template v-slot:loading>
+                    <div class="row justify-center q-my-md">
+                        <q-spinner color="primary" size="40px" />
+                    </div>
+                </template>
+            </q-infinite-scroll>
 
-        <h1 v-if='noMore'>aint' no mo</h1>
+            <!-- filler no / end of resources -->
+            <div class="message" v-if="noMore || resources.length === 0">
+                <p v-if="resources.length === 0">
+                    No results! Add a resource or shuffle?
+                </p>
+                <p v-if="noMore">
+                    No more results! Add a resource or shuffle?
+                </p>
+                <div>
+            
+                <q-btn @click="" color='primary' round >
+                    <i class="far fa-random "></i>
+                </q-btn>
+                </div>
+            </div>
         <q-page-scroller position="bottom-right" :scroll-offset="150" :offset="[18, 18]">
            <q-btn fab icon="keyboard_arrow_up" color="primary" />
         </q-page-scroller>
@@ -44,52 +61,70 @@
 
 <script>
 import search from 'components/search'
-import tagSuggestions from 'components/tagSuggestions'
-import resourceCollection from 'components/resourceCollection'
 import tag from 'components/tag'
-import crossSection from 'components/cross-section'
+import tagSuggestions from 'components/tagSuggestions'
+import resourceDisplayOptions from 'components/resourceDisplayOptions'
+import resourceCollection from 'components/resourceCollection'
 import resAPI from '../api/resources'
 
 
 export default {
-    components: { search, tagSuggestions, resourceCollection, tag },
+    components: { search, tag, tagSuggestions, resourceDisplayOptions, resourceCollection },
     mounted () {
         this.fetchResources()
     },
+    data () {
+        return {
+            tagQuery: this.$q.localStorage.getItem('tagQuery') || [],
+            resources: [],
+            resourceQueryOptions: {
+                include: [],
+                exclude: [],
+                skip: this.infinite? this.resources.length : 0,
+                limit: 30, // base on resources per row and mobile v desktop (i.e. available screen real estate)?
+                orderby: this.$q.localStorage.getItem('exploreOrder') || 'quality',
+                descending: typeof (this.$q.localStorage.getItem('exploreDescending')) === 'boolean'? this.$q.localStorage.getItem('exploreDescending') : true
+            },
+            infinite: false, // flag indicating if resources should be concatenated or replaced
+            noMore: false, // flag for no more related resources
+            collectionOptions:{
+                order: this.$q.localStorage.getItem('exploreOrder') || 'Quality',
+                display: this.$q.localStorage.getItem('exploreDisplay') || 'card',
+                size: this.$q.localStorage.getItem('exploreSize') || 4,
+                descending: this.$q.localStorage.getItem('exploreDescending') || true,
+            }
+        }
+    },
+    watch: {
+        tagQuery(){
+            this.fetchResources()    
+        }
+    },
     methods: {
-        addTag(x){
-            this.tagQuery.push(x)  // check if it's alreay there before adding?
-        },
-        orderUpdate(){
-
-            if(this.noMore){ 
-                this.descending = this.$q.localStorage.getItem('exploreDescending') //used for local sorting (without going to db?)
-                this.sort = this.$q.localStorage.getItem('exploreOrder') //used for local sorting (without going to db?)
-            } else {
-                this.fetchResources()
-            }
-        },
-        removeTag(id) {
-            for (var i = this.tagQuery.length - 1; i >= 0; i--) {
-                if (this.tagQuery[i].setID === id) this.tagQuery.splice(i, 1)
-            }
-        },
-        fetchResources(options, callback){
-            // these if statements feel a little dumb...is taking in options and/or callback dumb? 
-            // currently used to let infinite scroll know the query is done
-            if(typeof options == 'undefined') { 
-                options = this.resQueryOptions(false)
-            }
-            if(typeof callback == 'undefined') {
+        fetchResources(callback){
+                    
+            if(typeof callback == 'undefined') { // should I just make it required?
                 callback = function dummy(){}
             }
-            resAPI.getResourcesRelatedToTags(options)
+
+            for(let tag in this.tagQuery ) {
+                if(this.tagQuery[tag].status.includeIcon){
+                    this.resourceQueryOptions.include.push(this.tagQuery[tag].setID)
+                } else if (this.tagQuery[tag].status.excludeIcon){
+                    this.resourceQueryOptions.exclude.push(this.tagQuery[tag].setID)
+                }
+            }
+            console.log(  this.resourceQueryOptions.include)
+            resAPI.getResourcesRelatedToTags(this.resourceQueryOptions)
                 .then(resources => {
+                    console.log(resources)
+                    console.log(this.include)
                     if(resources.data.length == 0){
                         this.noMore = true
-                    } else if(options.skip > 0){
+                    } else if(this.infinite){
                         this.resources = this.resources.concat(resources.data) 
                         this.noMore = false
+                        this.infinite = false
                     } else {
                         this.resources = resources.data
                         this.noMore = false
@@ -97,62 +132,66 @@ export default {
                     callback(resources)
                 })
                 .catch(error => console.log(error))
+            
+            
         },
-        more(index, done){
-            console.log('in more')
+        infiniteResources(index, done){
             if(this.noMore){
                done()
             } else {
-                let options = this.resQueryOptions(true)
-                this.fetchResources(options, done)
+                this.infinite = true
+                this.fetchResources(done)
             }
         },
-        resQueryOptions(infinite) { 
-            // takes tags ids and status and converts to query options object? 
-            // gets others from cookies/storage?
-            // the default values are duplicated three times... explore, disp options, and api
+        addTag(tag){
+            console.log(tag)
+            tag.connections = 0
+           
+            tag.status.includeIcon = true
+        
+            if (tag.status.focusIcon) {
+                this.focus(tag) // clear all non-pinned
+            }
+            if (this.tagQuery.every(x => x.setID !== tag.setID)) { // don't add if already in query
+                this.tagQuery.push(tag)
+            }  // check if it's alreay there before adding?
+        },
+        removeTag(id) {
+            for (var i = this.tagQuery.length - 1; i >= 0; i--) {
+                if (this.tagQuery[i].setID === id) this.tagQuery.splice(i, 1)
+            }
+        },
+        focus (set) {
+            set.status.focusIcon = false
+            var tIndex = this.tagQuery.length
+            while (tIndex--) {
+                if (!this.tagQuery[tIndex].status.pinnedIcon && this.tagQuery[tIndex].setID !== set.setID) this.tagQuery.splice(tIndex, 1)
+            }
+            },
+        updateOrder(x){
+            console.log('in order update')
+            this.$q.localStorage.set('exploreOrder', x)
+            if(!this.noMore){ 
+                this.fetchResources()
+            }
+        },
+        updateDisplay(x){
+            this.$q.localStorage.set('exploreDisplay', x)
+            this.collectionOptions.display = x
+            // setTimeout((x) => { // wait for change
+            //     this.$refs.collection.layout()
+            // }, 300)
             
-            let options = {
-                include: [],
-                exclude: [],
-                skip: 0,
-                limit: 30, // base on resources per row and mobile v desktop?
-                orderby: this.$q.localStorage.getItem('exploreOrder') || 'quality',
-                descending: typeof (this.$q.localStorage.getItem('exploreDescending')) === 'boolean'? this.$q.localStorage.getItem('exploreDescending') : true
-            }
-
-            // infinite scrolling
-            if(infinite){ // set data prop flag instead of take in as param?
-                options.skip = this.resources.length
-            }
-            // include / exclude
-            for(let tag in this.tagQuery ) {
-                if(this.tagQuery[tag].status.includeIcon){
-                    options.include.push(this.tagQuery[tag].setID)
-                } else if (this.tagQuery[tag].status.excludeIcon){
-                    options.exclude.push(this.tagQuery[tag].setID)
-                }
-            }
-            return options
-        }
-    },
-    watch: {
-        tagQuery(x,y){
-            this.fetchResources()
-        }
-    },
-    data () {
-        return {
-            tagQuery: [],
-            resources: [],
-            infinite: false,
-            sort: '',
-            descending: '',
-            display: this.$q.localStorage.getItem('exploreDisplay') || 'card',
-            noMore: false // flag for no more related resources
-        }
+        },
+        updateSize(x){
+            this.$q.localStorage.set('exploreSize', x)
+            this.collectionOptions.size = x
+        },
+        updateDescending(x){
+            this.$q.localStorage.set('exploreDescending', x)
+            this.collectionOptions.descending = x
+        }       
     }
-
 }
 </script>
 
