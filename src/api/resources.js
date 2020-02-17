@@ -11,7 +11,8 @@ export default {
     if(typeof options == 'undefined'){
       options = {}
     }
-   
+    console.log(options.descending)
+    console.log(typeof options.descending)
     let params = {
       languageCode: 'en',
       include: [] || options.include,
@@ -20,7 +21,7 @@ export default {
       skip: options.skip || 0,
       limit: options.limit || 10,
       orderby: options.orderby || "quality",
-      descending: typeof (options.descending) === 'boolean'? options.descending : true 
+      descending: options.descending || 'true'
     }
     console.log(params)
     return axios.get('/api/resource', {

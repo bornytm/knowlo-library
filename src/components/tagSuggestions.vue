@@ -24,38 +24,12 @@
         @pin="addTag(tag)"
         @focus="addTag(tag)"
         hide="lens remove"
-        @main="showGroup(index)"
+        @main="showGroup(index,tag)"
         >
         </tag>
       </div>
     </cross-section>
   </transition>
-
-  <!-- <isotope  v-if='show' class='rtags' ref='rtags' :list="tags" :options="{}">
-    <tag v-if='displayed === "groups"' v-for="tag, i in tags"
-      :tag="tag"
-      :key="tag.tag.uid+i"
-      :settings='settings'
-      @include="addTag(tag)"
-      @pin="addTag(tag)"
-      @focus="addTag(tag)"
-      hide="lens remove"
-      @main="showGroup(i)"
-      display='thumb'>
-    </tag>
-
-    <tag v-else
-      :tag="tag"
-      :key="tag.tag.uid+i"
-      :settings='settings'
-      @include="addTag(tag)"
-      @pin="addTag(tag)"
-      @focus="addTag(tag)"
-      hide="remove lens"
-      @main="tagQuery.push(tag)"
-      display='thumb'>
-    </tag>
-  </isotope> -->
   </div>
 </template>
 
@@ -83,10 +57,14 @@ export default {
     }
   },
   methods: {
-    showGroup(index) {
-      if(this.groupSet[index]){
+    showGroup(index,tag) {
+
+      if(this.groupSet[index] && (this.displayed == 'groups' || this.displayed == 'tags')){
         this.tags = this.groupSet[index].contains
         this.displayed = 'subGroup'
+      } else {
+        tag.status.includeIcon = true
+        this.addTag(tag)
       }
     },
     showAllGroups() {
@@ -100,6 +78,7 @@ export default {
       this.displayed = 'groups'
     },
     addTag(tag) {
+      tag.status.includeIcon = true
       this.$emit('add', tag) // with pin/include/focus flag
     },
     fetch() { // determine which method to get
@@ -247,6 +226,7 @@ export default {
 .options {
   margin-left: 30px;
   margin-right: 10px;
+  margin-bottom: 20px;
   height: 40px;
 }
 .back {

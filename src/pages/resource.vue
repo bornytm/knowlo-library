@@ -17,20 +17,20 @@
 
     <!--  youtube/vimeo -->
 
-    <!-- <div v-if='resource.displayType=="embed"' class="vid-container-container">
+    <div v-if='resource.displayType=="embed"' class="vid-container-container">
       <div class="video-container ">
         <iframe :src="'https://youtube.com/embed/'+resource.ytID+'?rel=0&autoplay=1'"  frameborder=”0″ allowfullscreen></iframe>
       </div>
-    </div> -->
+    </div>
 
-    <vue-plyr ref="plyr":options='plyrOptions' v-if='resource.displayType=="embed"'>
+    <!-- <vue-plyr ref="plyr":options='plyrOptions' v-if='resource.displayType=="embed"'>
       <div class="plyr__video-embed">
         <iframe
           :src="'https://youtube.com/embed/'+resource.ytID+'?iv_load_policy=3&modestbranding=1&playsinline=1&showinfo=0&rel=0&enablejsapi=1'"
           allowfullscreen allowtransparency allow="autoplay">
         </iframe>
       </div>
-    </vue-plyr>
+    </vue-plyr> -->
 
     <!-- website -->
     <div v-if='resource.displayType=="webpage"' class="web-container">

@@ -57,8 +57,8 @@
                 </q-item>
               </q-list>         
             </q-btn-dropdown>
-              <q-btn flat round @click="descending = !descending">
-                <i class="material-icons ascDec" :class="{'flipVert': !descending }">
+              <q-btn flat round @click="descending == 'true'?descending = 'false' :descending = 'true'">
+                <i class="material-icons ascDec" :class="{'flipVert': descending == 'false' }">
                   sort
                   <q-tooltip :disable="!$q.cookies.get('showToolTips')" :delay="500" :offset="[0, 5]">Ascending / Descending</q-tooltip>
                 </i>
@@ -66,6 +66,7 @@
           </span>
         </span>
       </div>
+
       <!-- <div style="border-bottom:none;">
         <br/>
         <div class="row right quantity">
@@ -83,7 +84,7 @@ export default {
       display: this.$q.localStorage.getItem('exploreDisplay') || "card",
       size: this.$q.localStorage.getItem('exploreSize') || 4,
       orderby: this.$q.localStorage.getItem('exploreOrder') || 'quality',
-      descending: typeof (this.$q.localStorage.getItem('exploreDescending')) === 'boolean'? true : this.$q.localStorage.getItem('exploreDescending'),
+      descending: this.$q.localStorage.getItem('exploreDescending') || 'true',
       sizePopup: null,
       showViewed: true,
     }
@@ -102,6 +103,7 @@ export default {
       this.orderNotification()
     },
     descending (x){
+      console.log(x)
       this.$emit('update-descending',x)
       this.orderNotification()
     }
@@ -112,7 +114,7 @@ export default {
     },
     orderNotification() {
       this.$q.notify({
-        message: 'Order by ' + this.orderby + ', ' + (this.descending ? 'high to low' : 'low to high'),
+        message: 'Order by ' + this.orderby + ', ' + (this.descending == 'true'? 'high to low' : 'low to high'),
         timeout: 1500,
         position: 'bottom-left',
       })

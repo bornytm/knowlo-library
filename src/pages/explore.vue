@@ -2,20 +2,21 @@
     <div>
         <!-- view for pop-up tag and resource pages -->
         <router-view ></router-view>
-        
-        <!-- tag query display -->
-        <transition-group class='container row' name='fade'>
-            <span class="col  center" v-for="tag in tagQuery" @click.stop.prevent='removeTag(tag.setID)' :key="tag.setID">
-                <img v-if="tag.tag.iconURL" class='circle hoverable' style='height:40px;width:40px;margin-right:10px;padding:3px;' :src="tag.tag.iconURL" />
-                <span v-else class='circle hoverable' style='text-align:center;padding:10px;width:40px;width:40px;position:absolute;font-size;2em' >{{tag.translation.name[0]}}</span>
-            </span>
-        </transition-group>
 
         <!-- tag search -->
         <search class ='col' exclude="" input-id="mainSearch" holder-text="Search" @select="addTag"></search>
         
         <!-- tag navigation/explorer -->
         <tag-suggestions :tagQuery="tagQuery" @add="addTag"></tag-suggestions>
+
+        <!-- tag query display -->
+        <transition-group class='tagQuery row pad' name='fade' style='text-overflow: ellipsis;position:sticky;top:0;background-color:white;box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 0px 0px, rgba(0, 0, 0, 0.19) 0px 9px 9px -3px;z-index:1000;width:100vw'>
+            <span style='width:50px;padding:10px'class="col  center" v-for="tag in tagQuery" @click.stop.prevent='removeTag(tag.setID)' :key="tag.setID">
+                <img v-if="tag.tag.iconURL" class='circle hoverable center' style='height:25px;width:25px;overflow:hidden;padding:3px;' :src="tag.tag.iconURL" />
+                <span v-else class='circle hoverable center' style='text-align:center;padding:10px;height:250px;width:25px;position:absolute;font-size;2em' >{{tag.translation.name[0]}}</span>
+                <div style ="font-size:12px;text-overflow: ellipsis;font-size: 12px;white-space: nowrap;overflow: hidden;" class='center'>{{tag.translation.name}}</div>
+            </span>
+        </transition-group>
 
         <!-- resource view options -- is this a dumb way to organize? -->
         <resource-display-options
@@ -25,7 +26,7 @@
             @update-descending="updateDescending"
         ></resource-display-options>
                 
-       
+       {{resources.length}}
         <q-layout>
             <!-- resource results  -->
             <q-infinite-scroll ref='infiniteScroll' @load="infiniteResources" :offset="250">
@@ -47,7 +48,7 @@
                 </p>
                 <div>
             
-                <q-btn @click="" color='primary' round >
+                <q-btn color='primary' round >
                     <i class="far fa-random "></i>
                 </q-btn>
                 </div>
@@ -80,10 +81,10 @@ export default {
             resourceQueryOptions: {
                 include: [],
                 exclude: [],
-                skip: this.infinite? this.resources.length : 0,
+                skip: this.infinite? this.resources.length -1 : 0,
                 limit: 30, // base on resources per row and mobile v desktop (i.e. available screen real estate)?
                 orderby: this.$q.localStorage.getItem('exploreOrder') || 'quality',
-                descending: typeof (this.$q.localStorage.getItem('exploreDescending')) === 'boolean'? this.$q.localStorage.getItem('exploreDescending') : true
+                descending: this.$q.localStorage.getItem('exploreDescending') || 'true'
             },
             infinite: false, // flag indicating if resources should be concatenated or replaced
             noMore: false, // flag for no more related resources
@@ -91,13 +92,24 @@ export default {
                 order: this.$q.localStorage.getItem('exploreOrder') || 'Quality',
                 display: this.$q.localStorage.getItem('exploreDisplay') || 'card',
                 size: this.$q.localStorage.getItem('exploreSize') || 4,
-                descending: this.$q.localStorage.getItem('exploreDescending') || true,
+                descending: this.$q.localStorage.getItem('exploreDescending') || 'true',
             }
         }
     },
     watch: {
-        tagQuery(){
+        tagQuery: function(){
             this.fetchResources()    
+        },
+        // descending: function(){
+        //     console.log('about ot')
+        //      this.fetchResources() 
+        // },
+        resources: {
+            handler(val){
+            // do stuffcon
+            console.log('booooooooooooooooooooooooooooooooo')
+            },
+            deep: true
         }
     },
     methods: {
@@ -114,18 +126,27 @@ export default {
                     this.resourceQueryOptions.exclude.push(this.tagQuery[tag].setID)
                 }
             }
-            console.log(  this.resourceQueryOptions.include)
+            console.log('tquery',  this.tagQuery)
+            console.log('includ ',  this.resourceQueryOptions.include)
+            console.log('skip ',  this.resourceQueryOptions.skip)
             resAPI.getResourcesRelatedToTags(this.resourceQueryOptions)
                 .then(resources => {
                     console.log(resources)
-                    console.log(this.include)
+                    console.log(this.resourceQueryOptions.include)
+                    console.log('infinit',this.infinite)
                     if(resources.data.length == 0){
                         this.noMore = true
                     } else if(this.infinite){
-                        this.resources = this.resources.concat(resources.data) 
+                        // for (let index = 0; index < resources.data.length; index++) {
+                        //     const element = resource.data[index];
+                            
+                        // }
+                            this.resources = this.resources.concat(resources.data) 
                         this.noMore = false
                         this.infinite = false
                     } else {
+                        console.log('assigling...')
+                        this.resources = undefined;
                         this.resources = resources.data
                         this.noMore = false
                     }
@@ -144,17 +165,15 @@ export default {
             }
         },
         addTag(tag){
-            console.log(tag)
+          
             tag.connections = 0
-           
-            tag.status.includeIcon = true
         
             if (tag.status.focusIcon) {
                 this.focus(tag) // clear all non-pinned
             }
             if (this.tagQuery.every(x => x.setID !== tag.setID)) { // don't add if already in query
                 this.tagQuery.push(tag)
-            }  // check if it's alreay there before adding?
+            }  
         },
         removeTag(id) {
             for (var i = this.tagQuery.length - 1; i >= 0; i--) {
@@ -167,9 +186,9 @@ export default {
             while (tIndex--) {
                 if (!this.tagQuery[tIndex].status.pinnedIcon && this.tagQuery[tIndex].setID !== set.setID) this.tagQuery.splice(tIndex, 1)
             }
-            },
+        },
         updateOrder(x){
-            console.log('in order update')
+            console.log('in order update',x)
             this.$q.localStorage.set('exploreOrder', x)
             if(!this.noMore){ 
                 this.fetchResources()
@@ -190,6 +209,9 @@ export default {
         updateDescending(x){
             this.$q.localStorage.set('exploreDescending', x)
             this.collectionOptions.descending = x
+            if(!this.noMore){ 
+                this.fetchResources()
+            }
         }       
     }
 }
