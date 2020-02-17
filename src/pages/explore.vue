@@ -9,12 +9,13 @@
         <!-- tag navigation/explorer -->
         <tag-suggestions :tagQuery="tagQuery" @add="addTag"></tag-suggestions>
 
+        <div class='sticky-ui-stuff'>
         <!-- tag query display -->
-        <transition-group class='tagQuery row pad' name='fade' style='text-overflow: ellipsis;position:sticky;top:0;background-color:white;box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 0px 0px, rgba(0, 0, 0, 0.19) 0px 9px 9px -3px;z-index:1000;width:100vw'>
+        <transition-group class='tagQuery row pad' name='fade' style='text-overflow: ellipsis;background-color:white;'>
             <span style='width:50px;padding:10px'class="col  center" v-for="tag in tagQuery" @click.stop.prevent='removeTag(tag.setID)' :key="tag.setID">
-                <img v-if="tag.tag.iconURL" class='circle hoverable center' style='height:25px;width:25px;overflow:hidden;padding:3px;' :src="tag.tag.iconURL" />
+                <img v-if="tag.tag.iconURL" class='circle hoverable center' style='height:25px;width:25px;overflow:hidden;margin: 3px 3px 0px 3px;' :src="tag.tag.iconURL" />
                 <span v-else class='circle hoverable center' style='text-align:center;padding:10px;height:250px;width:25px;position:absolute;font-size;2em' >{{tag.translation.name[0]}}</span>
-                <div style ="font-size:12px;text-overflow: ellipsis;font-size: 12px;white-space: nowrap;overflow: hidden;" class='center'>{{tag.translation.name}}</div>
+                <div style ="max-width: 150px;font-size: 12px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;margin: 0 auto;" class='center'>{{tag.translation.name}}</div>
             </span>
         </transition-group>
 
@@ -25,7 +26,7 @@
             @update-size="updateSize"
             @update-descending="updateDescending"
         ></resource-display-options>
-                
+        </div>  
        {{resources.length}}
         <q-layout>
             <!-- resource results  -->
@@ -218,5 +219,11 @@ export default {
 </script>
 
 <style>
-
+.sticky-ui-stuff {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 0px 0px, rgba(0, 0, 0, 0.19) 0px 9px 9px -3px;
+    position: sticky;
+    top:0px;
+    background: white;
+    z-index: 21;
+}
 </style>
