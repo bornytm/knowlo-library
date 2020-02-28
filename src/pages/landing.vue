@@ -9,7 +9,7 @@
 
         <h4 style="margin-bottom:40px" class="header col s12 light">What's worth discussing?</h4>
 
-        <h5 style="line-height:1.3em;" class="header light">Knowlo is a <router-link to="/principals"><span >principled</span></router-link>, <a target="_blank" href="http://github.com/bornytm/knowlo-library"><span >open source</span></a>, experiment in collaborative knowledge sharing</h5>
+        <h5 style="line-height:1.3em;" class="header light">Knowlo is a <router-link to="/principals"><span >principled</span></router-link>, <a target="_blank" href="http://github.com/MintyOrb/knowlo-library"><span >open source</span></a>, experiment in collaborative knowledge sharing</h5>
       </div>
       <div style='margin-top: 80px;' class="center">
         <router-link to="/">

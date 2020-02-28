@@ -6,10 +6,10 @@
   "productName": "Knowlo Library",
   "repository": {
     "type": "git",
-    "url": "git://github.com/bornytm/knowlo-library.git"
+    "url": "git://github.com/MintyOrb/knowlo-library.git"
   },
   "cordovaId": "org.cordova.quasar.app",
-  "author": "Tim Borny <bornytm@gmail.com>",
+  "author": "Tim Borny <MintyOrb@gmail.com>",
   "private": true,
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",

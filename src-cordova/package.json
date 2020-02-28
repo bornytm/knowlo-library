@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/bornytm/knowlo-library.git"
+    "url": "git://github.com/MintyOrb/knowlo-library.git"
   },
   "keywords": [
     "ecosystem:cordova"

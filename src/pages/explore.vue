@@ -105,13 +105,6 @@ export default {
         //     console.log('about ot')
         //      this.fetchResources() 
         // },
-        resources: {
-            handler(val){
-            // do stuffcon
-            console.log('booooooooooooooooooooooooooooooooo')
-            },
-            deep: true
-        }
     },
     methods: {
         fetchResources(callback){
@@ -127,7 +120,8 @@ export default {
                     this.resourceQueryOptions.exclude.push(this.tagQuery[tag].setID)
                 }
             }
-            console.log('tquery',  this.tagQuery)
+            console.log('resources',  this.resources)
+            console.log('tagquery',  this.tagQuery)
             console.log('includ ',  this.resourceQueryOptions.include)
             console.log('skip ',  this.resourceQueryOptions.skip)
             resAPI.getResourcesRelatedToTags(this.resourceQueryOptions)
@@ -142,7 +136,7 @@ export default {
                         //     const element = resource.data[index];
                             
                         // }
-                            this.resources = this.resources.concat(resources.data) 
+                        this.resources = this.resources += resources.data
                         this.noMore = false
                         this.infinite = false
                     } else {
@@ -198,6 +192,11 @@ export default {
         updateDisplay(x){
             this.$q.localStorage.set('exploreDisplay', x)
             this.collectionOptions.display = x
+            if(x == 'slider'){
+                this.$refs.infiniteScroll.disable = true
+            } else {
+                this.$refs.infiniteScroll.disable = false
+            }
             // setTimeout((x) => { // wait for change
             //     this.$refs.collection.layout()
             // }, 300)

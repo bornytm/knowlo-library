@@ -58,7 +58,7 @@
     </div>
     <div class="footer-copyright">
       <div class="container center">knowlo</div>
-      <a style="margin-left:20px; margin-top:5px; position:absolute;" href="https://github.com/bornytm/knowlo-library"><img style="width:25px" src="statics/github.png"></a>
+      <a style="margin-left:20px; margin-top:5px; position:absolute;" href="https://github.com/MintyOrb/knowlo-library"><img style="width:25px" src="statics/github.png"></a>
     </div>
   </footer>
 

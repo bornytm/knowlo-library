@@ -22,7 +22,7 @@ The Knowlo Library is a [Node.js](nodejs.org/en/) and [Vue app](vuejs.org/) usin
   2. [node.js](https://nodejs.org/en/)
   3. [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 2. Clone the repo
-`git clone https://github.com/bornytm/knowlo-library `
+`git clone https://github.com/MintyOrb/knowlo-library `
 3. Install npm packages
 `npm install`
 
@@ -49,4 +49,4 @@ Instructions to follow. Varies by platform.
 Currently, pushing to the master branch automatically builds the app on heroku. 
 
 # Contributing
-Knowlo is an open source project, collaboration is welcomed- contribution guidelines are under development. For now, reach out to @bornytm.
+Knowlo is an open source project, collaboration is welcomed- contribution guidelines are under development. For now, reach out to @MintyOrb.
