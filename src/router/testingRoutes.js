@@ -1,5 +1,9 @@
 const testingRoutes = [
     {
+        path: '/dynalist',
+        component: () => import('../testing/dynalist.vue')
+    },
+    {
         path: '/cross-section',
         component: () => import('components/cross-section.vue')
     },
