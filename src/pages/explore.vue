@@ -27,10 +27,20 @@
             @update-descending="updateDescending"
         ></resource-display-options>
         </div>  
-       <!-- {{resources.length}} -->
+       
+       <!-- number of resources -->
+        <!-- <div class='right' style='margin:30px'>Showing {{resources.length}} resources.</div>
+        {{collectionOptions.display == 'slider'}} -->
+            <!-- of {{resourcesRelated}}</div> -->
+
         <q-layout>
             <!-- resource results  -->
-            <q-infinite-scroll ref='infiniteScroll' @load="infiniteResources" :offset="250">
+            <q-infinite-scroll ref='infiniteScroll' 
+                @load="infiniteResources" 
+                :disable="collectionOptions.display == 'slider'" 
+                :debounce="500" 
+                :offset="250">
+
                 <resource-collection ref='collection' :resources="resources" :options="collectionOptions"></resource-collection>
                 <template v-slot:loading>
                     <div class="row justify-center q-my-md">
@@ -99,20 +109,8 @@ export default {
     },
     watch: {
         tagQuery: function(){
-            console.log(this.tagQuery )
             this.fetchResources()    
-        },
-        resources: {
-            handler: function(val) {
-                console.log('resssss updated')
-                // this.$emit('updateSettings', this.settings)
-            },
-            deep: true
-            }
-        // descending: function(){
-        //     console.log('about ot')
-        //      this.fetchResources() 
-        // },
+        }
     },
     methods: {
         fetchResources(callback){
@@ -184,7 +182,6 @@ export default {
             }
         },
         updateOrder(x){
-            console.log('in order update',x)
             this.$q.localStorage.set('exploreOrder', x)
             this.collectionOptions.order = x
             this.resourceQueryOptions.order = x
@@ -210,7 +207,6 @@ export default {
             
         },
         updateDescending(x){
-            console.log(x)
             this.$q.localStorage.set('exploreDescending', x)
             this.collectionOptions.descending = x
             this.resourceQueryOptions.descending = x

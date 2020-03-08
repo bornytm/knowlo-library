@@ -161,15 +161,12 @@ export default {
         } else if (e.which === 27) { // Esc. Close ul
           return
         }
-        console.log(options)
         var val = $input.val().toLowerCase()
         if (val.length > options.minLength) {
           timeout = setTimeout(() => { // comment this line to remove timeout
-            console.log(options.ajaxUrl + val + '/' + this.exclude)
             this.$http.get(options.ajaxUrl + val + '/' + this.exclude).then(data => {
               this.suggestions = data.data
               // hide "create new" if a match is found
-              console.log(data)
               if (Object.values(this.suggestions).findIndex(item => this.input.toLowerCase().trim() === item.translation.name.toLowerCase().trim())) {
                 this.suggestions.push({
                   tag: {},
@@ -181,7 +178,7 @@ export default {
               }
             },
             fail => {
-              console.log(fail)
+              console.error(fail)
             })
           }, 250) // comment this line to remove timeout
         }

@@ -7,7 +7,6 @@ export default {
     // let tag = ['Syh41sK--']
     
     // let include = tag[Math.floor(Math.random() * tag.length)]
-    console.log(options)
     if(typeof options == 'undefined'){
       options = {}
     }
@@ -21,7 +20,6 @@ export default {
       orderby: options.order || "quality",
       descending: options.descending || 'true'
     }
-    console.log(params)
     return axios.get('/api/resource', {
       params: params,
       before(request) { // abort current request, if there is one

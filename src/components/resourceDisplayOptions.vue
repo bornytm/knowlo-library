@@ -17,9 +17,9 @@
            <q-tooltip :disable="!this.$q.cookies.get('showToolTips')" :delay="500" :offset="[0, 5]">Grid view</q-tooltip>
           </q-btn>
           <q-btn class="viewBtn" flat round  ><i class="material-icons">photo_size_select_large</i>
-            <q-tooltip :disable="!this.$q.cookies.get('showToolTips')" :delay="500" :offset="[0, 5]">Change Size</q-tooltip>
+            <q-tooltip :disable="!this.$q.cookies.get('showToolTips')" :delay="500" :offset="[0, 5]">Resize</q-tooltip>
             <q-popup-edit class="" v-model="sizePopup" cover >
-              <q-slider class='sizeSlider' @mouseup="test" v-model="size" :min="1" :max="20" :step="1" reverse />
+              <q-slider class='sizeSlider' @mouseup="" v-model="size" :min="1" :max="20" :step="1" reverse />
               <!-- <q-btn round>hi</q-btn> -->
             </q-popup-edit>
           </q-btn>
@@ -90,27 +90,22 @@ export default {
     }
   },
   watch: {
-    display(x) {
-      this.$emit('update-display',x)
+    display(display) {
+      this.$emit('update-display', display)
     },
-    size(x) {
-      console.log('in size change')
-      this.$emit('update-size',x)
+    size(size) {
+      this.$emit('update-size', size)
     },
-    orderby(x) {
-      this.$emit('update-order',x)
+    orderby(orderby) {
+      this.$emit('update-order', orderby)
       this.orderNotification()
     },
-    descending (x){
-      console.log(x)
-      this.$emit('update-descending',x)
+    descending (descending){
+      this.$emit('update-descending', descending)
       this.orderNotification()
     }
   },
   methods: {
-    test(x){
-      console.log('selected ',x)
-    },
     orderNotification() {
       this.$q.notify({
         message: 'Order by ' + this.orderby + ', ' + (this.descending == 'true'? 'high to low' : 'low to high'),

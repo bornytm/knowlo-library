@@ -94,21 +94,18 @@ export default {
         }else if(this.displayed === 'Time') { // save in local storage if already fetched? no reason to hit the db more than necessary...
           tagAPI.getContains('BJNgnDdk-')
                 .then(response => {
-                  console.log(response)
                    this.tags = response.data
                 })
                 .catch(error => console.log(error))
         }else if(this.displayed === 'Size') {
           tagAPI.getContains('BJgVf2ZQYW')
                 .then(response => {
-                  console.log(response)
                    this.tags = response.data
                 })
                 .catch(error => console.log(error))
         }else if(this.displayed === 'Types') {
           tagAPI.getContains('HywG30RSyW')
                 .then(response => {
-                  console.log(response)
                    this.tags = response.data
                 })
                 .catch(error => console.log(error))
@@ -226,8 +223,8 @@ export default {
 .options {
   margin-left: 30px;
   margin-right: 10px;
-  margin-bottom: 20px;
-  height: 40px;
+  /* margin-bottom: 20px; */
+  /* height: 40px; */
 }
 .back {
   margin:10px;
