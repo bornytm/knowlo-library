@@ -8,7 +8,7 @@ Knowlo is a principled, community driven, open source, radically transparent, no
 
 #### Definition:
 
-The Knowlo Library is a [principled](https://www.knowlo.org/principals), open source tool for resource organization, proliferation, and collaboration.
+The Knowlo Library is a [principled](https://www.knowlo.org/principles), open source tool for resource organization, proliferation, and collaboration.
 
 #### Technical definition:
 
