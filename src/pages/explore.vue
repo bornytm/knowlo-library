@@ -12,7 +12,7 @@
         <div class='sticky-ui-stuff' :class="{'extraPadding': this.$q.platform.is.desktop }">
         <!-- tag query display -->
         <transition-group class='tagQuery row pad' name='fade' style='text-overflow: ellipsis;background-color:white;'>
-            <span style='width:50px;padding:10px'class="col  center" v-for="tag in tagQuery" @click.stop.prevent='removeTag(tag.setID)' :key="tag.setID">
+            <span style='width:50px;padding:10px' class="col center" v-for="tag in tagQuery" @click.stop.prevent='removeTag(tag.setID)' :key="tag.setID">
                 <img v-if="tag.tag.iconURL" class='circle hoverable center' style='height:25px;width:25px;overflow:hidden;margin: 3px 3px 0px 3px;' :src="tag.tag.iconURL" />
                 <span v-else class='circle hoverable center' style='text-align:center;padding:10px;height:250px;width:25px;position:absolute;font-size;2em' >{{tag.translation.name[0]}}</span>
                 <div style ="max-width: 150px;font-size: 12px;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;margin: 0 auto;" class='center'>{{tag.translation.name}}</div>
@@ -82,9 +82,9 @@ export default {
             resourceQueryOptions: {
                 include: [],
                 exclude: [],
-                skip: this.infinite? this.resources.length -1 : 0,
+                skip: 0,
                 limit: 30, // base on resources per row and mobile v desktop (i.e. available screen real estate)?
-                orderby: this.$q.localStorage.getItem('exploreOrder') || 'quality',
+                order: this.$q.localStorage.getItem('exploreOrder') || 'quality',
                 descending: this.$q.localStorage.getItem('exploreDescending') || 'true'
             },
             infinite: false, // flag indicating if resources should be concatenated or replaced
@@ -99,8 +99,16 @@ export default {
     },
     watch: {
         tagQuery: function(){
+            console.log(this.tagQuery )
             this.fetchResources()    
         },
+        resources: {
+            handler: function(val) {
+                console.log('resssss updated')
+                // this.$emit('updateSettings', this.settings)
+            },
+            deep: true
+            }
         // descending: function(){
         //     console.log('about ot')
         //      this.fetchResources() 
@@ -113,6 +121,8 @@ export default {
                 callback = function dummy(){}
             }
 
+            this.resourceQueryOptions.include = []
+            this.resourceQueryOptions.exclude = []
             for(let tag in this.tagQuery ) {
                 if(this.tagQuery[tag].status.includeIcon){
                     this.resourceQueryOptions.include.push(this.tagQuery[tag].setID)
@@ -120,36 +130,25 @@ export default {
                     this.resourceQueryOptions.exclude.push(this.tagQuery[tag].setID)
                 }
             }
-            console.log('resources',  this.resources)
-            console.log('tagquery',  this.tagQuery)
-            console.log('includ ',  this.resourceQueryOptions.include)
-            console.log('skip ',  this.resourceQueryOptions.skip)
+            this.resourceQueryOptions.skip = this.infinite? this.resources.length : 0
+
             resAPI.getResourcesRelatedToTags(this.resourceQueryOptions)
-                .then(resources => {
-                    console.log(resources)
-                    console.log(this.resourceQueryOptions.include)
-                    console.log('infinit',this.infinite)
-                    if(resources.data.length == 0){
+                .then(response => {
+                    if(response.data.length == 0){
                         this.noMore = true
                     } else if(this.infinite){
-                        // for (let index = 0; index < resources.data.length; index++) {
-                        //     const element = resource.data[index];
-                            
-                        // }
-                        this.resources = this.resources += resources.data
                         this.noMore = false
                         this.infinite = false
+                        for (let index = 0; index < response.data.length; index++) {
+                            this.resources.push(response.data[index])  
+                        }
                     } else {
-                        console.log('assigling...')
-                        this.resources = undefined;
-                        this.resources = resources.data
+                        this.resources = response.data
                         this.noMore = false
                     }
-                    callback(resources)
+                    callback(response)
                 })
                 .catch(error => console.log(error))
-            
-            
         },
         infiniteResources(index, done){
             if(this.noMore){
@@ -169,11 +168,13 @@ export default {
             if (this.tagQuery.every(x => x.setID !== tag.setID)) { // don't add if already in query
                 this.tagQuery.push(tag)
             }  
+            this.$q.localStorage.set('tagQuery', this.tagQuery)
         },
         removeTag(id) {
             for (var i = this.tagQuery.length - 1; i >= 0; i--) {
                 if (this.tagQuery[i].setID === id) this.tagQuery.splice(i, 1)
             }
+            this.$q.localStorage.set('tagQuery', this.tagQuery)
         },
         focus (set) {
             set.status.focusIcon = false
@@ -185,6 +186,8 @@ export default {
         updateOrder(x){
             console.log('in order update',x)
             this.$q.localStorage.set('exploreOrder', x)
+            this.collectionOptions.order = x
+            this.resourceQueryOptions.order = x
             if(!this.noMore){ 
                 this.fetchResources()
             }
@@ -197,18 +200,20 @@ export default {
             } else {
                 this.$refs.infiniteScroll.disable = false
             }
-            // setTimeout((x) => { // wait for change
-            //     this.$refs.collection.layout()
-            // }, 300)
-            
         },
         updateSize(x){
             this.$q.localStorage.set('exploreSize', x)
             this.collectionOptions.size = x
+           setTimeout((x) => { // wait for change
+                this.$refs.collection.layout()
+            }, 300)
+            
         },
         updateDescending(x){
+            console.log(x)
             this.$q.localStorage.set('exploreDescending', x)
             this.collectionOptions.descending = x
+            this.resourceQueryOptions.descending = x
             if(!this.noMore){ 
                 this.fetchResources()
             }

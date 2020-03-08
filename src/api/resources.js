@@ -7,20 +7,18 @@ export default {
     // let tag = ['Syh41sK--']
     
     // let include = tag[Math.floor(Math.random() * tag.length)]
-  
+    console.log(options)
     if(typeof options == 'undefined'){
       options = {}
     }
-    console.log(options.descending)
-    console.log(typeof options.descending)
     let params = {
       languageCode: 'en',
-      include: [] || options.include,
-      exclude: [],
+      include: options.include || [],
+      exclude: [], // need to impliment in query
       // showViewed: this.showViewed, // option only if user is logged in
       skip: options.skip || 0,
       limit: options.limit || 10,
-      orderby: options.orderby || "quality",
+      orderby: options.order || "quality",
       descending: options.descending || 'true'
     }
     console.log(params)

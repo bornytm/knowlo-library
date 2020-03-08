@@ -96,7 +96,6 @@ export default {
     size(x) {
       console.log('in size change')
       this.$emit('update-size',x)
-      this.layout()
     },
     orderby(x) {
       this.$emit('update-order',x)

@@ -43,10 +43,10 @@ export default {
         },
         sort: function(x) {
             this.order(x)
+        },
+        size: function(x) {
+            this.layout()
         }
-    },
-    mounted(){
-        console.log(  this.$refs.resourceBin)
     },
     methods: {
         getOptions() {
@@ -75,15 +75,13 @@ export default {
                 }
             }
         },
-        order(){
+        order(){ // reorder without db query
             // this.$refs.resourceBin.options.sortAscending = !this.options.descending
             // // this.opt.sortAscending = !this.options.descending
             // // this.$refs.resourceBin.updateSortData()
             // this.$refs.resourceBin.sort(this.sort)
         },
         layout() {
-            console.log('in layout')
-            // use .on( 'layoutComplete', function( laidOutItems ) {...} ) to not trigger if already oging
             if(this.$refs.resourceBin){
                 this.$refs.resourceBin.layout('masonry')
             }
