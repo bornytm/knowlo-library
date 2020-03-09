@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <!-- slider view -->
         <cross-section v-if="options.display=='slider'" :items="resources">
             <resource v-for="res in resources"
@@ -36,6 +35,9 @@ export default {
     components: { resource, crossSection, isotope },
     directives: { imagesLoaded },
     props: ['tagQuery', 'resources', 'options'],
+    mounted () {
+        console.log(this.options)
+    },
     watch: {
         descending: function(x) {
             console.log('in descending watch. descending:', !this.options.descending)
@@ -45,6 +47,8 @@ export default {
             this.order(x)
         },
         size: function(x) {
+            // console.log()
+            console.log(x)
             this.layout()
         }
     },

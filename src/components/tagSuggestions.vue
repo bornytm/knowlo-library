@@ -10,7 +10,7 @@
     <!-- <q-radio v-model="displayed" val="disciplines" label="disciplines" /> -->
   </div>
   <q-btn class='back' color='primary' small flat round v-show='displayed === "subGroup"' @click="showAllGroups">
-    <q-icon name='arrow back' />
+    <q-icon name='arrow_back' />
   </q-btn>
 
   <transition type='fade'>

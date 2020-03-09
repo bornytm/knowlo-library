@@ -123,7 +123,6 @@ export default {
   props: {
     re: Object,
     display: String,
-    settings: Object,
     size: Number,
   },
   data: () => {
@@ -138,11 +137,6 @@ export default {
     }
   },
   methods: {
-    sizeChange () {
-      setTimeout(() => { // wait for change
-        this.$emit('changedDisplay')
-      }, 300)
-    },
     voteLabel () {
       // can be html...
       return '<span><span class="left" style="color:orange">Q: ' + this.displayQuality.toString().substring(0, 4) + '</span> <span style="float:right; color:blue" class="">C: ' + this.displayComplexity.toString().substring(0, 4) + '</span></span>'
@@ -212,9 +206,15 @@ export default {
         }
         return num.toFixed(digits).replace(rx, '$1')
       }
+    },
+    setSize(){
+      if(this.display == 'card'){
+        this.width = "calc(" + (1/this.size)*100 + "% - 10px)"
+      }
     }
   },
   mounted () {
+    this.setSize()
     this.ratingDisplay = 'global'
     if (this.re.editing) { // adding / editing resource
       this.editing = true
@@ -222,9 +222,7 @@ export default {
   },
   watch: {
      size (x) {
-      if(this.display == 'card'){
-        this.width = "calc(" + (1/this.size)*100 + "% - 10px)"
-      }
+      this.setSize()
     },
     ratingDisplay (val) {
       if (val === 'global') {

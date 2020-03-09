@@ -198,11 +198,12 @@ export default {
                 this.$refs.infiniteScroll.disable = false
             }
         },
-        updateSize(x){
-            this.$q.localStorage.set('exploreSize', x)
-            this.collectionOptions.size = x
-           setTimeout((x) => { // wait for change
+        updateSize(size){
+          
+            this.collectionOptions.size = size
+           setTimeout(() => { // wait for change
                 this.$refs.collection.layout()
+                this.$q.localStorage.set('exploreSize', size)
             }, 300)
             
         },
