@@ -206,26 +206,29 @@ export default {
   props: ['member','settings'],
   name: 'resourcePage',
   components: { isotope, search, tag, resource, Flickity, addResource},
-  meta () {
-    return {// not support in my version?
-      // title: 'My Example App',
-      // titleTemplate: '%s - Yay!',
-      // htmlAttrs: {
-      //   lang: 'en',
-      // },
-      meta: {
-        description: { name: 'descriptionssssssssssssssssssss', content: 'Page 1' }
-      }
-      // meta: [
-      //   { property: 'og:title', content: resource.title, vmid: 'test', },
-      //   { property: 'og:description', content: 'howdyhowdy', vmid: 'test', },
-      //   { property: 'og:image', content: resource.mThumb, vmid: 'test', },
-      //   { property: 'og:url', content: 'knowlo.io' + Vue.route.fullPath, vmid: 'test', },
-      //   // { name: 'description', content: 'Hello', vmid: 'test', },
-      //   // { name: 'description', content: 'Hello', vmid: 'test', }
-      // ],
-    }
-  },
+  // meta: {
+  //   title: "hellloooooooooooooo"
+  // },
+  // meta () {
+  //   return {// not support in my version?
+  //     title: 'My Example App',
+  //     // titleTemplate: '%s - Yay!',
+  //     // htmlAttrs: {
+  //     //   lang: 'en',
+  //     // },
+  //     // meta: {
+  //     //   description: { name: 'descriptionssssssssssssssssssss', content: 'Page 1' }
+  //     // }
+  //     // meta: [
+  //     //   { property: 'og:title', content: resource.title, vmid: 'test', },
+  //     //   { property: 'og:description', content: 'howdyhowdy', vmid: 'test', },
+  //     //   { property: 'og:image', content: resource.mThumb, vmid: 'test', },
+  //     //   { property: 'og:url', content: 'knowlo.io' + Vue.route.fullPath, vmid: 'test', },
+  //     //   // { name: 'description', content: 'Hello', vmid: 'test', },
+  //     //   // { name: 'description', content: 'Hello', vmid: 'test', }
+  //     // ],
+  //   }
+  // },
   data: function () {
     return {
       resource: {
@@ -323,11 +326,8 @@ export default {
       this.fetchDiscussion()
       this.fetchRelated() // TODO: only fetch when on related panel
       this.$nextTick(function () {
-        console.log(this.$route)
-        console.log(this)
         if (!this.modalOpen) {
           this.modalOpen = true
-          console.log(this.$route)
           $('#resourceModal' + this.resource.uid).modal({
             opacity: 0.5, // Opacity of modal background
             inDuration: 300, // Transition in duration
@@ -481,6 +481,7 @@ export default {
   },
   mounted: function () {
     console.log(this.$route.meta)
+    console.log(this)
     this.fetchResource()
     // if (this.member.uid) {
     //   window.setTimeout(() => {
