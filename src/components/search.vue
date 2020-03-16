@@ -1,12 +1,12 @@
 <template>
   <div :id="'cont' + inputId" class="input-field ">
-    <q-input type="search" label="Search" @click.stop.prevent=""  class="search" v-model="input"  @focus="hidden=false" @blur="delayBlur">
+    <q-input type="search" label="Search" @click.stop.prevent=""  class="search" v-model="input"  @focus="hidden=false" @blur="delayBlur"  autocomplete="off">
       <template v-slot:append>
           <q-icon name="search" />
       </template>
     </q-input>
     <ul id="ac" class="dropdown-content" style="position:absolute" :class="{ hide: hidden}">
-			<li v-for="suggestion in suggestions" @click.stop.prevent='pick(suggestion)'>
+			<li v-for="suggestion in suggestions" @click.stop.prevent='pick(suggestion)' :key="suggestion.setID">
 				<img v-if="suggestion.tag.iconURL" :src="suggestion.tag.iconURL" class="left">
 				<span><i v-if="suggestion.new" class='material-icons  left'>add</i>{{suggestion.translation.name}}<span v-if="$route.name !='addTag' && suggestion.new" @click="addWithDetail = true"><i class='material-icons right addDetail'>playlist_add</i></span></span>
 			</li>
@@ -16,12 +16,10 @@
 <script>
 import $ from 'jquery'
 import Materialize from 'materialize-css'
-// import { QInput } from 'quasar'
 // adapted from  http://stackoverflow.com/a/42757285/2061741
 // TODO: there is a LOT of direct DOM manipulation here that probably ought to be cleaned up.
 export default {
   props: ['ajaxUrl', 'inputId', 'exclude', 'holderText'],
-  // components: { QInput },
   name: 'search',
   data: () => {
     return {
@@ -164,8 +162,14 @@ export default {
         var val = $input.val().toLowerCase()
         if (val.length > options.minLength) {
           timeout = setTimeout(() => { // comment this line to remove timeout
-            this.$http.get(options.ajaxUrl + val + '/' + this.exclude).then(data => {
-              this.suggestions = data.data
+            this.$http.get(options.ajaxUrl + val + '/' + this.exclude).then(response => {
+              // remove duplicate tags TODO: this should be done with the db query rather than on the front end.
+              this.suggestions = response.data.filter((thing, index, self) =>
+                index === self.findIndex((t) => (
+                  t.setID === thing.setID
+                ))
+              )
+              // this.suggestions = response.data
               // hide "create new" if a match is found
               if (Object.values(this.suggestions).findIndex(item => this.input.toLowerCase().trim() === item.translation.name.toLowerCase().trim())) {
                 this.suggestions.push({

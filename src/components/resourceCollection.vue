@@ -35,9 +35,6 @@ export default {
     components: { resource, crossSection, isotope },
     directives: { imagesLoaded },
     props: ['tagQuery', 'resources', 'options'],
-    mounted () {
-        console.log(this.options)
-    },
     watch: {
         descending: function(x) {
             console.log('in descending watch. descending:', !this.options.descending)

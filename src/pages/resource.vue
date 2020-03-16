@@ -327,6 +327,7 @@ export default {
         console.log(this)
         if (!this.modalOpen) {
           this.modalOpen = true
+          console.log(this.$route)
           $('#resourceModal' + this.resource.uid).modal({
             opacity: 0.5, // Opacity of modal background
             inDuration: 300, // Transition in duration

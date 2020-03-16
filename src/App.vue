@@ -130,7 +130,7 @@ export default {
           expires: 7
         })
         Materialize.toast('Hi! Knowlo is in alpha right now...everthing is subject to change and break.', 10000)
-        this.$router.push('/about')
+        
       } else {
         Cookies.set('alpha-warning-seen', true, {
           expires: 7
