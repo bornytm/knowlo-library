@@ -2,15 +2,15 @@
     <div class='time'>
         <!--  test with -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet">
-        <timeline ref='time' :items="items" :start="start" :end="end" :option="option" :groups="groups" :hide-tools=true></timeline>
+        <!-- <timeline ref='time' :items="items" :start="start" :end="end" :option="option" :groups="groups" :hide-tools=true></timeline> -->
     </div>
 </template>
 
 <script>
-import timeline from 'vue-visjs-timeline'
-console.log(timeline)
+// import timeline from 'vue-visjs-timeline'
+// console.log(timeline)
 export default {
-    components: { timeline },
+    // components: { timeline },
     mounted () {
         console.log(this.start)
         console.log(this.end)

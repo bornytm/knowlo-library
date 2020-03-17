@@ -29,11 +29,11 @@
 import resource from 'components/resource'
 import crossSection from 'components/cross-section'
 import isotope from 'vueisotope'
-import imagesLoaded from 'vue-images-loaded'
+// import imagesLoaded from 'vue-images-loaded'
 
 export default {
     components: { resource, crossSection, isotope },
-    directives: { imagesLoaded },
+    // directives: { imagesLoaded },
     props: ['tagQuery', 'resources', 'options'],
     watch: {
         descending: function(x) {

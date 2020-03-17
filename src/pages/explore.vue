@@ -83,7 +83,7 @@ import resAPI from '../api/resources'
 export default {
     components: { search, tag, tagSuggestions, resourceDisplayOptions, resourceCollection },
     mounted () {
-        this.fetchResources()
+        this.$refs.infiniteScroll.trigger() // initial resource load
     },
     data () {
         return {

@@ -72,13 +72,11 @@ import Materialize from 'materialize-css'
 import Headroom from 'headroom.js'
 import Cookies from 'js-cookie'
 import firebase from 'firebase'
-import firebaseui from 'firebaseui'
 import sidemenu from 'components/sideMenu'
 import VuePlyr from 'vue-plyr'
 import 'vue-plyr/dist/vue-plyr.css'
-import VueMeta from 'vue-meta'
 
-Vue.use(VueMeta, {
+Vue.use({
   // optional pluginOptions
   refreshOnceOnNavigation: true
 })
@@ -241,9 +239,9 @@ export default {
     }
 
     // Initialize the FirebaseUI Widget using Firebase.
-    var ui = new firebaseui.auth.AuthUI(firebase.auth())
+    // var ui = new firebaseui.auth.AuthUI(firebase.auth())
     // The start method will wait until the DOM is loaded.
-    ui.start('#firebaseui-auth-container', uiConfig)
+    // ui.start('#firebaseui-auth-container', uiConfig)
 
     // The start method will wait until the DOM is loaded.
     firebase.auth().onAuthStateChanged((member) => {
