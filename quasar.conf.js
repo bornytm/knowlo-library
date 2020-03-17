@@ -97,7 +97,8 @@ module.exports = function (ctx) {
         'Notify',
         'Cookies',
         'LocalStorage',
-        'SessionStorage'
+        'SessionStorage',
+        'Meta'
       ]
       // lang: 'de' // Quasar language
     },

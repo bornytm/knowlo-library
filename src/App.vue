@@ -85,6 +85,27 @@ Vue.use(VuePlyr)
 
 export default {
   name: 'app',
+
+  meta () {
+    return {
+      title: "Knowlo - " + this.$route.name,
+      meta: [
+        { property: 'og:title', content: "Knowlo - For the design and proliferation of insight."},
+        { property: 'og:description', content: "Welcome to the Knowlo Library, a community directed open source tool for resource organization, proliferation, and collaboration."},
+        { property: 'og:image', content: 'https://i1.wp.com/knowlo.org/wp-content/uploads/2020/02/size-time-tight.png?resize=1024%2C422&ssl=1'},
+        { property: 'og:url', content: 'https://knowlo.io'},
+        // Twitter meta
+        // { name:"twitter:card", content:"summary_large_image"},
+        // { name:"twitter:title", content:"Knowlo Library"},
+        // { name:"twitter:description", content:"A learning community and platform for optimizing access to insight."},
+        // { name:"twitter:image", content:"https://i1.wp.com/knowlo.org/wp-content/uploads/2020/02/size-time-tight.png?resize=1024%2C422&ssl=1"},
+        // Google / Search Engine meta
+        // { itemprop:"name", content:"Knowlo Library"},
+        // { itemprop:"description", content:"A learning community and platform for optimizing access to insight."},
+        // { itemprop:"image", content:"https://i1.wp.com/knowlo.org/wp-content/uploads/2020/02/size-time-tight.png?resize=1024%2C422&ssl=1"},
+      ],
+    }
+  },
   components: { sidemenu },
   data () {
     return {
