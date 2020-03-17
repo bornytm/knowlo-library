@@ -206,29 +206,28 @@ export default {
   props: ['member','settings'],
   name: 'resourcePage',
   components: { isotope, search, tag, resource, Flickity, addResource},
-  // meta: {
-  //   title: "hellloooooooooooooo"
-  // },
-  // meta () {
-  //   return {// not support in my version?
-  //     title: 'My Example App',
-  //     // titleTemplate: '%s - Yay!',
-  //     // htmlAttrs: {
-  //     //   lang: 'en',
-  //     // },
-  //     // meta: {
-  //     //   description: { name: 'descriptionssssssssssssssssssss', content: 'Page 1' }
-  //     // }
-  //     // meta: [
-  //     //   { property: 'og:title', content: resource.title, vmid: 'test', },
-  //     //   { property: 'og:description', content: 'howdyhowdy', vmid: 'test', },
-  //     //   { property: 'og:image', content: resource.mThumb, vmid: 'test', },
-  //     //   { property: 'og:url', content: 'knowlo.io' + Vue.route.fullPath, vmid: 'test', },
-  //     //   // { name: 'description', content: 'Hello', vmid: 'test', },
-  //     //   // { name: 'description', content: 'Hello', vmid: 'test', }
-  //     // ],
-  //   }
-  // },
+  meta () {
+    return {
+      title: 'Knowlo - ' + this.resource.title,
+      meta: [
+        // Facebook meta
+        { property: 'og:title', content: this.resource.title},
+        { property: 'og:description', content: this.resource.description},
+        { property: 'og:image', content: this.resource.mThumb},
+        { property: 'og:url', content: 'knowlo.io' + this.$route.fullPath},
+        { property: 'og:type', content:'website'},
+        // Twitter meta
+        // { name:"twitter:card", content:"summary_large_image"},
+        // { name:"twitter:title", content:"Knowlo Library"},
+        // { name:"twitter:description", content:"A learning community and platform for optimizing access to insight."},
+        // { name:"twitter:image", content:"https://i1.wp.com/knowlo.org/wp-content/uploads/2020/02/size-time-tight.png?resize=1024%2C422&ssl=1"},
+        // Google / Search Engine meta
+        // { itemprop:"name", content:"Knowlo Library"},
+        // { itemprop:"description", content:"A learning community and platform for optimizing access to insight."},
+        // { itemprop:"image", content:"https://i1.wp.com/knowlo.org/wp-content/uploads/2020/02/size-time-tight.png?resize=1024%2C422&ssl=1"},
+      ],
+    }
+  },
   data: function () {
     return {
       resource: {
@@ -480,8 +479,6 @@ export default {
     }
   },
   mounted: function () {
-    console.log(this.$route.meta)
-    console.log(this)
     this.fetchResource()
     // if (this.member.uid) {
     //   window.setTimeout(() => {
