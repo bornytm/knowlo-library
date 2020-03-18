@@ -1,9 +1,10 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
-var admin = require('firebase-admin');
-var serveStatic = require('serve-static');
-var firebaseMiddleware = require('express-firebase-middleware');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const admin = require('firebase-admin');
+const serveStatic = require('serve-static');
+const firebaseMiddleware = require('express-firebase-middleware');
+const history = require('connect-history-api-fallback')
 
 if (process.env.GRAPHENEDB_URL) {
   url = require('url').parse(process.env.GRAPHENEDB_URL);
@@ -32,6 +33,9 @@ if (process.env.GRAPHENEDB_URL) {
 app.use('/api/auth', firebaseMiddleware.auth)
 app.use(bodyParser.json())
 app.use(serveStatic(__dirname + "/dist/spa"))
+app.use(history())
+app.use(serveStatic(__dirname + "/dist/spa"))
+// ^ `app.use(serveStatic())` is included twice as per https://github.com/bripkens/connect-history-api-fallback/blob/master/examples/static-files-and-index-rewrite/README.md#configuring-the-middleware
 
 require('./initDB')(app, db);
 require('./CRUD/tags')(app, db);

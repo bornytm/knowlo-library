@@ -217,14 +217,14 @@ export default {
         { property: 'og:url', content: 'knowlo.io' + this.$route.fullPath},
         { property: 'og:type', content:'website'},
         // Twitter meta
-        // { name:"twitter:card", content:"summary_large_image"},
-        // { name:"twitter:title", content:"Knowlo Library"},
-        // { name:"twitter:description", content:"A learning community and platform for optimizing access to insight."},
-        // { name:"twitter:image", content:"https://i1.wp.com/knowlo.org/wp-content/uploads/2020/02/size-time-tight.png?resize=1024%2C422&ssl=1"},
+        // { name:'twitter:card', content:'summary_large_image'},
+        // { name:'twitter:title', content:'Knowlo Library'},
+        // { name:'twitter:description', content:'A learning community and platform for optimizing access to insight.'},
+        // { name:'twitter:image', content:'https://i1.wp.com/knowlo.org/wp-content/uploads/2020/02/size-time-tight.png'},
         // Google / Search Engine meta
-        // { itemprop:"name", content:"Knowlo Library"},
-        // { itemprop:"description", content:"A learning community and platform for optimizing access to insight."},
-        // { itemprop:"image", content:"https://i1.wp.com/knowlo.org/wp-content/uploads/2020/02/size-time-tight.png?resize=1024%2C422&ssl=1"},
+        // { itemprop:'name', content:'Knowlo Library'},
+        // { itemprop:'description', content:'A learning community and platform for optimizing access to insight.'},
+        // { itemprop:'image', content:'https://i1.wp.com/knowlo.org/wp-content/uploads/2020/02/size-time-tight.png'},
       ],
     }
   },

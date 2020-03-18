@@ -28,7 +28,7 @@ module.exports = function (ctx) {
         //   regex: /^_/
         // }
       // },
-      // vueRouterMode: 'history',
+      vueRouterMode: 'history',
       // vueCompiler: true,
       // gzip: true,
       // analyze: true,
