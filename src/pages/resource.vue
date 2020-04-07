@@ -171,17 +171,7 @@
           <span class="viewBtn" @click.stop.prevent="relatedDisplay='card'"><i class="material-icons">dashboard</i></span>
           <span class="viewBtn" @click.stop.prevent="relatedDisplay='thumb'"><i class="material-icons">dialpad</i></span>
         </div>
-        <isotope ref='relatedBin' :list="related" :options='{}'>
-          <resource
-          v-for="re in related"
-          :settings="settings"
-          @selected="toTop"
-          :re="re"
-          :key="re.resource.uid"
-          :display="relatedDisplay"
-          >
-          </resource>
-        </isotope>
+        <resource-collection ref='collection' :resources="related" :options="{}"></resource-collection>
       </div>
     </flickity>
   </div>
@@ -200,21 +190,23 @@ import Flickity from 'vue-flickity'
 import L from 'leaflet'
 import { scroll } from 'quasar'
 import resources from '../api/resources'
+import resourceCollection from 'components/resourceCollection'
+
 const { getScrollPosition, setScrollPosition } = scroll
 
 export default {
   props: ['member','settings'],
   name: 'resourcePage',
-  components: { isotope, search, tag, resource, Flickity, addResource},
+  components: { isotope, search, tag, resource, Flickity, addResource, resourceCollection},
   meta () {
     return {
-      title: 'Knowlo - ' + this.resource.title,
+      title: this.resource.title + ' - Knowlo',
       meta: [
         // Facebook meta
         { property: 'og:title', content: this.resource.title},
         { property: 'og:description', content: this.resource.description},
         { property: 'og:image', content: this.resource.mThumb},
-        { property: 'og:url', content: 'knowlo.io' + this.$route.fullPath},
+        { property: 'og:url', content: 'https://www.knowlo.io' + this.$route.fullPath},
         { property: 'og:type', content:'website'},
         // Twitter meta
         // { name:'twitter:card', content:'summary_large_image'},
@@ -227,6 +219,10 @@ export default {
         // { itemprop:'image', content:'https://i1.wp.com/knowlo.org/wp-content/uploads/2020/02/size-time-tight.png'},
       ],
     }
+  },
+  mounted() {
+    console.log(this.$route)
+    console.log(this.meta)
   },
   data: function () {
     return {

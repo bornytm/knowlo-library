@@ -30,6 +30,21 @@ if (process.env.GRAPHENEDB_URL) {
 //   databaseURL: "https://knowlo-952cc.firebaseio.com/"
 // });
 
+// handle link preview routes
+linkPreview = express.Router()
+
+// catch link preview routes
+app.use(function(req,res,next) { 
+  var ua = req.headers['user-agent'];
+  if (/^(facebookexternalhit)|(Twitterbot)|(Pinterest)|(LinkedInBot)/gi.test(ua)) { 
+    console.log(ua,' is a bot')
+    linkPreview(req,res,next);
+  } else { 
+    console.log('in netxt i.e. to SPA')
+    next()
+  } 
+}); 
+
 app.use('/api/auth', firebaseMiddleware.auth)
 app.use(bodyParser.json())
 app.use(serveStatic(__dirname + "/dist/spa"))
@@ -41,6 +56,7 @@ require('./initDB')(app, db);
 require('./CRUD/tags')(app, db);
 require('./CRUD/resources')(app, db);
 require('./CRUD/members')(app, db);
+require('./CRUD/generateMeta')(linkPreview, db);
 
 // task scripts
 // require('./dothings')(app, db);
