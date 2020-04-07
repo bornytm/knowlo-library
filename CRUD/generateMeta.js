@@ -14,7 +14,7 @@ module.exports = function(linkPreview, db){
                + "WITH resource "
                + "OPTIONAL MATCH (resource)-[p:HAS_PROPERTY]->(prop:prop)-[plang:HAS_TRANSLATION ]->(ptrans:translation) "
                + "WHERE p.order=1 AND plang.languageCode IN [ {languageCode} , 'en' ] and prop.type='title' "
-               + "RETURN resource.thumb as image, ptrans.value as title"
+               + "RETURN resource.mThumb as image, ptrans.value as title"
 
         db.query(cypher, {uid: req.params.uid, languageCode: req.query.languageCode || 'en'},function(err, result) {
             if(err){console.log(err)}
