@@ -5,7 +5,6 @@ module.exports = function(linkPreview, db){
     linkPreview.get('*', catchAll);   
 
     function catchAll(req,res) { 
-        console.log(req.url)
         res.send(meta())
     }
 
@@ -22,17 +21,16 @@ module.exports = function(linkPreview, db){
             if(result.length == 0){
                 res.send(meta())
             } else {
-                res.send(meta(result[0].title, undefined, result[0].image, 'https://www.knowlo.io' + req.url))
+                res.send(meta(result[0].title, undefined, result[0].image))
             }
         })
     }
 
-    function meta(title, description, imageUrl, url){
+    function meta(title, description, imageUrl){
         // defaults
         let ttitle = title || 'Knowlo Library'
         let tdescription = description || 'Knowlo is a learning community and platform for optimizing access to insight.'
         let timageUrl = imageUrl || 'https://i1.wp.com/knowlo.org/wp-content/uploads/2020/02/size-time-tight.png' // curriculum image hosted on wordpress site
-        let turl = url || 'https://www.knowlo.io'
 
         let metaTemplate = `
         <!doctype html>
@@ -44,7 +42,6 @@ module.exports = function(linkPreview, db){
                 <meta name='og:title' content='${ttitle} - Knowlo'>
                 <meta name='og:description' content='${tdescription}'>
                 <meta name='og:image' content='${timageUrl}'>
-                <meta name='og:url' content='${turl}'>
                 <meta name='og:type' content='website'>
                 <!-- Twitter meta -->
                 <meta name='twitter:card' content='summary_large_image'>
