@@ -43,18 +43,18 @@ module.exports = function(linkPreview, db){
                 <!-- Facebook meta -->
                 <meta name='og:title' content='${ttitle} - Knowlo'>
                 <meta name='og:description' content='${tdescription}'>
-                <meta name='og:image' content='${timagUurl}'>
+                <meta name='og:image' content='${timageUrl}'>
                 <meta name='og:url' content='${turl}'>
                 <meta name='og:type' content='website'>
                 <!-- Twitter meta -->
                 <meta name='twitter:card' content='summary_large_image'>
                 <meta name='twitter:title' content='${ttitle} - Knowlo'>
                 <meta name='twitter:description' content='${tdescription}'>
-                <meta name='twitter:image' content='${timagUurl}'>
+                <meta name='twitter:image' content='${timageUrl}'>
                 <!-- Google / Search Engine meta -->
                 <meta name='name' content='${ttitle} - Knowlo'>
                 <meta name='description' content='${tdescription}'>
-                <meta name='image' content='${timagUurl}'>
+                <meta name='image' content='${timageUrl}'>
             </head>
             <body>
                 <h1>${ttitle} - Knowlo</h1>
