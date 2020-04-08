@@ -37,10 +37,8 @@ linkPreview = express.Router()
 app.use(function(req,res,next) { 
   var ua = req.headers['user-agent'];
   if (/^(facebookexternalhit)|(Twitterbot)|(Pinterest)|(LinkedInBot)/gi.test(ua)) { 
-    console.log(ua,' is a bot')
     linkPreview(req,res,next);
   } else { 
-    console.log('in netxt i.e. to SPA')
     next()
   } 
 }); 
