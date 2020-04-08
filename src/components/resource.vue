@@ -247,7 +247,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 .hoverable {
   box-shadow: none!important;

@@ -72,72 +72,6 @@
     </div>
     <!-- </div> -->
     <flickity ref='flickBody' :options="flickBody" class="resourceSections">
-      <!-- discussion -->
-      <div class="resourceStep discussion">
-        <div class="center margin20">
-          <span class="left" style="margin-right:15px"><i class="material-icons ">remove_red_eye</i></span>
-          <span class="viewBtn" @click="changeDisplay('list')"><i class="material-icons">view_list</i></span>
-          <span class="viewBtn" @click="changeDisplay('card')"><i class="material-icons">dashboard</i></span>
-          <span class='right'>
-						 <a class="dropdown-button viewBtn" data-activates='disOrder' data-hover="true" data-alignment='right'><i class="material-icons ">sort</i></a>
-						 <ul id='disOrder' class='dropdown-content sort'>
-							<li class=''><a>quality</a></li>
- 							<li class=''><a>complexity</a></li>
- 							<li class='disabled'><a>date added</a></li>
- 							<!-- <li class='disabled'><a>time to view</a></li> -->
- 							<li class='disabled'><a># of votes</a></li>
- 							<li class='disabled'><a># of views</a></li>
- 							<li class='disabled'><a># responses</a></li>
-						 </ul>
-					 </span>
-          <br/>
-        </div>
-        <div class='disSwitch center'>
-          <div class="switch">
-            <label>
-							 <input type="checkbox" value="insight" v-model="discussionFilter">
-							 <span class="lever"></span>
-							 Insight
-						 </label>
-          </div>
-          <div class="switch">
-            <label>
-							 <input type="checkbox" value="question" v-model="discussionFilter">
-							 <span class="lever"></span>
-							 Question
-						 </label>
-          </div>
-          <div class="switch">
-            <label>
-							 <input type="checkbox" value="criticism" v-model="discussionFilter">
-							 <span class="lever"></span>
-							 Criticism
-						 </label>
-          </div>
-          <div class="switch">
-            <label>
-							 <input type="checkbox" value="quote" v-model="discussionFilter">
-							 <span class="lever"></span>
-							 Quote
-						 </label>
-          </div>
-        </div>
-        <div class='message well' v-if="discussion.length===0">
-          <div style='margin-bottom:40px;'>
-            Nothing yet! Be the first to add your thoughts...
-          </div>
-          <q-btn color='primary' round @click="addResourceType='discussion'; addResource = true;">
-            <q-icon name="add" />
-          </q-btn>
-        </div>
-        <isotope v-else ref="discussionBin" :list="discussion" :options='discussionIsotope()' id="container">
-          <resource :key="re.resource.uid" :settings="settings" v-for="re in discussion" :re="re" :class="{'fullWidth': discussionDisplay=='list'}" :display="discussionDisplay">
-          </resource>
-        </isotope>
-        <q-btn color='primary' round @click="addResourceType='discussion'; addResource = true;" >
-          <q-icon name="add" />
-        </q-btn>
-      </div>
       <!-- Description -->
       <div class="resourceStep cont-medium">
         <div v-if="resource.source">
@@ -166,12 +100,7 @@
       </div>
       <!-- related -->
       <div class="resourceStep discussion">
-        <div class='center'>
-          <span class="viewBtn" @click.stop.prevent="relatedDisplay='list'"><i class="material-icons">view_list</i></span>
-          <span class="viewBtn" @click.stop.prevent="relatedDisplay='card'"><i class="material-icons">dashboard</i></span>
-          <span class="viewBtn" @click.stop.prevent="relatedDisplay='thumb'"><i class="material-icons">dialpad</i></span>
-        </div>
-        <resource-collection ref='collection' :resources="related" :options="{}"></resource-collection>
+        <resource-collection ref='collection' :resources="related" :options="relatedResourceOptions"></resource-collection>
       </div>
     </flickity>
   </div>
@@ -244,9 +173,14 @@ export default {
       tags: [], // current resources tags
       discussion: [], // resources within discussion
       related: [], // resources related to current resource
-      relatedDisplay: 'card', // display type for related resources
+      relatedResourceOptions: {
+        order: 'Quality',
+        display: 'card',
+        size: 4,
+        descending: 'true',
+      },
       discussionDisplay: 'card', // default display for discussion
-      resourceSection: ['Discussion', 'Detail', 'Tags', 'Related'],
+      resourceSection: ['Detail', 'Tags', 'Related'],
       selectedTab: 'Relatedd',
       addResource: false,
       addResourceType: '',
@@ -565,7 +499,7 @@ export default {
   height: 100%;
 }
 .resourceStep {
-  width: 25vw;
+  /* width: 25vw; */
 	height: 100%;
   overflow-x: scroll;
   padding-top: 10px;
