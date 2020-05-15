@@ -17,20 +17,16 @@
 
     <!--  youtube/vimeo -->
 
-    <div v-if='resource.displayType=="embed"' class="vid-container-container">
+    <div v-if='resource.displayType=="embed"'>
       <div class="video-container ">
         <iframe :src="'https://youtube.com/embed/'+resource.ytID+'?rel=0&autoplay=1'"  frameborder=”0″ allowfullscreen></iframe>
       </div>
-    </div>
 
-    <!-- <vue-plyr ref="plyr":options='plyrOptions' v-if='resource.displayType=="embed"'>
-      <div class="plyr__video-embed">
-        <iframe
-          :src="'https://youtube.com/embed/'+resource.ytID+'?iv_load_policy=3&modestbranding=1&playsinline=1&showinfo=0&rel=0&enablejsapi=1'"
-          allowfullscreen allowtransparency allow="autoplay">
-        </iframe>
-      </div>
-    </vue-plyr> -->
+      <!-- <vue-plyr>
+        <div data-plyr-provider="youtube" :data-plyr-embed-id="resource.ytID"></div>
+      </vue-plyr> -->
+
+    </div>
 
     <!-- website -->
     <div v-if='resource.displayType=="webpage"' class="web-container">
@@ -108,8 +104,6 @@
 </template>
 
 <script>
-import Materialize from 'materialize-css'
-import $ from 'jquery'
 import addResource from 'components/addResource'
 import tag from 'components/tag'
 import resource from 'components/resource'
@@ -158,9 +152,9 @@ export default {
       resource: {
         uid: undefined
       },
-      plyrOptions: {
-        controls: ['play','progress', 'volume','pip']//['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
-      },
+      // plyrOptions: {
+      //   controls: ['play','progress', 'volume','pip']//['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+      // },
       flickBody: {
         wrapAround: true,
         pageDots: false,
